@@ -1,0 +1,296 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+{namespace flux=FluidTYPO3\Flux\ViewHelpers}
+
+<f:layout name="Content" />
+
+<f:section name="Configuration">	
+	<flux:form id="j77_row" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline" description="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:description" options="{group:'Layout', icon:'EXT:jar_columnrow/Resources/Public/Icons/ColumnRow.svg'}">
+		
+		<f:comment>Spalten Einstellungen - Start</f:comment>
+			<flux:form.sheet name="columnmanagement" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_manager">
+				<flux:field.checkbox name="extended" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_extended" requestUpdate="1" />
+				<flux:form.section name="columns" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:columns">				
+					<flux:form.object name="column" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column">	
+
+						<flux:field.select label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width" name="col" displayCond="FIELD:extended:!=:1" items="{12:'[12] 100%',11:'[11] 91.66%',10:'[10] 83.33%',9:'[9] 75%',8:'[8] 66.66%',7:'[7] 58.33%',6:'[6] 50%',5:'[5] 41.66%',4:'[4] 33.33%',3:'[3] 25%',2:'[2] 16.66%',1:'[1] 8.33%'}" />
+						<flux:field.select label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width_mobile" name="col-xs" displayCond="FIELD:extended:=:1" items="{12:'[12] 100%',11:'[11] 91.66%',10:'[10] 83.33%',9:'[9] 75%',8:'[8] 66.66%',7:'[7] 58.33%',6:'[6] 50%',5:'[5] 41.66%',4:'[4] 33.33%',3:'[3] 25%',2:'[2] 16.66%',1:'[1] 8.33%',-1: 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:do_not_show'}" />
+						<flux:field.select label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width_tablet" name="col-sm" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_automatic',12:'[12] 100%',11:'[11] 91.66%',10:'[10] 83.33%',9:'[9] 75%',8:'[8] 66.66%',7:'[7] 58.33%',6:'[6] 50%',5:'[5] 41.66%',4:'[4] 33.33%',3:'[3] 25%',2:'[2] 16.66%',1:'[1] 8.33%',-1: 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_do_not_show'}" />
+						<flux:field.select label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width_small_desktop" name="col-md" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_automatic',12:'[12] 100%',11:'[11] 91.66%',10:'[10] 83.33%',9:'[9] 75%',8:'[8] 66.66%',7:'[7] 58.33%',6:'[6] 50%',5:'[5] 41.66%',4:'[4] 33.33%',3:'[3] 25%',2:'[2] 16.66%',1:'[1] 8.33%',-1: 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_do_not_show'}" />
+						<flux:field.select label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width_large_desktop" name="col-lg" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_automatic',12:'[12] 100%',11:'[11] 91.66%',10:'[10] 83.33%',9:'[9] 75%',8:'[8] 66.66%',7:'[7] 58.33%',6:'[6] 50%',5:'[5] 41.66%',4:'[4] 33.33%',3:'[3] 25%',2:'[2] 16.66%',1:'[1] 8.33%',-1: 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_do_not_show'}" />
+
+						<flux:field.select name="order-xs" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order_smartphone" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_up_high',1:'2',2:'3',3:'4',4:'5',5:'6',6:'7',7:'8',8:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_bottom'}" />
+						<flux:field.select name="order-sm" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order_tablet" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_up_high',1:'2',2:'3',3:'4',4:'5',5:'6',6:'7',7:'8',8:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_bottom'}" />
+						<flux:field.select name="order-md" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order_small_desktop" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_up_high',1:'2',2:'3',3:'4',4:'5',5:'6',6:'7',7:'8',8:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_bottom'}" />
+						<flux:field.select name="order-lg" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order_large_desktop" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_up_high',1:'2',2:'3',3:'4',4:'5',5:'6',6:'7',7:'8',8:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_bottom'}" />
+
+						<flux:field.select name="offset-xs" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset_smartphone" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:no_offset',1:'8.33%',2:'16.66%',3:'25%',4:'33.33%',5:'41.66%',6:'50%',7:'58.33%',8:'66.66%',9:'75%',10:'83.33%',11:'91.66%'}" />
+						<flux:field.select name="offset-sm" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset_tablet" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:no_offset',1:'8.33%',2:'16.66%',3:'25%',4:'33.33%',5:'41.66%',6:'50%',7:'58.33%',8:'66.66%',9:'75%',10:'83.33%',11:'91.66%'}" />
+						<flux:field.select name="offset-md" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset_small_desktop" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:no_offset',1:'8.33%',2:'16.66%',3:'25%',4:'33.33%',5:'41.66%',6:'50%',7:'58.33%',8:'66.66%',9:'75%',10:'83.33%',11:'91.66%'}" />
+						<flux:field.select name="offset-lg" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset_large_desktop" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:no_offset',1:'8.33%',2:'16.66%',3:'25%',4:'33.33%',5:'41.66%',6:'50%',7:'58.33%',8:'66.66%',9:'75%',10:'83.33%',11:'91.66%'}" />
+						
+						<flux:field.select name="col-background-choose" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background" displayCond="FIELD:extended:=:1" items="{0:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:choose',1:'0'},1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',1:'1'}}" requestUpdate="1"/>
+						<flux:field.select name="col-background-color" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color" displayCond="FIELD:col-background-choose:=:1" items="{
+							0:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:transparent',1:'default'},
+							1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:orange',1:'#ED672C'},
+							2:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:light_gray',1:'#A5A5A5'},
+							3:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:dark_gray',1:'#49474F'},
+							4:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:user_customized',1:'user'}
+						}" requestUpdate="1"/>
+						<flux:field.input name="col-user-background-color" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom_background" default="#FFFFFF" displayCond="FIELD:col-background-color:=:user" >
+							<flux:wizard.colorPicker />
+						</flux:field.input>
+						<flux:field.input name="additionalColClass" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:add_column_class"/>
+
+					</flux:form.object>
+				</flux:form.section>
+
+				<flux:grid>
+					<flux:grid.row>
+						<f:if condition="{columns}">
+							<f:then>
+								<f:for each="{columns}" as="sectionObject" iteration="iteration">
+									<v:variable.set name="colSize" value="" />
+									<v:variable.set name="colSizeClasses" value="" />
+									
+									<f:if condition="{extended} == 0">
+										<f:then>
+											<f:if condition="{sectionObject.column.col} != 12">
+												<f:then>
+													<v:variable.set name="colSize" value="{sectionObject.column.col}" />
+													<v:variable.set name="colSizeClasses" value="col-12 col-md-{colSize}" />
+												</f:then>
+												<f:else>
+													<v:variable.set name="colSize" value="{sectionObject.column.col}" />
+													<v:variable.set name="colSizeClasses" value="col-{colSize}" />
+												</f:else>
+											</f:if>
+										</f:then>
+										<f:else>
+											<f:if condition="{sectionObject.column.col-xs}">
+												<v:variable.set name="colSize" value="{sectionObject.column.col-xs}" />
+												<v:variable.set name="colSizeClasses" value="col-{colSize}" />
+											</f:if>
+											<f:if condition="{sectionObject.column.col-sm} != 0">
+												<v:variable.set name="colSize" value="{sectionObject.column.col-sm}" />
+												<v:variable.set name="colSizeClasses" value="{colSizeClasses} col-sm-{colSize}" />
+											</f:if>
+											<f:if condition="{sectionObject.column.col-md} != 0">
+												<v:variable.set name="colSize" value="{sectionObject.column.col-md}" />
+												<v:variable.set name="colSizeClasses" value="{colSizeClasses} col-md-{colSize}" />
+											</f:if>
+											<f:if condition="{sectionObject.column.col-lg} != 0">
+												<v:variable.set name="colSize" value="{sectionObject.column.col-lg}" />
+												<v:variable.set name="colSizeClasses" value="{colSizeClasses} col-lg-{colSize}" />
+											</f:if>
+										</f:else>
+									</f:if>
+									<f:comment>
+										<v:variable.set name="percent" value="{colSize -> v:math.division(b: 12) -> v:math.product(b: 100) -> v:math.floor()}" />
+									</f:comment>
+									<v:variable.set name="label" value="{colSizeClasses}" />
+									
+									<f:if condition="{sectionObject.column.additionalColClass}">
+										<v:variable.set name="label" value="{colSizeClasses} - {sectionObject.column.additionalColClass}" />
+									</f:if>
+
+									<flux:grid.column colspan="{colSize}" label="{label}" name="column_{iteration.cycle}" colPos="{iteration.cycle}"></flux:grid.column>
+								</f:for>
+							</f:then>
+							<f:else>
+								<flux:grid.column colspan="12" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:100_percent_nogrid" name="column_1" colPos="0"></flux:grid.column>
+							</f:else>
+						</f:if>
+					</flux:grid.row>
+				</flux:grid>
+			</flux:form.sheet>
+		<f:comment>Column settings - end</f:comment>
+		
+		<f:comment>Column settings extended - start</f:comment>
+			<v:variable.set name="bg_items" value="{0:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:choose',1:'0'},1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',1:'1'},2:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_graph',1:'2'}}" />
+			<flux:form.variable name="bg_items" value="{bg_items}" />
+
+			<v:variable.set name="farbe_items" value="{
+				0:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:transparent',1:'default'},
+				1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:orange',1:'#ED672C'},
+				2:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:light_gray',1:'#A5A5A5'},
+				3:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:dark_gray',1:'#49474F'},
+				4:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:user_customized',1:'user'}
+			}" />
+			<flux:form.variable name="farbe_items" value="{farbe_items}" />
+			<flux:form.variable name="farbe_items" value="{farbe_items}" />
+			
+			<v:variable.set name="breite_items" value="{0:{0:'Inhaltsbreite',1:'content'},1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:full_width',1:'fullwidth'},2:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:reduced_content_width',1:'indented'}}" />
+			<flux:form.variable name="breite_items" value="{breite_items}" />
+			
+			<flux:form.variable name="rowBackgroundImage" value="{rowBackgroundImage}" />
+			<flux:form.variable name="additionalRowClass" value="{additionalRowClass}" />
+			<flux:form.variable name="extended" value="{extended}" />
+			
+			<flux:form.sheet name="addmanagement" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:advanced_settings">
+				<flux:field.select label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:content_width" name="contentWidth" items="{breite_items}" />
+				<flux:field.select label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background" name="selectBackground" items="{bg_items}" requestUpdate="1" />
+				<flux:field.select label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color" name="rowBackground" items="{farbe_items}" displayCond="FIELD:selectBackground:=:1" requestUpdate="1"/>
+				<flux:field.input name="rowUserBackground" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom_background" default="#FFFFFF" displayCond="FIELD:rowBackground:=:user" >
+					<flux:wizard.colorPicker />
+				</flux:field.input>
+				<flux:field.inline.fal label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_graph" name="rowBackgroundImage" required="0" maxItems="1" minItems="0" displayCond="FIELD:selectBackground:=:2"/>
+				<flux:field.input label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:add_row_class" name="additionalRowClass" />
+			</flux:form.sheet>
+		<f:comment>Column settings extended - end</f:comment>
+	</flux:form>
+</f:section>
+
+
+<f:section name="Preview">	
+	<p><strong>Grid - Row</strong> (<f:translate key="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:width_of_content" />: <v:variable.get name="form.variables.breite_items.{v:iterator.indexOf(haystack: '{v:iterator.column(subject: form.variables.breite_items, columnKey: 1)}', needle: contentWidth)}.0" /><f:if condition="{additionalRowClass}"> | Zusätzliche Row Klasse: {additionalRowClass}</f:if>)
+
+		
+			<f:if condition="{selectBackground} == 1 && {rowBackground} != ''">
+				<f:comment>
+					<br>Hintergrundfarbe: <v:variable.get name="form.variables.farbe_items.{v:iterator.indexOf(haystack: '{v:iterator.column(subject: form.variables.farbe_items, columnKey: 1)}', needle: rowBackground)}.0" />			
+				</f:comment>
+				<f:if condition="{rowBackground} != 'default' && {rowBackground} != 'user'">
+					<f:then>
+						<v:variable.set name="backgroundRowColor" value="{rowBackground}" />
+					</f:then>
+					<f:else if="{rowBackground} == 'user'">
+						<v:variable.set name="backgroundRowColor" value="{rowUserBackground}" />
+					</f:else>				
+				</f:if>
+				<style>
+					.flux-collapse[data-grid-uid="{row.uid}"] > .t3-grid-container > table  > tbody > tr:before {
+						background-color: {backgroundRowColor};
+					}
+				</style>
+			</f:if>
+		<f:if condition="{selectBackground} == 2 && {rowBackgroundImage} == 1">
+			{v:content.resources.fal(field: 'rowBackgroundImage', table: 'tt_content', record: row) -> v:iterator.first() -> v:variable.set(name: 'image')}			
+			<style>
+				.flux-collapse[data-grid-uid="{row.uid}"] > .t3-grid-container > table  > tbody > tr:before {
+					background-image: url(/{image.url});
+				}
+			</style>
+			<f:comment>Hintergrundbild</f:comment>
+		</f:if>	
+	</p>	
+	<f:if condition="{columns}">
+		<f:for each="{columns}" as="sectionObject" iteration="iteration">
+			<v:variable.set name="colBackground" value=""></v:variable.set>
+			<f:if condition="{sectionObject.column.col-background-choose} == '1'">
+				<f:then>
+					<f:if condition="{sectionObject.column.col-background-color} != 'default' && {sectionObject.column.col-background-color} != 'user'">
+						<f:then>
+							<v:variable.set name="colBackground" value="background-color:{sectionObject.column.col-background-color};" />
+						</f:then>
+						<f:else if="{sectionObject.column.col-background-color} == 'user'">
+							<v:variable.set name="colBackground" value="background-color:{sectionObject.column.col-user-background-color};" />
+						</f:else>
+					</f:if>
+				</f:then>
+				<f:else if="{sectionObject.column.col-background-choose} == '2'">
+					<v:variable.set name="colBackground" value="background-image:url(/{sectionObject.column.col-background-image});" />
+				</f:else>				
+			</f:if>
+			<f:if condition="{colBackground}">
+				<style>
+					.flux-collapse[data-grid-uid="{row.uid}"] > .t3-grid-container > table  > tbody > tr > td:nth-child({iteration.cycle}):before {
+						<f:format.raw>{colBackground}</f:format.raw>
+					}
+				</style>
+			</f:if>
+		</f:for>
+
+		<flux:grid />
+	</f:if>
+</f:section>
+
+
+<f:section name="Main">
+	<f:spaceless>
+		<v:variable.set name="backgroundRowStyle" value="" />
+		<f:if condition="{selectBackground} == '1' && {rowBackground} != ''">
+			<f:then>
+				<f:if condition="{rowBackground} != 'default' && {rowBackground} != 'user'">
+					<f:then>
+						<v:variable.set name="backgroundRowStyle" value="background-color:{rowBackground};" />
+					</f:then>
+					<f:else if="{rowBackground} == 'user'">
+						<v:variable.set name="backgroundRowStyle" value="background-color:{rowUserBackground};" />
+					</f:else>
+				</f:if>
+			</f:then>
+			<f:else if="{selectBackground} == '2' && {rowBackgroundImage} == 1">
+				{v:content.resources.fal(field: 'rowBackgroundImage') -> v:iterator.first() -> v:variable.set(name: 'image')}
+				<v:variable.set name="backgroundRowStyle" value="background-image: url(/{image.url});" />
+			</f:else>
+		</f:if>
+
+		<div id="c{record.uid}" class="container-fluid<f:if condition="{record.daob}"> sp-pt</f:if><f:if condition="{record.daut}"> sp-pb</f:if><f:if condition="{record.hided}"> hide-lg</f:if><f:if condition="{record.hidem}"> hide-md</f:if><f:if condition="{record.hides}"> hide-sm</f:if><f:if condition="{record.hidex}"> hide-xs</f:if>" 
+			style="<f:if condition="{backgroundRowStyle}">{backgroundRowStyle}</f:if><f:if condition="{record.daob}">--ptd:{record.dsob}px;--ptm:{record.mdob}px;--pts:{record.tbob}px;--ptx:{record.mbob}px;</f:if><f:if condition="{record.daut}">--pbd:{record.dsut}px;--pbm:{record.mdut}px;--pbs:{record.tbut}px;--pbx:{record.mbut}px;</f:if>">
+			
+			<div class="container {contentWidth}">
+				<div class="row{f:if(condition: additionalRowClass, then: ' {additionalRowClass}')}"> 
+					<f:if condition="{columns}">
+						<f:then>
+							<f:for each="{columns}" as="sectionObject" iteration="iteration">
+
+								<v:variable.set name="colClasses" value="" />
+								<v:variable.set name="colBackground" value="" />
+								<f:if condition="{extended} == 0">
+									<f:then>
+										<f:if condition="{sectionObject.column.col} != 12">
+											<f:then><v:variable.set name="colClasses" value="col-12 col-md-{sectionObject.column.col}" /></f:then>
+											<f:else><v:variable.set name="colClasses" value="col-{sectionObject.column.col}" /></f:else>
+										</f:if>
+									</f:then>
+									<f:else>
+										<f:if condition="{sectionObject.column.col-xs}"><v:variable.set name="colClasses" value="col-{sectionObject.column.col-xs}" /></f:if>
+										<f:if condition="{sectionObject.column.col-sm}"><v:variable.set name="colClasses" value="{colClasses} col-sm-{sectionObject.column.col-sm}" /></f:if>
+										<f:if condition="{sectionObject.column.col-md}"><v:variable.set name="colClasses" value="{colClasses} col-md-{sectionObject.column.col-md}" /></f:if>
+										<f:if condition="{sectionObject.column.col-lg}"><v:variable.set name="colClasses" value="{colClasses} col-lg-{sectionObject.column.col-lg}" /></f:if>
+
+										<f:if condition="{sectionObject.column.order-xs}"><v:variable.set name="colClasses" value="{colClasses} order-{sectionObject.column.order-xs}" /></f:if>
+										<f:if condition="{sectionObject.column.order-sm}"><v:variable.set name="colClasses" value="{colClasses} order-sm-{sectionObject.column.order-sm}" /></f:if>
+										<f:if condition="{sectionObject.column.order-md}"><v:variable.set name="colClasses" value="{colClasses} order-md-{sectionObject.column.order-md}" /></f:if>
+										<f:if condition="{sectionObject.column.order-lg}"><v:variable.set name="colClasses" value="{colClasses} order-lg-{sectionObject.column.order-lg}" /></f:if>
+
+										<f:if condition="{sectionObject.column.offset-xs}"><v:variable.set name="colClasses" value="{colClasses} offset-{sectionObject.column.offset-xs}" /></f:if>
+										<f:if condition="{sectionObject.column.offset-sm}"><v:variable.set name="colClasses" value="{colClasses} offset-sm-{sectionObject.column.offset-sm}" /></f:if>
+										<f:if condition="{sectionObject.column.offset-md}"><v:variable.set name="colClasses" value="{colClasses} offset-md-{sectionObject.column.offset-md}" /></f:if>
+										<f:if condition="{sectionObject.column.offset-lg}"><v:variable.set name="colClasses" value="{colClasses} offset-lg-{sectionObject.column.offset-lg}" /></f:if>
+
+										<f:if condition="{sectionObject.column.col-background-choose} == '1'">
+											<f:then>
+												<f:if condition="{sectionObject.column.col-background-color} != 'default' && {sectionObject.column.col-background-color} != 'user'">
+													<f:then>
+														<v:variable.set name="colBackground" value="background-color:{sectionObject.column.col-background-color};" />
+													</f:then>
+													<f:else if="{sectionObject.column.col-background-color} == 'user'">
+														<v:variable.set name="colBackground" value="background-color:{sectionObject.column.col-user-background-color};" />
+													</f:else>
+												</f:if>
+											</f:then>
+											<f:else if="{sectionObject.column.col-background-choose} == '2'">
+												<v:variable.set name="colBackground" value="background-image:url(/{sectionObject.column.col-background-image});" />
+											</f:else>
+										</f:if>
+									</f:else>
+								</f:if>
+
+								<div data-index="{iteration.index}" class="{f:if(condition: colClasses, then: '{colClasses}')} {f:if(condition: sectionObject.column.additionalColClass, then: '{sectionObject.column.additionalColClass}')}" {f:if(condition: colBackground, then: 'style="{colBackground}"')}>				
+									<flux:content.render area="column_{iteration.cycle}" />				
+								</div>
+
+							</f:for>
+						</f:then>
+						<f:else>
+							<div class="col-12">
+								<flux:content.render area="column_1" />	
+							</div>
+						</f:else>
+					</f:if>
+				</div>
+			</div>
+		</div>
+	</f:spaceless>
+</f:section>

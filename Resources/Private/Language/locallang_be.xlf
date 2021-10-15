@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2021-10-01T19:14:51Z" product-name="jar_columrow">
+		<header/>
+		<body>
+			<trans-unit id="page_tab_template">
+				<source>Template</source>
+			</trans-unit>
+			<trans-unit id="headline">
+				<source>Column Row (Grid)</source>
+			</trans-unit>
+			<trans-unit id="description">
+				<source>Layout element that displays content in a column row.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

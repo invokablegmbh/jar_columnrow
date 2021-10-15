@@ -1,4 +1,19 @@
 {
-    "name": "wirklich-digital/jar-columnrow",
-    "require": {}
+    "name": "jar/jar_columnrow",
+    "type": "typo3-cms-extension",
+    "description": "",
+    "authors": [
+        {
+            "name": "J77 DaPedro",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^10.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jar\\Columnrow\\": "Classes/"
+        }
+    }
 }

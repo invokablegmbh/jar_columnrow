@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2021-10-01T19:14:52Z" product-name="jar_columrow" target-language="de">
+		<header/>
+		<body>
+			<trans-unit id="page_tab_template">
+				<target>Template</target>
+			</trans-unit>
+			<trans-unit id="headline">
+				<target>Spaltenelement (Grid | Row - Column)</target>
+			</trans-unit>
+			<trans-unit id="description">
+				<target>Layoutelement, welches Inhalte in einer Spaltenanordnung anzeigt.</target>
+			</trans-unit>
+			<trans-unit id="column_manager">
+				<target>Spaltenverwaltung</target>
+			</trans-unit>
+			<trans-unit id="column_extended">
+				<target>Erweiterte Spaltenansicht</target>
+			</trans-unit>
+			<trans-unit id="column_extended">
+				<target>Erweiterte Spaltenansicht</target>
+			</trans-unit>
+			<trans-unit id="column">
+				<target>Spalte</target>
+			</trans-unit>
+			<trans-unit id="columns">
+				<target>Spalten</target>
+			</trans-unit>
+			<trans-unit id="column_width">
+				<target>Spaltenbreite</target>
+			</trans-unit>
+			<trans-unit id="column_width_mobile">
+				<target>Spaltenbreite (Mobile)</target>
+			</trans-unit>
+			<trans-unit id="column_width_tablet">
+				<target>Spaltenbreite (Tablet)</target>
+			</trans-unit>
+			<trans-unit id="column_width_small_desktop">
+				<target>Spaltenbreite (Small Desktop)</target>
+			</trans-unit>
+			<trans-unit id="column_width_large_desktop">
+				<target>Spaltenbreite (Large Desktop)</target>
+			</trans-unit>
+			<trans-unit id="order_smartphone">
+				<target>Reihenfolge (Smartphone)</target>
+			</trans-unit>
+			<trans-unit id="order_tablet">
+				<target>Reihenfolge (Tablet)</target>
+			</trans-unit>
+			<trans-unit id="order_small_desktop">
+				<target>Reihenfolge (Small Desktop)</target>
+			</trans-unit>
+			<trans-unit id="order_large_desktop">
+				<target>Reihenfolge (Large Desktop)</target>
+			</trans-unit>
+			<trans-unit id="offset_smartphone">
+				<target>Offset (Smartphone)</target>
+			</trans-unit>
+			<trans-unit id="offset_tablet">
+				<target>Offset (Tablet)</target>
+			</trans-unit>
+			<trans-unit id="offset_small_desktop">
+				<target>Offset (Small Desktop)</target>
+			</trans-unit>
+			<trans-unit id="offset_large_desktop">
+				<target>Offset (Large Desktop)</target>
+			</trans-unit>
+			<trans-unit id="background">
+				<target>Hintergrund</target>
+			</trans-unit>
+			<trans-unit id="background_color">
+				<target>Hintergrundfarbe</target>
+			</trans-unit>
+			<trans-unit id="background_graph">
+				<target>Hintergrundgrafik</target>
+			</trans-unit>
+			<trans-unit id="item_automatic">
+				<target>Automatisch</target>
+			</trans-unit>
+			<trans-unit id="item_do_now_show">
+				<target>Nicht anzeigen</target>
+			</trans-unit>
+			<trans-unit id="item_up_high">
+				<target>1 (ganz oben)</target>
+			</trans-unit>
+			<trans-unit id="item_bottom">
+				<target>9 (ganz unten)</target>
+			</trans-unit>
+			<trans-unit id="no_offset">
+				<target>Kein Offset</target>
+			</trans-unit>
+			<trans-unit id="choose">
+				<target>Bitte auswählen</target>
+			</trans-unit>
+			<trans-unit id="transparent">
+				<target>Transparent</target>
+			</trans-unit>
+			<trans-unit id="orange">
+				<target>Orange</target>
+			</trans-unit>
+			<trans-unit id="light_gray">
+				<target>Hell Grau 1</target>
+			</trans-unit>
+			<trans-unit id="dark_gray">
+				<target>Dunkel Grau</target>
+			</trans-unit>
+			<trans-unit id="user_customized">
+				<target>Benuterdefiniert</target>
+			</trans-unit>
+			<trans-unit id="custom_background">
+				<target>Benuterdefinierter Hintergrund</target>
+			</trans-unit>
+			<trans-unit id="add_row_class">
+				<target>Zusätzliche Reihen CSS-Klasse</target>
+			</trans-unit>
+			<trans-unit id="add_column_class">
+				<target>Zusätzliche Spalten CSS-Klasse</target>
+			</trans-unit>
+			<trans-unit id="100_percent_nogrid">
+				<target>100% ohne Grid</target>
+			</trans-unit>
+			<trans-unit id="full_width">
+				<target>Volle Bildschirmbreite</target>
+			</trans-unit>
+			<trans-unit id="reduced_content_width">
+				<target>Verringerte Inhaltsbreite</target>
+			</trans-unit>
+			<trans-unit id="content_width">
+				<target>Inhaltsbreite</target>
+			</trans-unit>
+			<trans-unit id="advanced_settings">
+				<target>Erweitere Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="width_of_content">
+				<target>Breite des Inhalts</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

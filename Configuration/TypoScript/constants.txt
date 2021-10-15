@@ -1,0 +1,2 @@
+# cat=column row/enable; type=boolean; label=Inlcude Bootrap Grid Styling
+plugin.tx_jar_columnrow.settings.bootstrapGrid = 1

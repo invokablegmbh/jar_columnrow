@@ -1,0 +1,12 @@
+lib.contentElement {
+   templateRootPaths {
+      0  = EXT:fluid_styled_content/Resources/Private/Templates/
+      10 = EXT:jar_columnrow/Resources/Private/Templates/Content/
+   }
+}
+
+page = PAGE
+
+[{$plugin.tx_jar_columnrow.settings.bootstrapGrid} > 0]
+   page.includeCSS.bootstrapGrid = EXT:jar_columnrow/Resources/Public/Css/bootstrap-grid.min.css
+[end]
