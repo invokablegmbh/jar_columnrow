@@ -1,7 +1,6 @@
 lib.contentElement {
    templateRootPaths {
-      0  = EXT:fluid_styled_content/Resources/Private/Templates/
-      10 = EXT:jar_columnrow/Resources/Private/Templates/Content/
+      50 = EXT:jar_columnrow/Resources/Private/Templates/Content/
    }
 }
 

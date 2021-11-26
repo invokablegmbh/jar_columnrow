@@ -1,7 +1,7 @@
 {
     "name": "jar/jar_columnrow",
     "type": "typo3-cms-extension",
-    "description": "",
+    "description": "Provides a freely definable and universal grid element with bootstrap-based output.",
     "authors": [
         {
             "name": "J77 DaPedro",
@@ -14,6 +14,11 @@
     "autoload": {
         "psr-4": {
             "Jar\\Columnrow\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "jar_columnrow"
         }
     }
 }

@@ -2,11 +2,11 @@
 
 $EM_CONF['jar_columnrow'] = array(
 	'title' => 'Column Row',
-	'description' => 'Customized Column Row for Grid Elements',
+	'description' => 'Provides a freely definable and universal grid element with bootstrap-based output.',
 	'category' => 'template',
 	'shy' => 0,
 	'version' => '1.0.0',
-	'dependencies' => 'fluid,flux,vhs,jar_feditor',
+	'dependencies' => 'fluid,flux,vhs',
 	'conflicts' => '',
 	'priority' => '',
 	'loadOrder' => '',
