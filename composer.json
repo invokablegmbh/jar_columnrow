@@ -4,7 +4,15 @@
     "description": "Provides a freely definable and universal grid element with bootstrap-based output.",
     "authors": [
         {
-            "name": "J77 DaPedro",
+            "name": "Julian Lichte",
+            "email": "julian.lichte@invokable.gmbh",
+            "homepage": "https://invokable.gmbh",
+            "role": "Developer"
+        },
+        {
+            "name": "Maurice Möllmer",
+            "email": "maurice.moellmer@invokable.gmbh",
+            "homepage": "https://invokable.gmbh",
             "role": "Developer"
         }
     ],
