@@ -1,5 +1,6 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 {namespace flux=FluidTYPO3\Flux\ViewHelpers}
+{namespace jcl=Jar\Columnrow\ViewHelpers}
 
 <f:layout name="Content" />
 
@@ -29,13 +30,18 @@
 						<flux:field.select name="offset-lg" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset_large_desktop" displayCond="FIELD:extended:=:1" items="{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:no_offset',1:'8.33%',2:'16.66%',3:'25%',4:'33.33%',5:'41.66%',6:'50%',7:'58.33%',8:'66.66%',9:'75%',10:'83.33%',11:'91.66%'}" />
 						
 						<flux:field.select name="col-background-choose" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background" displayCond="FIELD:extended:=:1" items="{0:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:choose',1:'0'},1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',1:'1'}}" requestUpdate="1"/>
-						<flux:field.select name="col-background-color" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color" displayCond="FIELD:col-background-choose:=:1" items="{
-							0:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:transparent',1:'default'},
-							1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:orange',1:'#ED672C'},
-							2:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:light_gray',1:'#A5A5A5'},
-							3:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:dark_gray',1:'#49474F'},
-							4:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:user_customized',1:'user'}
-						}" requestUpdate="1"/>
+						<f:comment>
+							<flux:field.select name="col-background-color" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color" displayCond="FIELD:col-background-choose:=:1" items="{
+								0:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:transparent',1:'default'},
+								1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:orange',1:'#ED672C'},
+								2:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:light_gray',1:'#A5A5A5'},
+								3:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:dark_gray',1:'#49474F'},
+								4:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:user_customized',1:'user'}
+							}" requestUpdate="1"/>
+						</f:comment>
+						<f:variable name="bgColors" value="{jcl:tsconfig()}" />
+						<flux:field.select name="col-background-color" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color" displayCond="FIELD:col-background-choose:=:1" items="{bgColors}" requestUpdate="1"/>
+
 						<flux:field.input name="col-user-background-color" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom_background" default="#FFFFFF" displayCond="FIELD:col-background-color:=:user" >
 							<flux:wizard.colorPicker />
 						</flux:field.input>
@@ -284,7 +290,7 @@
 							</f:for>
 						</f:then>
 						<f:else>
-							<div class="col-12">
+							<div class="col-xs-12">
 								<flux:content.render area="column_1" />	
 							</div>
 						</f:else>

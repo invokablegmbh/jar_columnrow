@@ -1,6 +1,6 @@
 <?php
 
-call_user_func(function () {
+	call_user_func(function () {
 	// Flux - Engine init
 	\FluidTYPO3\Flux\Core::registerProviderExtensionKey('JarColumnrow', 'Content');
 
