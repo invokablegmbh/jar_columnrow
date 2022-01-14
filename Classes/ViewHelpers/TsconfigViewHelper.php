@@ -2,6 +2,7 @@
 
 namespace Jar\Columnrow\ViewHelpers;
 
+use Jar\Utilities\Utilities\BackendUtility;
 use TYPO3Fluid\Fluid\Core\Parser\Source;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -44,11 +45,15 @@ class TsconfigViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
-        echo 1;
-        die;
-        return [
-          ['LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:transparent','default'],
-          ['1','hikjugdefa']
-        ];
+        $options[] = ['LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:transparent','default'];
+        $pageTs = BackendUtility::getCurrentPageTS();
+        if(isset($pageTs['jar']['bgcolors'])) {
+            foreach($pageTs['jar']['bgcolors'] as $label => $value) {
+                $options[] = [$label, $value];
+            }
+        }
+        $options[] = ['LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:user_customized','user'];
+
+        return $options;
     }
 }

@@ -12,6 +12,126 @@
 			<trans-unit id="description">
 				<source>Layout element that displays content in a column row.</source>
 			</trans-unit>
+			<trans-unit id="column_manager">
+				<source>Column management</source>
+			</trans-unit>
+			<trans-unit id="column_extended">
+				<source>Extended column view</source>
+			</trans-unit>
+			<trans-unit id="column">
+				<source>Column</source>
+			</trans-unit>
+			<trans-unit id="columns">
+				<source>Columns</source>
+			</trans-unit>
+			<trans-unit id="column_width">
+				<source>Column width</source>
+			</trans-unit>
+			<trans-unit id="column_width_mobile">
+				<source>Column width (mobile)</source>
+			</trans-unit>
+			<trans-unit id="column_width_tablet">
+				<source>Column width (Tablet)</source>
+			</trans-unit>
+			<trans-unit id="column_width_small_desktop">
+				<source>Column width (small desktop)</source>
+			</trans-unit>
+			<trans-unit id="column_width_large_desktop">
+				<source>Column width (large desktop)</source>
+			</trans-unit>
+			<trans-unit id="order_smartphone">
+				<source>Order (smartphone)</source>
+			</trans-unit>
+			<trans-unit id="order_tablet">
+				<source>Order (tablet)</source>
+			</trans-unit>
+			<trans-unit id="order_small_desktop">
+				<source>Order (small desktop)</source>
+			</trans-unit>
+			<trans-unit id="order_large_desktop">
+				<source>Order (large desktop)</source>
+			</trans-unit>
+			<trans-unit id="offset_smartphone">
+				<source>Offset (smartphone)</source>
+			</trans-unit>
+			<trans-unit id="offset_tablet">
+				<source>Offset (tablet)</source>
+			</trans-unit>
+			<trans-unit id="offset_small_desktop">
+				<source>Offset (small desktop)</source>
+			</trans-unit>
+			<trans-unit id="offset_large_desktop">
+				<source>Offset (large desktop)</source>
+			</trans-unit>
+			<trans-unit id="background">
+				<source>Background</source>
+			</trans-unit>
+			<trans-unit id="background_color">
+				<source>Background color</source>
+			</trans-unit>
+			<trans-unit id="background_graph">
+				<source>Background image</source>
+			</trans-unit>
+			<trans-unit id="item_automatic">
+				<source>Automatic</source>
+			</trans-unit>
+			<trans-unit id="item_do_now_show">
+				<source>Don't show</source>
+			</trans-unit>
+			<trans-unit id="item_up_high">
+				<source>1 (top)</source>
+			</trans-unit>
+			<trans-unit id="item_bottom">
+				<source>9 (bottom)</source>
+			</trans-unit>
+			<trans-unit id="no_offset">
+				<source>No Offset</source>
+			</trans-unit>
+			<trans-unit id="choose">
+				<source>Please choose</source>
+			</trans-unit>
+			<trans-unit id="transparent">
+				<source>Transparent</source>
+			</trans-unit>
+			<trans-unit id="orange">
+				<source>Orange</source>
+			</trans-unit>
+			<trans-unit id="light_gray">
+				<source>Light gray</source>
+			</trans-unit>
+			<trans-unit id="dark_gray">
+				<source>Dark grey</source>
+			</trans-unit>
+			<trans-unit id="user_customized">
+				<source>Customized</source>
+			</trans-unit>
+			<trans-unit id="custom_background">
+				<source>Customized background</source>
+			</trans-unit>
+			<trans-unit id="add_row_class">
+				<source>Additional CSS class (row)</source>
+			</trans-unit>
+			<trans-unit id="add_column_class">
+				<source>Additional CSS class (column)</source>
+			</trans-unit>
+			<trans-unit id="100_percent_nogrid">
+				<source>100% without Grid</source>
+			</trans-unit>
+			<trans-unit id="full_width">
+				<source>Full width</source>
+			</trans-unit>
+			<trans-unit id="reduced_content_width">
+				<source>Reduced content width</source>
+			</trans-unit>
+			<trans-unit id="content_width">
+				<source>Content with</source>
+			</trans-unit>
+			<trans-unit id="advanced_settings">
+				<source>Advanced settings</source>
+			</trans-unit>
+			<trans-unit id="width_of_content">
+				<source>Width of content</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
