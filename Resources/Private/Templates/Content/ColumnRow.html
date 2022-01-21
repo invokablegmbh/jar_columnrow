@@ -191,8 +191,9 @@
 
 
 <f:section name="Main">
-	<f:debug>{_all}</f:debug>
 	<f:spaceless>
+		<f:variable name="config" value="{jcl:columnMain(options="{_all}")}" />
+		<f:debug>{config}</f:debug>
 		<v:variable.set name="backgroundRowStyle" value="" />
 		<f:if condition="{selectBackground} == '1' && {rowBackground} != ''">
 			<f:then>

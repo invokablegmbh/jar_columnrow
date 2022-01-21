@@ -3,6 +3,7 @@
 namespace Jar\Columnrow\ViewHelpers;
 
 use Jar\Utilities\Utilities\BackendUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3Fluid\Fluid\Core\Parser\Source;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -28,8 +29,8 @@ class ColumnMainViewHelper extends AbstractViewHelper
     public function initializeArguments()
     {
         $this->registerArgument(
-            'flag',
-            'string',
+            'options',
+            'array',
             ''
         );
     }
@@ -45,15 +46,25 @@ class ColumnMainViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
-        $options[] = ['LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:transparent','default'];
-        $pageTs = BackendUtility::getCurrentPageTS();
-        if(isset($pageTs['jar']['bgcolors'])) {
-            foreach($pageTs['jar']['bgcolors'] as $label => $value) {
-                $options[] = [$label, $value];
-            }
-        }
-        $options[] = ['LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:user_customized','user'];
+        DebuggerUtility::var_dump($arguments);
 
-        return $options;
+        $config = [];
+        $backgroundRowStyle = '';
+        if($selectBackground == 1 && $rowBackground != ''){
+            if($rowBackground != 'default' && $rowBackground != 'user') {
+                $backgroundRowStyle = 'background-color:' . $rowBackground;
+            } else {
+                $backgroundRowStyle = 'background-color:' . $rowUserBackground;
+            }
+        } else if($selectBackground == 2 && $rowBackgroundImage == 1) {
+            #DebuggerUtility::var_dump($rowBackgroundImage);die;
+            //{v:content.resources.fal(field: 'rowBackgroundImage') -> v:iterator.first()}
+            $image['url'] = '';
+            $backgroundRowStyle = 'background-image: url(/'. $image['url'] .')';
+        }
+
+        $config['backgroundRowStyle'] = $backgroundRowStyle;
+        DebuggerUtility::var_dump($config);die;
+        return $config;
     }
 }
