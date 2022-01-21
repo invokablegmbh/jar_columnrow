@@ -46,17 +46,18 @@ class ColumnMainViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
+        $options = $arguments['options'];
         DebuggerUtility::var_dump($arguments);
 
         $config = [];
         $backgroundRowStyle = '';
-        if($selectBackground == 1 && $rowBackground != ''){
+        if($options['selectBackground'] == 1 && $options['rowBackground'] != ''){
             if($rowBackground != 'default' && $rowBackground != 'user') {
-                $backgroundRowStyle = 'background-color:' . $rowBackground;
+                $backgroundRowStyle = 'background-color:' . $options['rowBackground'];
             } else {
-                $backgroundRowStyle = 'background-color:' . $rowUserBackground;
+                $backgroundRowStyle = 'background-color:' . $options['rowUserBackground'];
             }
-        } else if($selectBackground == 2 && $rowBackgroundImage == 1) {
+        } else if($options['selectBackground'] == 2 && $options['rowBackgroundImage'] == 1) {
             #DebuggerUtility::var_dump($rowBackgroundImage);die;
             //{v:content.resources.fal(field: 'rowBackgroundImage') -> v:iterator.first()}
             $image['url'] = '';
