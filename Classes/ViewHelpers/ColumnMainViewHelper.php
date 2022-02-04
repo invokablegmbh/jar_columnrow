@@ -3,6 +3,10 @@
 namespace Jar\Columnrow\ViewHelpers;
 
 use Jar\Utilities\Utilities\BackendUtility;
+use Jar\Utilities\Utilities\FileUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility as UtilityBackendUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3Fluid\Fluid\Core\Parser\Source;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
@@ -47,7 +51,7 @@ class ColumnMainViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ) {
         $options = $arguments['options'];
-        #DebuggerUtility::var_dump($arguments);
+        DebuggerUtility::var_dump($arguments);
 
         $config = [];
         $backgroundRowStyle = '';
@@ -58,22 +62,105 @@ class ColumnMainViewHelper extends AbstractViewHelper
                 $backgroundRowStyle = 'background-color:' . $options['rowUserBackground'];
             }
         } else if($options['selectBackground'] == 2 && $options['rowBackgroundImage'] == 1) {
-            #DebuggerUtility::var_dump($rowBackgroundImage);die;
-            //{v:content.resources.fal(field: 'rowBackgroundImage') -> v:iterator.first()}
-            $image['url'] = '';
-            $backgroundRowStyle = 'background-image: url(/'. $image['url'] .')';
+            if($url = static::getImage($options['record']['uid'])) {
+                $backgroundRowStyle = 'background-image: url(/'. $url .')';
+            }
+        }
+
+        if(!empty($options['columns'])) {
+            foreach($options['columns'] as $key => $column) {
+                $colClasses = $colBackground = '';
+                if($options['extended'] == 0) {
+                    if(isset($column['column']['col']) && $column['column']['col'] != 12){
+                        $colClasses = 'col-12 col-md-' . $column['column']['col'];
+                    } else {
+                        $colClasses = 'col-' . $column['column']['col'];
+                    }
+                } else {
+                    $colClasses = static::getColClasses($column);
+
+                    if($column['column']['col-background-choose'] == 1) {
+                        if($column['column']['col-background-color'] != 'default' && $column['column']['col-background-color'] != 'user') {
+                            $colBackground = 'background-color:' . $column['column']['col-background-color'];
+                        } 
+                        else if($column['column']['col-background-color'] == 'user') {
+                            $colBackground = 'background-color:' . $column['column']['col-user-background-color'];
+                        }
+                    } else if($column['column']['col-background-choose'] == 2) {
+                        $colBackground = 'background-image:url(/'. $column['column']['col-background-image'] .')';
+                    }
+                }
+                
+                $config['columns'][$key]['colClasses'] = $colClasses;
+                $config['columns'][$key]['colBackground'] = $colBackground;
+            }
         }
 
         $config['backgroundRowStyle'] = $backgroundRowStyle;
 
         #DebuggerUtility::var_dump(json_encode($config));die;
         return $config;
-        return "{asdf : 1}";
-        return json_encode($config);
-        return '"{\'asdf\' : 1}"';
     }
 
-    protected static function getImage() {
+    protected static function getImage($ceUid) {
+        $url = false;
+        
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('sys_file_reference')->createQueryBuilder();
+        $res = $queryBuilder
+        ->select('uid')
+        ->from('sys_file_reference')
+        ->where($queryBuilder->expr()->eq('tablenames', $queryBuilder->createNamedParameter('tt_content')))
+        ->andWhere($queryBuilder->expr()->eq('uid_foreign', $queryBuilder->createNamedParameter($ceUid, \PDO::PARAM_INT)))
+        ->execute();
+        if($fileRefUid = $res->fetchColumn()) {
+            $fileRef = FileUtility::getFileReferenceByUid($fileRefUid);
+            $file = FileUtility::buildFileArrayBySysFileReference($fileRef);
+            $url = $file['url'];
+        }
+        
+        return $url;
+    }
+    
+    protected static function getColClasses($column) {
+        if($column['column']['col-xs']){
+            $colClasses = 'col-' . $column['column']['col-xs'];
+        }
+        if($column['column']['col-sm']){
+            $colClasses .= ' col-sm-' . $column['column']['col-sm'];
+        }
+        if($column['column']['col-md']){
+            $colClasses .= ' col-md-' . $column['column']['col-md'];
+        }
+        if($column['column']['col-lg']){
+            $colClasses .= ' col-lg-' . $column['column']['col-lg'];
+        }
 
+        if($column['column']['order-xs']){
+            $colClasses .= ' order-' . $column['column']['order-xs'];
+        }
+        if($column['column']['order-sm']){
+            $colClasses .= ' order-sm-' . $column['column']['order-sm'];
+        }
+        if($column['column']['order-md']){
+            $colClasses .= ' order-md-' . $column['column']['order-md'];
+        }
+        if($column['column']['order-lg']){
+            $colClasses .= ' order-lg-' . $column['column']['order-lg'];
+        }
+
+        if($column['column']['offset-xs']){
+            $colClasses .= ' offset-' . $column['column']['offset-xs'];
+        }
+        if($column['column']['offset-sm']){
+            $colClasses .= ' offset-sm-' . $column['column']['offset-sm'];
+        }
+        if($column['column']['offset-md']){
+            $colClasses .= ' offset-md-' . $column['column']['offset-md'];
+        }
+        if($column['column']['offset-lg']){
+            $colClasses .= ' offset-lg-' . $column['column']['offset-lg'];
+        }
+        
+        return $colClasses;
     }
 }

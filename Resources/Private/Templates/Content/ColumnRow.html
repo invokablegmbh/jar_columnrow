@@ -177,11 +177,11 @@
 				</f:else>				
 			</f:if>
 			<f:if condition="{colBackground}">
-				<style>
+				<!-- wieder einkommentieren -- style>
 					.flux-collapse[data-grid-uid="{row.uid}"] > .t3-grid-container > table  > tbody > tr > td:nth-child({iteration.cycle}):before {
 						<f:format.raw>{colBackground}</f:format.raw>
 					}
-				</style>
+				</style-->
 			</f:if>
 		</f:for>
 
@@ -193,43 +193,17 @@
 <f:section name="Main">
 	<f:debug title="lückenfüller">1</f:debug>
 	<f:variable name="config">{jcl:columnMain(options="{_all}")}</f:variable>
-	<f:variable name="config2" value="{config}" />
-	<f:variable name="config3" value="{'asdf': '1'}" />
-	<f:debug title="return">{jcl:columnMain(options="{_all}")}</f:debug>
+	<f:debug title="all">{_all}</f:debug>
 	<f:debug title="config">{config}</f:debug>
-	<f:debug title="config.backgroundRowStyle">{config.backgroundRowStyle}</f:debug>
-	<f:debug title="config2">{config2}</f:debug>
-	<f:debug title="config2.backgroundRowStyle">{config.backgroundRowStyle}</f:debug>
-	<f:debug title="config3">{config2}</f:debug>
-	<f:debug title="config3.backgroundRowStyle">{config.backgroundRowStyle}</f:debug>
 	<f:spaceless>
-		<v:variable.set name="backgroundRowStyle" value="" />
-		<f:if condition="{selectBackground} == '1' && {rowBackground} != ''">
-			<f:then>
-				<f:if condition="{rowBackground} != 'default' && {rowBackground} != 'user'">
-					<f:then>
-						<v:variable.set name="backgroundRowStyle" value="background-color:{rowBackground};" />
-					</f:then>
-					<f:else if="{rowBackground} == 'user'">
-						<v:variable.set name="backgroundRowStyle" value="background-color:{rowUserBackground};" />
-					</f:else>
-				</f:if>
-			</f:then>
-			<f:else if="{selectBackground} == '2' && {rowBackgroundImage} == 1">
-				{v:content.resources.fal(field: 'rowBackgroundImage') -> v:iterator.first() -> v:variable.set(name: 'image')}
-				<v:variable.set name="backgroundRowStyle" value="background-image: url(/{image.url});" />
-			</f:else>
-		</f:if>
-
 		<div id="c{record.uid}" class="container-fluid<f:if condition="{record.daob}"> sp-pt</f:if><f:if condition="{record.daut}"> sp-pb</f:if><f:if condition="{record.hided}"> hide-lg</f:if><f:if condition="{record.hidem}"> hide-md</f:if><f:if condition="{record.hides}"> hide-sm</f:if><f:if condition="{record.hidex}"> hide-xs</f:if>" 
-			style="{backgroundRowStyle}<f:if condition="{record.daob}">--ptd:{record.dsob}px;--ptm:{record.mdob}px;--pts:{record.tbob}px;--ptx:{record.mbob}px;</f:if><f:if condition="{record.daut}">--pbd:{record.dsut}px;--pbm:{record.mdut}px;--pbs:{record.tbut}px;--pbx:{record.mbut}px;</f:if>">
+			style="{config.backgroundRowStyle}<f:if condition="{record.daob}">--ptd:{record.dsob}px;--ptm:{record.mdob}px;--pts:{record.tbob}px;--ptx:{record.mbob}px;</f:if><f:if condition="{record.daut}">--pbd:{record.dsut}px;--pbm:{record.mdut}px;--pbs:{record.tbut}px;--pbx:{record.mbut}px;</f:if>">
 			
 			<div class="container {contentWidth}">
 				<div class="row{f:if(condition: additionalRowClass, then: ' {additionalRowClass}')}"> 
 					<f:if condition="{columns}">
 						<f:then>
-							<f:for each="{columns}" as="sectionObject" iteration="iteration">
-
+							<f:for each="{columns}" as="sectionObject" iteration="iteration" key="key">
 								<v:variable.set name="colClasses" value="" />
 								<v:variable.set name="colBackground" value="" />
 								<f:if condition="{extended} == 0">
@@ -272,6 +246,10 @@
 										</f:if>
 									</f:else>
 								</f:if>
+								<f:debug title="config.colClasses">{config.columns.{key}.colClasses}</f:debug>
+								<f:debug title="colClasses">{colClasses}</f:debug>
+								<f:debug title="config.colBackground">{config.columns.{key}.colBackground}</f:debug>
+								<f:debug title="colBackground">{colBackground}</f:debug>
 
 								<div data-index="{iteration.index}" class="{f:if(condition: colClasses, then: '{colClasses}')} {f:if(condition: sectionObject.column.additionalColClass, then: '{sectionObject.column.additionalColClass}')}" {f:if(condition: colBackground, then: 'style="{colBackground}"')}>				
 									<flux:content.render area="column_{iteration.cycle}" />				
