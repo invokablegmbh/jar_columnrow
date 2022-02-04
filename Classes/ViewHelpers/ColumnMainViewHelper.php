@@ -51,7 +51,6 @@ class ColumnMainViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ) {
         $options = $arguments['options'];
-        DebuggerUtility::var_dump($arguments);
 
         $config = [];
         $backgroundRowStyle = '';
@@ -76,6 +75,12 @@ class ColumnMainViewHelper extends AbstractViewHelper
                     } else {
                         $colClasses = 'col-' . $column['column']['col'];
                     }
+                    if($column['column']['col-background-color'] != 'default' && $column['column']['col-background-color'] != 'user') {
+                        $colBackground = 'background-color:' . $column['column']['col-background-color'];
+                    } 
+                    else if($column['column']['col-background-color'] == 'user') {
+                        $colBackground = 'background-color:' . $column['column']['col-user-background-color'];
+                    }
                 } else {
                     $colClasses = static::getColClasses($column);
 
@@ -90,7 +95,7 @@ class ColumnMainViewHelper extends AbstractViewHelper
                         $colBackground = 'background-image:url(/'. $column['column']['col-background-image'] .')';
                     }
                 }
-                
+
                 $config['columns'][$key]['colClasses'] = $colClasses;
                 $config['columns'][$key]['colBackground'] = $colBackground;
             }

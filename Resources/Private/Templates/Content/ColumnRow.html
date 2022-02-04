@@ -191,10 +191,12 @@
 
 
 <f:section name="Main">
-	<f:debug title="lückenfüller">1</f:debug>
 	<f:variable name="config">{jcl:columnMain(options="{_all}")}</f:variable>
-	<f:debug title="all">{_all}</f:debug>
-	<f:debug title="config">{config}</f:debug>
+	<f:comment>
+		<f:debug title="lückenfüller">1</f:debug>
+		<f:debug title="all">{_all}</f:debug>
+		<f:debug title="config">{config}</f:debug>
+	</f:comment>
 	<f:spaceless>
 		<div id="c{record.uid}" class="container-fluid<f:if condition="{record.daob}"> sp-pt</f:if><f:if condition="{record.daut}"> sp-pb</f:if><f:if condition="{record.hided}"> hide-lg</f:if><f:if condition="{record.hidem}"> hide-md</f:if><f:if condition="{record.hides}"> hide-sm</f:if><f:if condition="{record.hidex}"> hide-xs</f:if>" 
 			style="{config.backgroundRowStyle}<f:if condition="{record.daob}">--ptd:{record.dsob}px;--ptm:{record.mdob}px;--pts:{record.tbob}px;--ptx:{record.mbob}px;</f:if><f:if condition="{record.daut}">--pbd:{record.dsut}px;--pbm:{record.mdut}px;--pbs:{record.tbut}px;--pbx:{record.mbut}px;</f:if>">
@@ -204,57 +206,9 @@
 					<f:if condition="{columns}">
 						<f:then>
 							<f:for each="{columns}" as="sectionObject" iteration="iteration" key="key">
-								<v:variable.set name="colClasses" value="" />
-								<v:variable.set name="colBackground" value="" />
-								<f:if condition="{extended} == 0">
-									<f:then>
-										<f:if condition="{sectionObject.column.col} != 12">
-											<f:then><v:variable.set name="colClasses" value="col-12 col-md-{sectionObject.column.col}" /></f:then>
-											<f:else><v:variable.set name="colClasses" value="col-{sectionObject.column.col}" /></f:else>
-										</f:if>
-									</f:then>
-									<f:else>
-										<f:if condition="{sectionObject.column.col-xs}"><v:variable.set name="colClasses" value="col-{sectionObject.column.col-xs}" /></f:if>
-										<f:if condition="{sectionObject.column.col-sm}"><v:variable.set name="colClasses" value="{colClasses} col-sm-{sectionObject.column.col-sm}" /></f:if>
-										<f:if condition="{sectionObject.column.col-md}"><v:variable.set name="colClasses" value="{colClasses} col-md-{sectionObject.column.col-md}" /></f:if>
-										<f:if condition="{sectionObject.column.col-lg}"><v:variable.set name="colClasses" value="{colClasses} col-lg-{sectionObject.column.col-lg}" /></f:if>
-
-										<f:if condition="{sectionObject.column.order-xs}"><v:variable.set name="colClasses" value="{colClasses} order-{sectionObject.column.order-xs}" /></f:if>
-										<f:if condition="{sectionObject.column.order-sm}"><v:variable.set name="colClasses" value="{colClasses} order-sm-{sectionObject.column.order-sm}" /></f:if>
-										<f:if condition="{sectionObject.column.order-md}"><v:variable.set name="colClasses" value="{colClasses} order-md-{sectionObject.column.order-md}" /></f:if>
-										<f:if condition="{sectionObject.column.order-lg}"><v:variable.set name="colClasses" value="{colClasses} order-lg-{sectionObject.column.order-lg}" /></f:if>
-
-										<f:if condition="{sectionObject.column.offset-xs}"><v:variable.set name="colClasses" value="{colClasses} offset-{sectionObject.column.offset-xs}" /></f:if>
-										<f:if condition="{sectionObject.column.offset-sm}"><v:variable.set name="colClasses" value="{colClasses} offset-sm-{sectionObject.column.offset-sm}" /></f:if>
-										<f:if condition="{sectionObject.column.offset-md}"><v:variable.set name="colClasses" value="{colClasses} offset-md-{sectionObject.column.offset-md}" /></f:if>
-										<f:if condition="{sectionObject.column.offset-lg}"><v:variable.set name="colClasses" value="{colClasses} offset-lg-{sectionObject.column.offset-lg}" /></f:if>
-
-										<f:if condition="{sectionObject.column.col-background-choose} == '1'">
-											<f:then>
-												<f:if condition="{sectionObject.column.col-background-color} != 'default' && {sectionObject.column.col-background-color} != 'user'">
-													<f:then>
-														<v:variable.set name="colBackground" value="background-color:{sectionObject.column.col-background-color};" />
-													</f:then>
-													<f:else if="{sectionObject.column.col-background-color} == 'user'">
-														<v:variable.set name="colBackground" value="background-color:{sectionObject.column.col-user-background-color};" />
-													</f:else>
-												</f:if>
-											</f:then>
-											<f:else if="{sectionObject.column.col-background-choose} == '2'">
-												<v:variable.set name="colBackground" value="background-image:url(/{sectionObject.column.col-background-image});" />
-											</f:else>
-										</f:if>
-									</f:else>
-								</f:if>
-								<f:debug title="config.colClasses">{config.columns.{key}.colClasses}</f:debug>
-								<f:debug title="colClasses">{colClasses}</f:debug>
-								<f:debug title="config.colBackground">{config.columns.{key}.colBackground}</f:debug>
-								<f:debug title="colBackground">{colBackground}</f:debug>
-
-								<div data-index="{iteration.index}" class="{f:if(condition: colClasses, then: '{colClasses}')} {f:if(condition: sectionObject.column.additionalColClass, then: '{sectionObject.column.additionalColClass}')}" {f:if(condition: colBackground, then: 'style="{colBackground}"')}>				
+								<div data-index="{iteration.index}" class="{config.columns.{key}.colClasses} {f:if(condition: sectionObject.column.additionalColClass, then: '{sectionObject.column.additionalColClass}')}"  style="{config.columns.{key}.colBackground}">				
 									<flux:content.render area="column_{iteration.cycle}" />				
 								</div>
-
 							</f:for>
 						</f:then>
 						<f:else>
