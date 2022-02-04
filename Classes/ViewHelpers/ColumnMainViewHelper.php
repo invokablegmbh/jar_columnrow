@@ -47,12 +47,12 @@ class ColumnMainViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ) {
         $options = $arguments['options'];
-        DebuggerUtility::var_dump($arguments);
+        #DebuggerUtility::var_dump($arguments);
 
         $config = [];
         $backgroundRowStyle = '';
         if($options['selectBackground'] == 1 && $options['rowBackground'] != ''){
-            if($rowBackground != 'default' && $rowBackground != 'user') {
+            if($options['rowBackground'] != 'default' && $options['rowBackground'] != 'user') {
                 $backgroundRowStyle = 'background-color:' . $options['rowBackground'];
             } else {
                 $backgroundRowStyle = 'background-color:' . $options['rowUserBackground'];
@@ -65,7 +65,15 @@ class ColumnMainViewHelper extends AbstractViewHelper
         }
 
         $config['backgroundRowStyle'] = $backgroundRowStyle;
-        DebuggerUtility::var_dump($config);die;
+
+        #DebuggerUtility::var_dump(json_encode($config));die;
         return $config;
+        return "{asdf : 1}";
+        return json_encode($config);
+        return '"{\'asdf\' : 1}"';
+    }
+
+    protected static function getImage() {
+
     }
 }

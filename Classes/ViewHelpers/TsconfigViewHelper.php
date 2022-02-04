@@ -3,6 +3,7 @@
 namespace Jar\Columnrow\ViewHelpers;
 
 use Jar\Utilities\Utilities\BackendUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3Fluid\Fluid\Core\Parser\Source;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -53,7 +54,7 @@ class TsconfigViewHelper extends AbstractViewHelper
             }
         }
         $options[] = ['LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:user_customized','user'];
-
+        
         return $options;
     }
 }
