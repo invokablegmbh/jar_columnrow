@@ -104,7 +104,7 @@
 			<f:variable name="bg_items" value="{0:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:choose',1:'0'},1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',1:'1'},2:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_graph',1:'2'}}" />
 			<flux:form.variable name="bg_items" value="{bg_items}" />
 			
-			<f:variable name="breite_items" value="{0:{0:'Inhaltsbreite',1:'content'},1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:full_width',1:'fullwidth'},2:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:reduced_content_width',1:'indented'}}" />
+			<f:variable name="breite_items" value="{0:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:content_width',1:'content'},1:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:full_width',1:'fullwidth'},2:{0:'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:reduced_content_width',1:'indented'}}" />
 			<flux:form.variable name="breite_items" value="{breite_items}" />
 			
 			<flux:form.variable name="rowBackgroundImage" value="{rowBackgroundImage}" />
@@ -127,36 +127,14 @@
 
 
 <f:section name="Preview">	
-	<p><strong>Grid - Row</strong> (<f:translate key="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:width_of_content" />: <v:variable.get name="form.variables.breite_items.{v:iterator.indexOf(haystack: '{v:iterator.column(subject: form.variables.breite_items, columnKey: 1)}', needle: contentWidth)}.0" /><f:if condition="{additionalRowClass}"> | Zusätzliche Row Klasse: {additionalRowClass}</f:if>)
-
-		<f:if condition="{selectBackground} == 1 && {rowBackground} != ''">
-			<f:comment>
-				<br>Hintergrundfarbe: <v:variable.get name="form.variables.farbe_items.{v:iterator.indexOf(haystack: '{v:iterator.column(subject: form.variables.farbe_items, columnKey: 1)}', needle: rowBackground)}.0" />			
-			</f:comment>
-			<f:if condition="{rowBackground} != 'default' && {rowBackground} != 'user'">
-				<f:then>
-					<v:variable.set name="backgroundRowColor" value="{rowBackground}" />
-				</f:then>
-				<f:else if="{rowBackground} == 'user'">
-					<v:variable.set name="backgroundRowColor" value="{rowUserBackground}" />
-				</f:else>				
-			</f:if>
-			<style>
-				.flux-collapse[data-grid-uid="{row.uid}"] > .t3-grid-container > table  > tbody > tr:before {
-					background-color: {backgroundRowColor};
-				}
-			</style>
-		</f:if>
-
-		<f:if condition="{selectBackground} == 2 && {rowBackgroundImage} == 1">
-			{v:content.resources.fal(field: 'rowBackgroundImage', table: 'tt_content', record: row) -> v:iterator.first() -> v:variable.set(name: 'image')}			
-			<style>
-				.flux-collapse[data-grid-uid="{row.uid}"] > .t3-grid-container > table  > tbody > tr:before {
-					background-image: url(/{image.url});
-				}
-			</style>
-			<f:comment>Hintergrundbild</f:comment>
-		</f:if>	
+	<f:variable name="config">{jcl:columnMain(options: '{_all}',  preview:'1' )}</f:variable>
+		<f:debug title="config">{config}</f:debug>
+	<p><strong>Grid - Row</strong> (<f:translate key="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:width_of_content" />: {contentWidth} <f:if condition="{additionalRowClass}"> | <f:translate key="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:add_row_class": /> {additionalRowClass}</f:if>)
+		<style>
+			.flux-collapse[data-grid-uid="{row.uid}"] > .t3-grid-container > table  > tbody > tr:before {
+				{config.backgroundRowStyle};;
+			}
+		</style>
 	</p>	
 	<f:if condition="{columns}">
 		<f:for each="{columns}" as="sectionObject" iteration="iteration">

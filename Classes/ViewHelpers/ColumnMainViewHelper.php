@@ -37,6 +37,13 @@ class ColumnMainViewHelper extends AbstractViewHelper
             'array',
             ''
         );
+        $this->registerArgument(
+            'preview',
+            'int',
+            '',
+            false,
+            0
+        );
     }
 
     /**
@@ -51,14 +58,27 @@ class ColumnMainViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ) {
         $options = $arguments['options'];
-
         $config = [];
-        $backgroundRowStyle = '';
+        
+        $backgroundRowStyle = $backgroundColor = $backgroundColorLabel = '';
         if($options['selectBackground'] == 1 && $options['rowBackground'] != ''){
             if($options['rowBackground'] != 'default' && $options['rowBackground'] != 'user') {
                 $backgroundRowStyle = 'background-color:' . $options['rowBackground'];
+                $backgroundColor = $options['rowBackground'];
             } else {
                 $backgroundRowStyle = 'background-color:' . $options['rowUserBackground'];
+                $backgroundColor = $options['rowUserBackground'];
+            }
+            if($arguments['preview'] == 1) {
+                $pageTs = BackendUtility::getCurrentPageTS();
+                if(isset($pageTs['jar']['bgcolors'])) {
+                    foreach($pageTs['jar']['bgcolors'] as $label => $value) {
+                        if($backgroundColor == $value) {
+                            $backgroundColorLabel = $label;
+                            break;
+                        }
+                    }
+                }
             }
         } else if($options['selectBackground'] == 2 && $options['rowBackgroundImage'] == 1) {
             if($url = static::getImage($options['record']['uid'])) {
@@ -102,8 +122,9 @@ class ColumnMainViewHelper extends AbstractViewHelper
         }
 
         $config['backgroundRowStyle'] = $backgroundRowStyle;
+        $config['backgroundColorLabel'] = $backgroundColorLabel;
 
-        #DebuggerUtility::var_dump(json_encode($config));die;
+        #DebuggerUtility::var_dump($config);
         return $config;
     }
 
