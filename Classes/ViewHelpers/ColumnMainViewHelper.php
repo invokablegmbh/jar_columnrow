@@ -124,7 +124,6 @@ class ColumnMainViewHelper extends AbstractViewHelper
         $config['backgroundRowStyle'] = $backgroundRowStyle;
         $config['backgroundColorLabel'] = $backgroundColorLabel;
 
-        #DebuggerUtility::var_dump($config);
         return $config;
     }
 
