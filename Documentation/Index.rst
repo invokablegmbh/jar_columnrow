@@ -13,7 +13,7 @@ Jar ColumnRow
 =============================================================
 
 :Version:
-   |release|
+   1.0
 
 :Language:
    en
@@ -29,9 +29,7 @@ The so called 'Column Row'-Element can be customized by any editor via the backe
    typo3jarcolumnrow@jcdn.de
 
 :License:
-   `GNU General Public License <http://www.gnu.org/copyleft/gpl.html>´__ .
-
-{extension.description}
+   `GNU General Public License <http://www.gnu.org/copyleft/gpl.html>`_ .
 
 **TYPO3**
 
@@ -40,7 +38,7 @@ a GNU/GPL CMS/Framework available from `typo3.org <https://typo3.org/>`_ .
 
 **Community Documentation**
 
-This documentation is community documentation for the TYPO3 extension {extension.name}
+This documentation is community documentation for the TYPO3 extension Jar ColumnRow
 
 It is maintained as part of this third party extension.
 
@@ -63,8 +61,7 @@ This documentation is for the TYPO3 extension <extkey>.
 .. toctree::
    :maxdepth: 3
 
-   Editor/Index
-   Installation/Index
+   QuickStart/Index
    Configuration/Index
    Templates/Index
    Developer/Index
