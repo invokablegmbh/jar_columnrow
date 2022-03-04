@@ -2,14 +2,15 @@
 .. index:: Quickstart
 .. _quickstart:
 
-
-Quick start
-===========
+Quickstart
+========
 
 Follow the steps below to set up a simple grid element with two rows.
 
-Download and installation
--------------------------
+.. _installation:
+
+Installation
+----------
 
 Install the extension jar_columnrow via extension manager or via composer (recommended):
 
@@ -30,7 +31,7 @@ Add Column Row
 ------------
 
 Navigate to a page with the page module enabled and add a new content element.
-Choose "Column Row" in the new tab "Grids".
+|Choose "Column Row" in the new tab "Grids".
 
 .. image:: ../Images/QuickStart/quick1.png
 
@@ -46,6 +47,6 @@ For example two columns with 50% each.
 
 .. image:: ../Images/QuickStart/quick3.png
 
-After saving and exiting, you can add content elements inside your new column rows either by creating or by simply drag and drop.
+After saving and exiting, you can add content elements inside your new column rows either by creating or simply by drag and drop.
 
 .. image:: ../Images/QuickStart/quick4.png

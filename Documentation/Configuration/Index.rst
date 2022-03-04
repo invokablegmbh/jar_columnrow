@@ -11,6 +11,6 @@ Configuration
    :titlesonly:
 
    General
-   TypoScriptReference/Index
-   TSconfig
+   BootstrapGrid
+   BackgroundColors
 

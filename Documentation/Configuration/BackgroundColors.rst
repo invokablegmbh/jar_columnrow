@@ -1,10 +1,9 @@
 .. include:: /Includes.rst.txt
 .. highlight:: typoscript
-.. index::
-   TSconfig
-.. _configuration-tsconfig:
+.. index:: Background Colors
+.. _configuration-background-colors:
 
-TSconfig reference
+Define Background Colors
 ==================
 
 If your extension uses TSconfig you can document it here.
