@@ -6,64 +6,26 @@
 Define Background Colors
 ==================
 
-If your extension uses TSconfig you can document it here.
+| In each grid container one can choose a background color.
+| Adding this to the TSConfig adds the possibility to define custom background colors to use exactly the same colors in any grid container.
 
-This section covers all configurations which can be set with TSconfig.
-Every configuration starts with :typoscript:`tx_myextension.`.
+------------
 
-.. note::
-   Just for clarification: TSconfig is in TYPO3 only used for configurations
-   inside the backend!
+.. confval:: jar.bgcolors
 
-.. index::
-   TSconfig; Page
-.. _configuration-tsconfig_page:
+   :type: object
 
-User TSconfig
-=============
+   | Multiple colors can be added to each grid container :typoscript:`Label => Value`
+   | Of course either plain labels or `XLIFF <https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ApiOverview/Internationalization/XliffFormat.html>`__ can be used.
+   |
 
-.. confval values will be added automatically to the index.
-
-.. confval:: enableSomething
-
-   :type: bool
-   :Default: false
-
-   If :typoscript:`true`, something is enabled...
 
    Example::
 
-      tx_myextension.enableSomething = true
+      jar {
+         bgcolors {
+            LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be\.xlf:orange = #ED672C
+            LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be\.xlf:light_gray = #A5A5A5
+         }
+      }
 
-
-.. index::
-   TSconfig; Page
-.. _configuration-tsconfig_user:
-
-Page TSconfig
-=============
-
-.. confval:: limitSomething
-
-   :type: int
-   :Default: 5
-
-   This value limits something. If it is set to :typoscript:`0` the thing will
-   be unlimited...
-
-
-   Example, limit something to 10::
-
-      tx_myextension.limitSomething = 10
-
-.. confval:: someImportantPages
-
-   :type: list
-   :Default: ''
-
-   Comma-list of fields from the pages-table. These fields are ...
-
-
-   Example, limit something to 10::
-
-      tx_myextension.someImportantPages = 4, 7, 42
