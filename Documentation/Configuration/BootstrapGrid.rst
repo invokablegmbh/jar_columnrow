@@ -25,3 +25,4 @@ Change via the Constant Editor
 """"""""""""""
 
 .. image:: ../Images/Configuration/constants_grid.png
+

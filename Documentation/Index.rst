@@ -63,7 +63,6 @@ This documentation is for the TYPO3 extension Jar ColumnRow.
 
    QuickStart/Index
    Configuration/Index
-   Templates/Index
    Developer/Index
 
 
