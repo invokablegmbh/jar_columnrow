@@ -21,13 +21,6 @@ Jar ColumnRow
 :License:
    `GNU General Public License <http://www.gnu.org/copyleft/gpl.html>`_ .
 
-**TYPO3**
-
-The content of this document is related to TYPO3 CMS,
-a GNU/GPL CMS/Framework available from `typo3.org <https://typo3.org/>`_ .
-
-**Links**
-
 :Repository: https://git.jar.media/composer-modules/typo3/jar-columnrow/
 :Issues: https://git.jar.media/composer-modules/typo3/jar-columnrow/-/issues
 :Documentation: https://1067-goldmaster-columnrow.e5j.de/typo3conf/ext/jar_columnrow/Documentation-GENERATED-temp/Result/project/0.0.0/Index.html
