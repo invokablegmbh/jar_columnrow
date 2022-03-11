@@ -7,7 +7,7 @@ Define Background Colors
 ==================
 
 | In each grid container one can choose a background color.
-| Adding this to the TSConfig adds the possibility to define custom background colors to use exactly the same colors in any grid container.
+| Adding this to the PageTS config adds the possibility to define custom background colors to use exactly the same colors in any grid container.
 
 ------------
 

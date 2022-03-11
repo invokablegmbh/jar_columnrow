@@ -63,7 +63,6 @@ This documentation is for the TYPO3 extension Jar ColumnRow.
 
    QuickStart/Index
    Configuration/Index
-   Developer/Index
 
 
 .. toctree::
@@ -73,3 +72,22 @@ This documentation is for the TYPO3 extension Jar ColumnRow.
    genindex
    About
    Targets
+
+---------------------------------------------------------------------------------
+
+Author
+------
+
+This extension has been created by `JAR Media <https://jar.media>`__, a brand of `invokable <https://invokable.gmbh>`__.
+
+.. image:: /Images/jarmedia_logo.svg
+   :alt: JAR Media - be creative. and relax
+   :target: https://jar.media/
+   :width: 300
+
+.. image:: /Images/spacerblock_40x40.png   
+
+.. image:: /Images/invokable_logo.svg
+   :alt: invokable GmbH
+   :target: https://invokable.gmbh/
+   :width: 300
