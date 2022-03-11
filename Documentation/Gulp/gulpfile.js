@@ -3,6 +3,7 @@ const concat = require('gulp-concat');
 
 const readmeBundle = () =>
   src([
+    '../Includes.rst.txt',
     '../Index.rst',
     '../QuickStart/Index.rst',
     '../Configuration/*.rst',
