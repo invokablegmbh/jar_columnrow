@@ -19,8 +19,8 @@ Jar ColumnRow
    en
 
 :Description:
-This extension provides a grid layout container where multiple columns with 12 different widths can be added.
-In the so called 'Column Row'-Element the column width, order and offset can be customized for 4 different breakpoints via the backend.
+   This extension provides a grid layout container where multiple columns with 12 different widths can be added.
+   In the so called 'Column Row'-Element the column width, order and offset can be customized for 4 different breakpoints via the backend.
 
 :Authors:
    Julian Lichte, Maurice Möllmer
