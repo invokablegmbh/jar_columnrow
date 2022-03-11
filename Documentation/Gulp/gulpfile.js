@@ -7,7 +7,7 @@ const readmeBundle = () =>
     '../QuickStart/Index.rst',
     '../Configuration/*.rst',
   ])
-  .pipe(concat('README.md'))
+  .pipe(concat('README.rst'))
   .pipe(dest('../../'));
 
   exports.readmeBundle = readmeBundle;
