@@ -9,7 +9,7 @@
 .. _start:
 
 =============================================================
-Jar ColumnRow
+JAR ColumnRow
 =============================================================
 
 :Version:
@@ -36,18 +36,11 @@ Jar ColumnRow
 The content of this document is related to TYPO3 CMS,
 a GNU/GPL CMS/Framework available from `typo3.org <https://typo3.org/>`_ .
 
-**Community Documentation**
-
-This documentation is community documentation for the TYPO3 extension Jar ColumnRow
-
-It is maintained as part of this third party extension.
-
-If you find an error or something is missing, please:
-`Report a Problem <https://github.com/TYPO3-Documentation/TYPO3CMS-Example-ExtensionManual/issues/new>`__
-
 **Extension Manual**
 
-This documentation is for the TYPO3 extension Jar ColumnRow.
+This documentation is for the TYPO3 extension JAR ColumnRow.
+If you find an error or something is missing, please:
+`Report a Problem <https://git.jar.media/composer-modules/typo3/jar-columnrow/-/issues/new>`__
 
 ..   Note for editors:
 ..   temporarily removed from menu:
