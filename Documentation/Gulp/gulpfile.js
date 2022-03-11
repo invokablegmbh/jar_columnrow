@@ -8,6 +8,6 @@ const readmeBundle = () =>
     '../Configuration/*.rst',
   ])
   .pipe(concat('Index.rst'))
-  .pipe(dest('../../'));
+  .pipe(dest('./'));
 
   exports.readmeBundle = readmeBundle;
