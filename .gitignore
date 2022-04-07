@@ -18,3 +18,5 @@ nbproject
 composer.lock
 
 **/node_modules
+
+Documentation-GENERATED-temp
