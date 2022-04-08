@@ -19,7 +19,7 @@ JAR ColumnRow
    typo3jarcolumnrow@jcdn.de
 
 :License:
-   `GNU General Public License <http://www.gnu.org/copyleft/gpl.html>`_ .
+   `Creative Commons BY 4.0 <https://creativecommons.org/licenses/by/4.0/>`__ .
 
 :Repository: https://git.jar.media/composer-modules/typo3/jar-columnrow/
 :Issues: https://git.jar.media/composer-modules/typo3/jar-columnrow/-/issues
