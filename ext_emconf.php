@@ -24,7 +24,7 @@ $EM_CONF['jar_columnrow'] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '10.4',			
+			'typo3' => '10.4.1',			
 			'extbase' => '',
 			'fluid' => '',
 		),
