@@ -2,6 +2,7 @@
     "name": "jar/jar_columnrow",
     "type": "typo3-cms-extension",
     "description": "Provides a freely definable and universal grid element with bootstrap-based output.",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Julian Lichte",
