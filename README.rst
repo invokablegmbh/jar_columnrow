@@ -3,7 +3,7 @@ JAR ColumnRow
 =============================================================
 
 :Version:
-   1.0
+   1.0.3
 
 :Language:
    en
@@ -16,11 +16,8 @@ JAR ColumnRow
    Julian Lichte, Maurice Möllmer
 
 :Email:
-   typo3jarcolumnrow@jcdn.de
+   info@invokable.gmbh
 
-:License:
-   `Creative Commons BY 4.0 <https://creativecommons.org/licenses/by/4.0/>`__ .
-
-:Repository: https://git.jar.media/composer-modules/typo3/jar-columnrow/
+:Repository: https://github.com/invokablegmbh/jar_columnrow
 :Issues: https://git.jar.media/composer-modules/typo3/jar-columnrow/-/issues
 :Documentation: https://1067-goldmaster-columnrow.e5j.de/typo3conf/ext/jar_columnrow/Documentation-GENERATED-temp/Result/project/0.0.0/Index.html
