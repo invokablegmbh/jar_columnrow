@@ -1,39 +1,24 @@
 <?php
 
 $EM_CONF['jar_columnrow'] = array(
-	'title' => 'Column Row',
+	'title' => 'JAR Column Row',
 	'description' => 'Provides a freely definable and universal grid element with bootstrap-based output.',
-	'category' => 'template',
-	'shy' => 0,
-	'version' => '1.0.5',
-	'dependencies' => 'fluid,flux,vhs',
-	'conflicts' => '',
-	'priority' => '',
-	'loadOrder' => '',
-	'module' => '',
+	'category' => 'plugin',
+	'author' => 'invokable GmbH',
+	'author_email' => 'info@invokable.gmbh',
+	'version' => '1.0.4',
 	'state' => 'stable',
-	'uploadfolder' => 0,
+	'internal' => '',
+	'uploadfolder' => '0',
 	'createDirs' => '',
-	'modify_tables' => '',
-	'clearcacheonload' => 1,
-	'lockType' => '',
-	'author' => 'Isaac Hintenjubel',
-	'author_email' => 'ih@jcdn.de',
-	'author_company' => '',
-	'CGLcompliance' => '',
-	'CGLcompliance_note' => '',
+	'clearCacheOnLoad' => 0,
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '10.4.1',			
-			'extbase' => '',
-			'fluid' => '',
+			'typo3' => '10.4.1-11.5.99',
+			'php' => '7.4.0-7.4.999',
+			'flux' => '9.4.1.'
 		),
-		'conflicts' => array(
-		),
-		'suggests' => array(
-		),
-	),
-	'_md5_values_when_last_written' => 'a:0:{}',
-	'suggests' => array(
+		'conflicts' => array(),
+		'suggests' => array(),
 	),
 );
