@@ -26,7 +26,7 @@ JAR ColumnRow
    Julian Lichte, Maurice Möllmer
 
 :Email:
-   typo3jarcolumnrow@jcdn.de
+   info@invokable.gmbh
 
 :License:
    `Creative Commons BY 4.0 <https://creativecommons.org/licenses/by/4.0/>`__ .
