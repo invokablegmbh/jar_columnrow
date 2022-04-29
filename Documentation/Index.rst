@@ -38,8 +38,8 @@ a GNU/GPL CMS/Framework available from `typo3.org <https://typo3.org/>`_ .
 
 **Extension Manual**
 
-This documentation is for the TYPO3 extension JAR ColumnRow.
-If you find an error or something is missing, please:
+| This documentation is for the TYPO3 extension JAR ColumnRow.
+| If you find an error or something is missing, please:
 `Report a Problem <https://github.com/invokablegmbh/jar_columnrow/issues/new>`__
 
 ..   Note for editors:
