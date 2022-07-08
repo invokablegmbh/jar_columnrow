@@ -18,7 +18,7 @@ JAR Column Row
 :Language:
    en
 
-:Description:
+:Description: 
    This extension provides a grid layout container where multiple columns with 12 different widths can be added.
    In the so called 'Column Row'-Element the column width, order and offset can be customized for 4 different breakpoints via the backend.
 
