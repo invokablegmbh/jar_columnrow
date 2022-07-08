@@ -61,6 +61,7 @@ class ColumnMainViewHelper extends AbstractViewHelper
         $config = [];
         
         $backgroundRowStyle = $backgroundColor = $backgroundColorLabel = '';
+        
         if($options['selectBackground'] == 1 && $options['rowBackground'] != ''){
             if($options['rowBackground'] != 'default' && $options['rowBackground'] != 'user') {
                 $backgroundRowStyle = 'background-color:' . $options['rowBackground'];
@@ -85,7 +86,6 @@ class ColumnMainViewHelper extends AbstractViewHelper
                 $backgroundRowStyle = 'background-image: url(/'. $url .')';
             }
         }
-
         if(!empty($options['columns'])) {
             foreach($options['columns'] as $key => $column) {
                 $colClasses = $colBackground = '';
@@ -99,7 +99,9 @@ class ColumnMainViewHelper extends AbstractViewHelper
                         $colBackground = 'background-color:' . $column['column']['col-background-color'];
                     } 
                     else if($column['column']['col-background-color'] == 'user') {
-                        $colBackground = 'background-color:' . $column['column']['col-user-background-color'];
+                        if($column['column']['col-user-background-color']) {
+                            $colBackground = 'background-color:' . $column['column']['col-user-background-color'];
+                        }
                     }
                 } else {
                     $colClasses = static::getColClasses($column);
@@ -109,7 +111,9 @@ class ColumnMainViewHelper extends AbstractViewHelper
                             $colBackground = 'background-color:' . $column['column']['col-background-color'];
                         } 
                         else if($column['column']['col-background-color'] == 'user') {
-                            $colBackground = 'background-color:' . $column['column']['col-user-background-color'];
+                            if($column['column']['col-user-background-color']) {
+                                $colBackground = 'background-color:' . $column['column']['col-user-background-color'];
+                            }
                         }
                     } else if($column['column']['col-background-choose'] == 2) {
                         $colBackground = 'background-image:url(/'. $column['column']['col-background-image'] .')';
