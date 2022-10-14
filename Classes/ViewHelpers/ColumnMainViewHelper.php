@@ -95,12 +95,14 @@ class ColumnMainViewHelper extends AbstractViewHelper
                     } else {
                         $colClasses = 'col-' . $column['column']['col'];
                     }
-                    if($column['column']['col-background-color'] != 'default' && $column['column']['col-background-color'] != 'user') {
-                        $colBackground = 'background-color:' . $column['column']['col-background-color'];
-                    } 
-                    else if($column['column']['col-background-color'] == 'user') {
-                        if($column['column']['col-user-background-color']) {
-                            $colBackground = 'background-color:' . $column['column']['col-user-background-color'];
+                    if(array_key_exists('col-background-color', $column['column'])) {
+                        if($column['column']['col-background-color'] != 'default' && $column['column']['col-background-color'] != 'user') {
+                            $colBackground = 'background-color:' . $column['column']['col-background-color'];
+                        } 
+                        else if($column['column']['col-background-color'] == 'user') {
+                            if($column['column']['col-user-background-color']) {
+                                $colBackground = 'background-color:' . $column['column']['col-user-background-color'];
+                            }
                         }
                     }
                 } else {
