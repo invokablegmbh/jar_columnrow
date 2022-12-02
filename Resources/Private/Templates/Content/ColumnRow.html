@@ -4,9 +4,10 @@
 
 <f:layout name="Content" />
 
-<f:section name="Configuration">	
-	<flux:form id="j77_row" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline" description="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:description" options="{group:'Layout', icon:'EXT:jar_columnrow/Resources/Public/Icons/ColumnRow.svg'}">
-		
+<f:section name="Configuration">		
+	<flux:form id="j77_row" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline" description="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:description">
+		<flux:form.option.icon value="jar-column-row-content-icon" />
+		<flux:form.option.group value="Layout" />
 		<f:comment>Spalten Einstellungen - Start</f:comment>
 			<flux:form.sheet name="columnmanagement" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_manager">
 				<flux:field.checkbox name="extended" label="LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_extended" requestUpdate="1" />
