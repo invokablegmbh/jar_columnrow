@@ -1,10 +1,8 @@
 <?php
 
-use Psr\Http\Message\ServerRequestInterface;
-
-$GLOBALS['TBE_STYLES']['skins']['j77_template'] = [
+$GLOBALS['TBE_STYLES']['skins']['jar_columnrow'] = [
     'name' => 'jar_columnrow',
     'stylesheetDirectories' => [
-        'css' => 'EXT:jar_columnrow/Resources/Public/css/'
+        'css' => 'EXT:jar_columnrow/Resources/Public/Css/Backend/'
     ]
 ];
