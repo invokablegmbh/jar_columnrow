@@ -83,7 +83,7 @@ class ColumnMainViewHelper extends AbstractViewHelper
             }
         } else if($options['selectBackground'] == 2 && $options['rowBackgroundImage'] == 1) {
             if($url = static::getImage($options['record']['uid'])) {
-                $backgroundRowStyle = 'background-image: url(/'. $url .')';
+                $backgroundRowStyle = 'background-image: url('. $url .')';
             }
         }
         if(!empty($options['columns'])) {
