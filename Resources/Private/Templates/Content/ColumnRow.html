@@ -171,7 +171,7 @@
 <f:section name="Main">
 	<f:variable name="config">{jcl:columnMain(options="{_all}")}</f:variable>
 	<f:spaceless>
-		<div class="container-fluid<f:if condition="{record.space_before_class}"> frame-space-before-{record.space_before_class}</f:if><f:if condition="{record.space_after_class}"> frame-space-after-{record.space_after_class}</f:if>" style="{config.backgroundRowStyle}">
+		<div class="jar-column-row container-fluid<f:if condition="{record.space_before_class}"> frame-space-before-{record.space_before_class}</f:if><f:if condition="{record.space_after_class}"> frame-space-after-{record.space_after_class}</f:if>" style="{config.backgroundRowStyle}">
 			
 			<div class="container {contentWidth}">
 				<div class="row{f:if(condition: additionalRowClass, then: ' {additionalRowClass}')}"> 
