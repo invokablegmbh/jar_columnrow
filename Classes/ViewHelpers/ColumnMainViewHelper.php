@@ -62,28 +62,30 @@ class ColumnMainViewHelper extends AbstractViewHelper
         
         $backgroundRowStyle = $backgroundColor = $backgroundColorLabel = '';
         
-        if($options['selectBackground'] == 1 && $options['rowBackground'] != ''){
-            if($options['rowBackground'] != 'default' && $options['rowBackground'] != 'user') {
-                $backgroundRowStyle = 'background-color:' . $options['rowBackground'];
-                $backgroundColor = $options['rowBackground'];
-            } else {
-                $backgroundRowStyle = 'background-color:' . $options['rowUserBackground'];
-                $backgroundColor = $options['rowUserBackground'];
-            }
-            if($arguments['preview'] == 1) {
-                $pageTs = BackendUtility::getCurrentPageTS();
-                if(isset($pageTs['jar']['bgcolors'])) {
-                    foreach($pageTs['jar']['bgcolors'] as $label => $value) {
-                        if($backgroundColor == $value) {
-                            $backgroundColorLabel = $label;
-                            break;
+        if(isset($options['selectBackground'])) {
+            if($options['selectBackground'] == 1 && $options['rowBackground'] != ''){
+                if($options['rowBackground'] != 'default' && $options['rowBackground'] != 'user') {
+                    $backgroundRowStyle = 'background-color:' . $options['rowBackground'];
+                    $backgroundColor = $options['rowBackground'];
+                } else {
+                    $backgroundRowStyle = 'background-color:' . $options['rowUserBackground'];
+                    $backgroundColor = $options['rowUserBackground'];
+                }
+                if($arguments['preview'] == 1) {
+                    $pageTs = BackendUtility::getCurrentPageTS();
+                    if(isset($pageTs['jar']['bgcolors'])) {
+                        foreach($pageTs['jar']['bgcolors'] as $label => $value) {
+                            if($backgroundColor == $value) {
+                                $backgroundColorLabel = $label;
+                                break;
+                            }
                         }
                     }
                 }
-            }
-        } else if($options['selectBackground'] == 2 && $options['rowBackgroundImage'] == 1) {
-            if($url = static::getImage($options['record']['uid'])) {
-                $backgroundRowStyle = 'background-image: url('. $url .')';
+            } else if($options['selectBackground'] == 2 && $options['rowBackgroundImage'] == 1) {
+                if($url = static::getImage($options['record']['uid'])) {
+                    $backgroundRowStyle = 'background-image: url('. $url .')';
+                }
             }
         }
         if(!empty($options['columns'])) {
