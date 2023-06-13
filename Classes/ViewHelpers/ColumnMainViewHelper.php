@@ -63,11 +63,11 @@ class ColumnMainViewHelper extends AbstractViewHelper
         $backgroundRowStyle = $backgroundColor = $backgroundColorLabel = '';
         
         if(isset($options['selectBackground'])) {
-            if($options['selectBackground'] == 1 && $options['rowBackground'] != ''){
+            if($options['selectBackground'] == 1 && isset($options['rowBackground']) && $options['rowBackground'] != ''){
                 if($options['rowBackground'] != 'default' && $options['rowBackground'] != 'user') {
                     $backgroundRowStyle = 'background-color:' . $options['rowBackground'];
                     $backgroundColor = $options['rowBackground'];
-                } else {
+                } else if(isset($options['rowUserBackground'])) {
                     $backgroundRowStyle = 'background-color:' . $options['rowUserBackground'];
                     $backgroundColor = $options['rowUserBackground'];
                 }
