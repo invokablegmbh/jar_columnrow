@@ -110,16 +110,16 @@ class ColumnMainViewHelper extends AbstractViewHelper
                 } else {
                     $colClasses = static::getColClasses($column);
 
-                    if($column['column']['col-background-choose'] == 1) {
+                    if(array_key_exists('col-background-choose', $column['column']) && $column['column']['col-background-choose'] == 1) {
                         if($column['column']['col-background-color'] != 'default' && $column['column']['col-background-color'] != 'user') {
                             $colBackground = 'background-color:' . $column['column']['col-background-color'];
                         } 
-                        else if($column['column']['col-background-color'] == 'user') {
+                        else if(array_key_exists('col-background-color', $column['column']) && $column['column']['col-background-color'] == 'user') {
                             if($column['column']['col-user-background-color']) {
                                 $colBackground = 'background-color:' . $column['column']['col-user-background-color'];
                             }
                         }
-                    } else if($column['column']['col-background-choose'] == 2) {
+                    } else if(array_key_exists('col-background-choose', $column['column']) && $column['column']['col-background-choose'] == 2) {
                         $colBackground = 'background-image:url(/'. $column['column']['col-background-image'] .')';
                     }
                 }
@@ -155,42 +155,44 @@ class ColumnMainViewHelper extends AbstractViewHelper
     }
     
     protected static function getColClasses($column) {
-        if($column['column']['col-xs']){
+        $colClasses = '';
+        
+        if(array_key_exists('col-xs', $column['column'])){
             $colClasses = 'col-' . $column['column']['col-xs'];
         }
-        if($column['column']['col-sm']){
+        if(array_key_exists('col-sm', $column['column'])){
             $colClasses .= ' col-sm-' . $column['column']['col-sm'];
         }
-        if($column['column']['col-md']){
+        if(array_key_exists('col-md', $column['column'])){
             $colClasses .= ' col-md-' . $column['column']['col-md'];
         }
-        if($column['column']['col-lg']){
+        if(array_key_exists('col-lg', $column['column'])){
             $colClasses .= ' col-lg-' . $column['column']['col-lg'];
         }
 
-        if($column['column']['order-xs']){
+        if(array_key_exists('order-xs', $column['column'])){
             $colClasses .= ' order-' . $column['column']['order-xs'];
         }
-        if($column['column']['order-sm']){
+        if(array_key_exists('order-sm', $column['column'])){
             $colClasses .= ' order-sm-' . $column['column']['order-sm'];
         }
-        if($column['column']['order-md']){
+        if(array_key_exists('order-md', $column['column'])){
             $colClasses .= ' order-md-' . $column['column']['order-md'];
         }
-        if($column['column']['order-lg']){
+        if(array_key_exists('order-lg', $column['column'])){
             $colClasses .= ' order-lg-' . $column['column']['order-lg'];
         }
 
-        if($column['column']['offset-xs']){
+        if(array_key_exists('offset-xs', $column['column'])){
             $colClasses .= ' offset-' . $column['column']['offset-xs'];
         }
-        if($column['column']['offset-sm']){
+        if(array_key_exists('offset-sm', $column['column'])){
             $colClasses .= ' offset-sm-' . $column['column']['offset-sm'];
         }
-        if($column['column']['offset-md']){
+        if(array_key_exists('offset-md', $column['column'])){
             $colClasses .= ' offset-md-' . $column['column']['offset-md'];
         }
-        if($column['column']['offset-lg']){
+        if(array_key_exists('offset-lg', $column['column'])){
             $colClasses .= ' offset-lg-' . $column['column']['offset-lg'];
         }
         
