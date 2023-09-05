@@ -1,6 +1,22 @@
+#Default Configuration
+
 jar {
     bgcolors {
         LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be\.xlf:orange = #ED672C
         LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be\.xlf:light_gray = #A5A5A5
     }
+}
+
+mod.wizards.newContentElement.wizardItems.container {
+    elements {
+        jarcolumnrow_columnrow {
+            iconIdentifier = jar-column-row-content-icon
+            title = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline
+            description = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:description
+            tt_content_defValues {
+                CType = jarcolumnrow_columnrow
+            }
+        }
+    }
+    show := addToList(jarcolumnrow_columnrow)
 }

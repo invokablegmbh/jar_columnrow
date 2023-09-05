@@ -1,6 +1,18 @@
 <?php
 defined('TYPO3_MODE') || die();
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+	[
+		'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline',
+		'jarcolumnrow_columnrow',
+		'EXT:jar_columnrow/Resources/Public/Icons/ColumnRow.svg',
+	],
+	'CType',
+	'jar_columnrow'
+);
+
+$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_columnrow'] = 'jar-column-row-content-icon';
+
 $contentTableColumns = [
 	'feditorce_feditor_columnrow_content_width' => [
 		'exclude' => false,
@@ -191,7 +203,7 @@ $contentTableColumns = [
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', $contentTableColumns);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
-	'fe_users',
+	'tt_content',
 	'feditorce_feditor_columnrow_content_width,
 	feditorce_feditor_columnrow_select_background,
 	feditorce_feditor_columnrow_row_background,
@@ -200,6 +212,7 @@ $contentTableColumns = [
 	feditorce_feditor_columnrow_additional_row_class,
 	feditorce_feditor_columnrow_columns',
 	'jarcolumnrow_columnrow',
+	'after:header'
 );
 // add $contentColuns to content ctpye 'feditor_columnrow'
 
@@ -859,22 +872,8 @@ $GLOBALS['TCA'] = [
                      --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
                      --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
                      --div--;LLL:EXT:flux/Resources/Private/Language/locallang.xlf:tt_content.tabs.relation,tx_flux_parent,tx_flux_column,tx_flux_children;LLL:EXT:flux/Resources/Private/Language/locallang.xlf:tt_content.tx_flux_children
-            ',
-        'previewRenderer' => 'Jar\\PrettyPreview\\Renderer\\PreviewRenderer',
-        'prettyPreviewConfiguration' => [
-          'tableColumnWhitelist' => [
-            'tt_content' => [
-              0 => 'feditorce_feditor_columnrow_*',
-            ],
-          ],
-          'nestingDepth' => 2,
-        ],
-      ],
-    'ctrl' => [
-      'typeicon_classes' => [
-        'Jar\\Feditor\\Domain\\Model\\ContentElement\\Feditor\\Columnrow' => 'feditoricon-icons-defaultcontenticon-328',
-      ],
-    ],
+            ',       
+      ],   
   ]
 ];
 
