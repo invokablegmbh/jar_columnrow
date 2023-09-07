@@ -13,6 +13,8 @@ defined('TYPO3_MODE') || die();
 
 $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_columnrow'] = 'jar-column-row-content-icon';
 
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_columnrow']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
+
 $contentTableColumns = [
 	'feditorce_feditor_columnrow_content_width' => [
 		'exclude' => false,
