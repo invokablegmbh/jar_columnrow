@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Jar\Columnrow\Xclasses\View;
 
+use Jar\Columnrow\Utilities\ColumnRowUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
  *
@@ -17,6 +20,11 @@ class GridColumnItem extends \TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColu
 {
     public function getRecord(): array
     {
+        if(array_key_exists('CType', $this->record) && ColumnRowUtility::isOurContainerCType($this->record['CType'])) {
+            $recordWithUidCType = $this->record;
+            //$recordWithUidCType['CType'] .= ' ' . $this->record['uid'];
+            return $recordWithUidCType;
+        }        
         return $this->record;
     }
 }
