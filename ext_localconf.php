@@ -34,10 +34,18 @@ if (version_compare(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExten
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['feditor_columnRowCtypeUpdateWizard'] = \Jar\Columnrow\Update\ColumnRowCtypeUpdateWizard::class;
 
 // extend Container Classes
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Hooks\Datahandler\Database::class] = [
-	'className' => \Jar\Columnrow\Xclasses\Datahandler\Database::class,
+
+// saving the last loaded record for using it when the grid is fetched just via ctype
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Domain\Factory\Database::class] = [
+	'className' => \Jar\Columnrow\Xclasses\Factory\Database::class,
 ];
 
+// adding the dynamic grid configuration for our columnrow container
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Tca\Registry::class] = [
 	'className' => \Jar\Columnrow\Xclasses\Tca\Registry::class,
+];
+
+// adding the uid to the ctype when fetching the grid
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumnItem::class] = [
+	'className' => \Jar\Columnrow\Xclasses\View\GridColumnItem::class,
 ];

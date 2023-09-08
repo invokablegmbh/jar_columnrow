@@ -15,11 +15,12 @@ namespace Jar\Columnrow\Xclasses\Tca;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use B13\Container\Tca\ContainerConfiguration;
+use Jar\Columnrow\Utilities\ColumnRowUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
 {
-    private string $containerCTypePrefix = 'jarcolumnrow_';
+    
 
     /**
      * @param ContainerConfiguration $containerConfiguration
@@ -35,9 +36,8 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
     }    
 
     public function isContainerElement(string $cType): bool
-    {
-        // check the beginning of ctype for "jarcolumnrow_"
-        if(substr($cType, 0, strlen($this->containerCTypePrefix)) === $this->containerCTypePrefix) {
+    {        
+        if(ColumnRowUtility::isOurContainerCType($cType)) {
             return true;
         }        
         return parent::isContainerElement($cType);
@@ -50,17 +50,38 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
     }
 
     public function getGrid(string $cType): array
-    {
+    {        
+        if(ColumnRowUtility::isOurContainerCType($cType)) {
+            //DebuggerUtility::var_dump($GLOBALS['feierabendanfang'], 'GETTING GERD');
+            return [
+                /*[
+                    ['name' => 'header', 'colPos' => 200, 'colspan' => 2, 'allowed' => ['CType' => 'header, textmedia']]
+                ],*/
+                [
+                    ['name' => 'left side', 'colPos' => 201],
+                    ['name' => 'right side', 'colPos' => 202]
+                ]
+            ];
+        }
         return parent::getGrid($cType);
     }
 
     public function getGridTemplate(string $cType): ?string
     {
+        if(ColumnRowUtility::isOurContainerCType($cType)) {
+            return 'EXT:container/Resources/Private/Templates/Grid.html';
+        }
         return parent::getGridTemplate($cType);
     }
 
     public function getGridPartialPaths(string $cType): array
     {
+        if (ColumnRowUtility::isOurContainerCType($cType)) {
+            return [
+                'EXT:backend/Resources/Private/Partials/',
+                'EXT:container/Resources/Private/Partials/'
+            ];
+        }
         return parent::getGridPartialPaths($cType);
     }
 
