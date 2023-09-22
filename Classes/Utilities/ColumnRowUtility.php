@@ -18,6 +18,10 @@ class ColumnRowUtility
 {
     protected static string $containerCTypePrefix = 'jarcolumnrow_';
 
+    /**
+     * @param string $cType 
+     * @return bool 
+     */
     public static function isOurContainerCType(string $cType): bool
     {
         // check the beginning of ctype for our container prefix
@@ -25,6 +29,16 @@ class ColumnRowUtility
             return true;
         }
         return false;
+    }
+
+    /**     
+     * @param array $columnRow 
+     * @param array $parentRow 
+     * @return int 
+     */
+    public static function calculateColPos(array $columnRow, array $parentRow = null): int
+    {
+        return (int) ('7731' . $columnRow['uid']);
     }
 
     
