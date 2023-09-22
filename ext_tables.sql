@@ -1,4 +1,4 @@
-CREATE TABLE tx_j77template_fedttc_feditor_columnrow_columns ( 
+CREATE TABLE tx_jarcolumnrow_columns ( 
     uid int(11) NOT NULL auto_increment,
     pid int(11) DEFAULT '0' NOT NULL,
     extended int(5) DEFAULT '0' NOT NULL,    
