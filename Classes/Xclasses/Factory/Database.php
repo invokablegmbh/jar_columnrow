@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Jar\Columnrow\Xclasses\Factory;
 
+use Jar\Columnrow\Services\GateService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
  *
@@ -13,14 +16,12 @@ namespace Jar\Columnrow\Xclasses\Factory;
  */
 
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 class Database extends \B13\Container\Domain\Factory\Database
 {
     public function fetchOneRecord(int $uid): ?array
     {        
         $result = parent::fetchOneRecord($uid);
-        $GLOBALS['feierabendanfang'] = $result;        
+        GeneralUtility::makeInstance(GateService::class)->setLastUsedRow($result);
         return $result;
     }
 }

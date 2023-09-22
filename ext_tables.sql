@@ -1,8 +1,7 @@
 CREATE TABLE tx_j77template_fedttc_feditor_columnrow_columns ( 
     uid int(11) NOT NULL auto_increment,
     pid int(11) DEFAULT '0' NOT NULL,
-    extended int(5) DEFAULT '0' NOT NULL,
-    col TINYTEXT,
+    extended int(5) DEFAULT '0' NOT NULL,    
     col_lg TINYTEXT,
     col_md TINYTEXT,
     col_sm TINYTEXT,

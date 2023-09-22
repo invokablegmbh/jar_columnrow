@@ -222,7 +222,7 @@ $contentTableColumns = [
 $GLOBALS['TCA']['tx_j77template_fedttc_feditor_columnrow_columns'] = [
 	'ctrl' => [
 		'title' => 'LLL:EXT:j77_template/dummylang.xlf:tx_j77template_fedttc_feditor_columnrow_columns',
-		'label' => 'extended',
+		'label' => 'col_lg',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
@@ -239,12 +239,12 @@ $GLOBALS['TCA']['tx_j77template_fedttc_feditor_columnrow_columns'] = [
 		'searchFields' => null,
 		'iconfile' => 'EXT:jar_feditor/Resources/Public/Icons/DefaultContentIcon.svg',
 		'typeicon_classes' => [
-			'default' => 'feditoricon-icons-defaultcontenticon-5',
+			'default' => 'jar-column-row-content-icon',
 		],
 	],
 	'types' => [
 		1 => [
-			'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, extended,col,col_lg,col_md,col_sm,col_xs,order_lg,order_md,order_sm,order_xs,offset_lg,offset_md,offset_sm,offset_xs,additional_col_class,parent_column_row, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
+			'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, extended,col_lg,col_md,col_sm,col_xs,order_lg,order_md,order_sm,order_xs,offset_lg,offset_md,offset_sm,offset_xs,additional_col_class,parent_column_row, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
 		],
 	],
 	'columns' => [
@@ -332,80 +332,14 @@ $GLOBALS['TCA']['tx_j77template_fedttc_feditor_columnrow_columns'] = [
 				'default' => 0,
 			],
 			'onChange' => 'reload',
-		],
-		'col' => [
-			'exclude' => false,
-			'label' => 'column_width',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => '[12] 100%',
-						1 => 12,
-					],
-					1 => [
-						0 => '[11] 91.66%',
-						1 => 11,
-					],
-					2 => [
-						0 => '[10] 83.33%',
-						1 => 10,
-					],
-					3 => [
-						0 => '[9] 75%',
-						1 => 9,
-					],
-					4 => [
-						0 => '[8] 66.66%',
-						1 => 8,
-					],
-					5 => [
-						0 => '[7] 58.33%',
-						1 => 7,
-					],
-					6 => [
-						0 => '[6] 50%',
-						1 => 6,
-					],
-					7 => [
-						0 => '[5] 41.66%',
-						1 => 5,
-					],
-					8 => [
-						0 => '[4] 33.33%',
-						1 => 4,
-					],
-					9 => [
-						0 => '[3] 25%',
-						1 => 3,
-					],
-					10 => [
-						0 => '[2] 16.66%',
-						1 => 2,
-					],
-					11 => [
-						0 => '[1] 8.33%',
-						1 => 1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:!=:1',
-		],
+		],		
 		'col_lg' => [
 			'exclude' => false,
 			'label' => 'column_width_large_desktop',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_automatic',
-						1 => 0,
-					],
+				'items' => [					
 					1 => [
 						0 => '[12] 100%',
 						1 => 12,
@@ -454,6 +388,7 @@ $GLOBALS['TCA']['tx_j77template_fedttc_feditor_columnrow_columns'] = [
 						0 => '[1] 8.33%',
 						1 => 1,
 					],
+					/* TODO: ONLY MAKE SENSE WHEN EXTENDED IS TRUE */
 					13 => [
 						0 => 'do_not_show',
 						1 => -1,
@@ -462,8 +397,7 @@ $GLOBALS['TCA']['tx_j77template_fedttc_feditor_columnrow_columns'] = [
 				'size' => 1,
 				'maxitems' => 1,
 				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			]			
 		],
 		'col_md' => [
 			'exclude' => false,

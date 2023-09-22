@@ -15,7 +15,10 @@ namespace Jar\Columnrow\Xclasses\Tca;
 
 use TYPO3\CMS\Core\SingletonInterface;
 use B13\Container\Tca\ContainerConfiguration;
+use Jar\Columnrow\Services\GateService;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
@@ -52,16 +55,7 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
     public function getGrid(string $cType): array
     {        
         if(ColumnRowUtility::isOurContainerCType($cType)) {
-            //DebuggerUtility::var_dump($GLOBALS['feierabendanfang'], 'GETTING GERD');
-            return [
-                /*[
-                    ['name' => 'header', 'colPos' => 200, 'colspan' => 2, 'allowed' => ['CType' => 'header, textmedia']]
-                ],*/
-                [
-                    ['name' => 'left side', 'colPos' => 201],
-                    ['name' => 'right side', 'colPos' => 202]
-                ]
-            ];
+            return GeneralUtility::makeInstance(GateService::class)->getContainerGridFromLastUsedRow();
         }
         return parent::getGrid($cType);
     }
@@ -76,10 +70,13 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
 
     public function getGridPartialPaths(string $cType): array
     {
+        // thus we skip the container bootloading of containers via tca (and the corsponding creation of new content elements)
+        // we have to add the partials manualy
         if (ColumnRowUtility::isOurContainerCType($cType)) {
             return [
                 'EXT:backend/Resources/Private/Partials/',
-                'EXT:container/Resources/Private/Partials/'
+                ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 12) ? 'EXT:container/Resources/Private/Partials12/' : 'EXT:container/Resources/Private/Partials/',
+                'EXT:jar_columnrow/Resources/Private/Partials/'
             ];
         }
         return parent::getGridPartialPaths($cType);
