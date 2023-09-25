@@ -49,6 +49,7 @@ class GateService implements SingletonInterface
     public function getContainerGridFromRow(?array $row): array
     {
         $reflectedRow = $this->getReflectedRow($row);
+
         if($reflectedRow === null) {
             return [];
         }

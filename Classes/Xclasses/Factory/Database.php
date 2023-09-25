@@ -6,6 +6,7 @@ namespace Jar\Columnrow\Xclasses\Factory;
 
 use Jar\Columnrow\Services\GateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
@@ -22,6 +23,16 @@ class Database extends \B13\Container\Domain\Factory\Database
     {        
         $result = parent::fetchOneRecord($uid);
         GeneralUtility::makeInstance(GateService::class)->setLastUsedRow($result);
+        return $result;
+    }
+
+    public function fetchOneDefaultRecord(array $record): ?array
+    {
+        $result = parent::fetchOneDefaultRecord($record);
+        if($result !== null) {
+            // overload current connected row with default values        
+            GeneralUtility::makeInstance(GateService::class)->setLastUsedRow($result);
+        }
         return $result;
     }
 }
