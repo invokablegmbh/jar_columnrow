@@ -228,7 +228,7 @@ $contentTableColumns = [
 
 $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 	'ctrl' => [
-		'title' => 'LLL:EXT:j77_template/dummylang.xlf:tx_j77template_fedttc_feditor_columnrow_columns',
+		'title' => 'LLL:EXT:jar-columnrow/Resources/Private/Language/locallang_be.xlf:headline',
 		'label' => 'col_lg',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
@@ -236,7 +236,7 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 		'versioningWS' => true,
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
-		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'translationSource' => 'l10n_source',
 		'delete' => 'deleted',
 		'enablecolumns' => [
 			'disabled' => 'hidden',
@@ -244,7 +244,7 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 			'endtime' => 'endtime',
 		],
 		'searchFields' => null,
-		'iconfile' => 'EXT:jar_feditor/Resources/Public/Icons/DefaultContentIcon.svg',
+		'iconfile' => 'EXT:jar-columnrow/Resources/Public/Icons/ColumnRow.svg',
 		'typeicon_classes' => [
 			'default' => 'jar-column-row-content-icon',
 		],
@@ -252,7 +252,7 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 	],
 	'types' => [
 		1 => [
-			'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, extended,col_lg,col_md,col_sm,col_xs,order_lg,order_md,order_sm,order_xs,offset_lg,offset_md,offset_sm,offset_xs,additional_col_class,parent_column_row, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
+			'showitem' => 'sys_language_uid, l10n_parent, extended,col_lg,col_md,col_sm,col_xs,order_lg,order_md,order_sm,order_xs,offset_lg,offset_md,offset_sm,offset_xs,additional_col_class,parent_column_row, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
 		],
 	],
 	'columns' => [
@@ -277,8 +277,8 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 						1 => 0,
 					],
 				],
-				'foreign_table' => 'tx_j77template_fedttc_feditor_columnrow_columns',
-				'foreign_table_where' => 'AND tx_j77template_fedttc_feditor_columnrow_columns.pid=###CURRENT_PID### AND tx_j77template_fedttc_feditor_columnrow_columns.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_jarcolumnrow_columns',
+				'foreign_table_where' => 'AND tx_jarcolumnrow_columns.pid=###CURRENT_PID### AND tx_jarcolumnrow_columns.sys_language_uid IN (-1,0)',
 			],
 		],
 		'l10n_diffsource' => [
@@ -795,30 +795,3 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 		],
 	],
 ];
-
-/*
-$GLOBALS['TCA'] = [
-  'tt_content' => [
-		'types' => [
-			'Jar\\Feditor\\Domain\\Model\\ContentElement\\Feditor\\Columnrow' => [
-        'showitem' => '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                     --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
-                     --palette--;;headers,
-                     feditorce_feditor_columnrow_content_width,feditorce_feditor_columnrow_select_background,feditorce_feditor_columnrow_row_background,feditorce_feditor_columnrow_row_user_background,feditorce_feditor_columnrow_row_background_image,feditorce_feditor_columnrow_additional_row_class,feditorce_feditor_columnrow_columns,
-                     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
-                     --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
-                     --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.appearanceLinks;appearanceLinks,
-                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
-                     --palette--;;language,--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                     --palette--;;hidden,
-                     --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,                     
-                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories, categories,
-                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription,
-                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
-                     --div--;LLL:EXT:flux/Resources/Private/Language/locallang.xlf:tt_content.tabs.relation,tx_flux_parent,tx_flux_column,tx_flux_children;LLL:EXT:flux/Resources/Private/Language/locallang.xlf:tt_content.tx_flux_children
-            ',       
-      ],   
-  ]
-];
-
-*/
