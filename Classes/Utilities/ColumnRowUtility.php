@@ -16,7 +16,8 @@ namespace Jar\Columnrow\Utilities;
 
 class ColumnRowUtility 
 {
-    protected static string $containerCTypePrefix = 'jarcolumnrow_';
+    public static string $containerCTypePrefix = 'jarcolumnrow_';
+    public static string $colPosPrefix = '7731';
 
     /**
      * @param string $cType 
@@ -38,7 +39,7 @@ class ColumnRowUtility
      */
     public static function calculateColPos(array $columnRow, array $parentRow = null): int
     {
-        return (int) ('7731' . $columnRow['uid']);
+        return (int) (self::$colPosPrefix . $columnRow['uid']);
     }
 
     

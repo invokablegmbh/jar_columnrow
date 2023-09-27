@@ -252,7 +252,7 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 	],
 	'types' => [
 		1 => [
-			'showitem' => 'sys_language_uid, l10n_parent, extended,col_lg,col_md,col_sm,col_xs,order_lg,order_md,order_sm,order_xs,offset_lg,offset_md,offset_sm,offset_xs,additional_col_class,parent_column_row, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
+			'showitem' => 'sys_language_uid, extended,col_lg,col_md,col_sm,col_xs,order_lg,order_md,order_sm,order_xs,offset_lg,offset_md,offset_sm,offset_xs,additional_col_class,parent_column_row, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
 		],
 	],
 	'columns' => [
@@ -264,21 +264,8 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 			],
 		],
 		'l10n_parent' => [
-			'displayCond' => 'FIELD:sys_language_uid:>:0',
-			'exclude' => true,
-			'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
 			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'default' => 0,
-				'items' => [
-					0 => [
-						0 => '',
-						1 => 0,
-					],
-				],
-				'foreign_table' => 'tx_jarcolumnrow_columns',
-				'foreign_table_where' => 'AND tx_jarcolumnrow_columns.pid=###CURRENT_PID### AND tx_jarcolumnrow_columns.sys_language_uid IN (-1,0)',
+				'type' => 'passthrough',
 			],
 		],
 		'l10n_diffsource' => [

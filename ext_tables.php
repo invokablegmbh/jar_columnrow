@@ -10,3 +10,8 @@ $GLOBALS['TBE_STYLES']['skins']['jar_columnrow'] = [
 ];
 
 ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns');
+
+/*
+ NEXT
+ /git/httpdocs/website/public/typo3conf/ext/container/Classes/Hooks/Datahandler/DatamapPreProcessFieldArrayHook.php -> copyToLanguageElementInContainer
+ */
