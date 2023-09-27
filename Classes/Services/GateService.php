@@ -18,8 +18,6 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * of the License, or any later version.
  */
 
-
-
 class GateService implements SingletonInterface
 {
     protected ?array $lastUsedRow = null;

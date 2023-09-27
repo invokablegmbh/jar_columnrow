@@ -49,3 +49,8 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Tca\Registry::class
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumnItem::class] = [
 	'className' => \Jar\Columnrow\Xclasses\View\GridColumnItem::class,
 ];
+
+// adding our columns to the localication summary
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Service\RecordLocalizeSummaryModifier::class] = [
+	'className' => \Jar\Columnrow\Xclasses\Service\RecordLocalizeSummaryModifier::class,
+];

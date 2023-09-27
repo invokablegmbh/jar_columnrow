@@ -17,14 +17,14 @@ use TYPO3\CMS\Core\SingletonInterface;
 use B13\Container\Tca\ContainerConfiguration;
 use Jar\Columnrow\Services\GateService;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
+use Jar\Utilities\Utilities\BackendUtility;
+use TYPO3\CMS\Backend\View\PageLayoutContext;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
 {
-    
-
     /**
      * @param ContainerConfiguration $containerConfiguration
      */
@@ -49,6 +49,7 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
     public function getRegisteredCTypes(): array
     {
         $result = parent::getRegisteredCTypes();
+        $result[] = 'jarcolumnrow_columnrow';
         return $result;
     }
 
@@ -99,7 +100,8 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
 
     public function getAllAvailableColumns(): array
     {
-        return parent::getAllAvailableColumns();
+        $columns = parent::getAllAvailableColumns();
+        return $columns;
     }
 
     public function getPageTsString(): string
