@@ -37,10 +37,33 @@ class ColumnRowUtility
      * @param array $parentRow 
      * @return int 
      */
-    public static function calculateColPos(array $columnRow, array $parentRow = null): int
+    public static function decodeColPos(array $columnRow, array $parentRow = null): int
     {
         return (int) (self::$colPosPrefix . $columnRow['uid']);
     }
+
+ 
+    /**
+     * @param int $colPos 
+     * @return int 
+     */
+    public static function encodeColPos(int $colPos): int
+    {
+        if(!self::isColumnRowColPos($colPos)) {
+            return $colPos;
+        }
+        return (int) substr((string) $colPos, strlen(self::$colPosPrefix));
+    }
+
+    /**
+     * @param int $colPos 
+     * @return bool 
+     */
+    public static function isColumnRowColPos(int $colPos): bool        
+    {
+        return substr((string) $colPos, 0, strlen(self::$colPosPrefix)) === self::$colPosPrefix;
+    }
+
 
     
 }

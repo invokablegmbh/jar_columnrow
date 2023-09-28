@@ -6,3 +6,6 @@ services:
 
   Jar\Columnrow\:
     resource: '../Classes/*'
+
+  Jar\Columnrow\Hooks\Datahandler\DatamapPreProcessFieldArrayHook:
+    public: true

@@ -54,3 +54,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Backend\View\BackendLay
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Service\RecordLocalizeSummaryModifier::class] = [
 	'className' => \Jar\Columnrow\Xclasses\Service\RecordLocalizeSummaryModifier::class,
 ];
+
+// adding field array hook to change the colpos of an translated element to the cooresponding column
+ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['tx_columnrow-pre-process-field-array'] = \Jar\Columnrow\Hooks\Datahandler\DatamapPreProcessFieldArrayHook::class;
