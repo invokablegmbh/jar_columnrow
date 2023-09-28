@@ -93,7 +93,7 @@ class GateService implements SingletonInterface
             }
             $grid[count($grid) - 1][] = [
                 'name' => $currentColumntWidth,
-                'colPos' => ColumnRowUtility::calculateColPos($column, $row),
+                'colPos' => ColumnRowUtility::decodeColPos($column, $row),
                 'colspan' => $currentColumntWidth,
             ];
         }

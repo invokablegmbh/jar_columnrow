@@ -266,6 +266,7 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 		'l10n_parent' => [
 			'config' => [
 				'type' => 'passthrough',
+				'default' => 0,
 			],
 		],
 		'l10n_diffsource' => [

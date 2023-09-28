@@ -31,8 +31,8 @@ class RecordLocalizeSummaryModifier extends \B13\Container\Service\RecordLocaliz
         // check for content elements with our colPos prefix and add them to the column list
         if(isset($payload['records'])) {            
             foreach (array_keys($payload['records']) as $colPos) {
-                if(substr((string) $colPos, 0, strlen($colPosPrefix)) === $colPosPrefix) {
-                    $payload['columns']['columns'][$colPos] = 'Column Row Content (' . $colPos . ')';
+                if(ColumnRowUtility::isColumnRowColPos((int) $colPos)) {
+                    $payload['columns']['columns'][$colPos] = 'Column (' . $colPos . ')';
                     $payload['columns']['columnList'][] = $colPos;
                 }
             }
