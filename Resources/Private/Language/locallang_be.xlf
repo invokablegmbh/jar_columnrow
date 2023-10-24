@@ -106,7 +106,7 @@
 				<source>Customized</source>
 			</trans-unit>
 			<trans-unit id="custom_background">
-				<source>Customized background</source>
+				<source>Customized background color</source>
 			</trans-unit>
 			<trans-unit id="add_row_class">
 				<source>Additional CSS class (row)</source>
@@ -124,13 +124,16 @@
 				<source>Reduced content width</source>
 			</trans-unit>
 			<trans-unit id="content_width">
-				<source>Content with</source>
+				<source>Content width</source>
 			</trans-unit>
 			<trans-unit id="advanced_settings">
 				<source>Advanced settings</source>
 			</trans-unit>
 			<trans-unit id="width_of_content">
 				<source>Width of content</source>
+			</trans-unit>
+			<trans-unit id="default">
+				<source>Default</source>
 			</trans-unit>
 		</body>
 	</file>

@@ -18,18 +18,18 @@ $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_columnrow']['previewRendere
 $contentTableColumns = [
 	'feditorce_feditor_columnrow_content_width' => [
 		'exclude' => false,
-		'label' => 'contentWidth',
+		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:width_of_content',
 		'l10n_mode' => 'exclude',
 		'config' => [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
 				0 => [
-					0 => 'content_width',
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:content_width',
 					1 => 'content',
 				],
 				1 => [
-					0 => 'fill_width',
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:full_width',
 					1 => 'fullwidth',
 				],
 			],
@@ -40,22 +40,22 @@ $contentTableColumns = [
 	],
 	'feditorce_feditor_columnrow_select_background' => [
 		'exclude' => false,
-		'label' => 'selectBackground',
+		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background',
 		'l10n_mode' => 'exclude',
 		'config' => [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
 				0 => [
-					0 => 'choose',
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:default',
 					1 => 0,
 				],
 				1 => [
-					0 => 'background_color',
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',
 					1 => 1,
 				],
 				2 => [
-					0 => 'background_graph',
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_graph',
 					1 => 2,
 				],
 			],
@@ -67,14 +67,14 @@ $contentTableColumns = [
 	],
 	'feditorce_feditor_columnrow_row_background' => [
 		'exclude' => false,
-		'label' => 'rowBackground',
+		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',
 		'l10n_mode' => 'exclude',
 		'config' => [
 			'type' => 'select',
 			'renderType' => 'selectSingle',
 			'items' => [
 				0 => [
-					0 => 'user_customized',
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:user_customized',
 					1 => 'user',
 				],
 			],
@@ -87,18 +87,25 @@ $contentTableColumns = [
 	],
 	'feditorce_feditor_columnrow_row_user_background' => [
 		'exclude' => false,
-		'label' => 'custom_background',
+		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom_background',
 		'l10n_mode' => 'exclude',
 		'config' => [
 			'type' => 'input',
-			'size' => 30,
+			'renderType' => 'colorpicker',
+			'size' => 10,
 			'eval' => 'trim',
 		],
-		'displayCond' => 'FIELD:feditorce_feditor_columnrow_row_background:=:user',
+		'displayCond' =>
+		[
+			'AND' => [
+				'FIELD:feditorce_feditor_columnrow_row_background:=:user',
+				'FIELD:feditorce_feditor_columnrow_select_background:=:1',
+			],
+		], 
 	],
 	'feditorce_feditor_columnrow_row_background_image' => [
 		'exclude' => false,
-		'label' => 'background_graph',
+		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_graph',
 		'l10n_mode' => 'exclude',
 		'config' =>  [
 			'type' => 'inline',
@@ -160,7 +167,7 @@ $contentTableColumns = [
 	],
 	'feditorce_feditor_columnrow_additional_row_class' => [
 		'exclude' => false,
-		'label' => 'add_row_class',
+		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:add_row_class',
 		'l10n_mode' => 'exclude',
 		'config' => [
 			'type' => 'input',
@@ -170,7 +177,7 @@ $contentTableColumns = [
 	],
 	'feditorce_feditor_columnrow_columns' => [
 		'exclude' => false,
-		'label' => 'columns',
+		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:columns',
 		'l10n_mode' => 'exclude',
 		'config' => [
 			'type' => 'inline',

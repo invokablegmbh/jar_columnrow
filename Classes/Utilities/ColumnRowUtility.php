@@ -33,13 +33,13 @@ class ColumnRowUtility
     }
 
     /**     
-     * @param array $columnRow 
+     * @param array $column 
      * @param array $parentRow 
      * @return int 
      */
-    public static function decodeColPos(array $columnRow, array $parentRow = null): int
+    public static function decodeColPos(array $column, array $parentRow = null): int
     {
-        return (int) (self::$colPosPrefix . $columnRow['uid']);
+        return (int) (self::$colPosPrefix . $column['uid']);
     }
 
  

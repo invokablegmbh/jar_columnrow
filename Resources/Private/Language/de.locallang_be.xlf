@@ -109,7 +109,7 @@
 				<target>Benuterdefiniert</target>
 			</trans-unit>
 			<trans-unit id="custom_background">
-				<target>Benuterdefinierter Hintergrund</target>
+				<target>Benuterdefinierte Hintergrundfarbe</target>
 			</trans-unit>
 			<trans-unit id="add_row_class">
 				<target>Zusätzliche Reihen CSS-Klasse</target>
@@ -134,6 +134,10 @@
 			</trans-unit>
 			<trans-unit id="width_of_content">
 				<target>Breite des Inhalts</target>
+			</trans-unit>
+			<trans-unit id="default">
+				<source>Default</source>
+				<target>Standard</target>
 			</trans-unit>
 		</body>
 	</file>
