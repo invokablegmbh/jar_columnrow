@@ -2,22 +2,7 @@
 <xliff version="1.0">
 	<file source-language="en" datatype="plaintext" original="messages" date="2021-10-01T19:14:52Z" product-name="jar_columrow">
 		<header/>
-		<body>
-			<trans-unit id="flux.newContentWizard.Layout">
-				<source>Grids</source>
-			</trans-unit>
-			<trans-unit id="dataflow">
-				<source>Datenfluss</source>
-			</trans-unit>
-			<trans-unit id="archive.name">
-				<source>Veranstaltungs Archivierer</source>
-			</trans-unit>
-			<trans-unit id="archive.description">
-				<source>Verschiebt abgelaufende Veranstaltungen in einen Archiv Ordner</source>
-			</trans-unit>
-			<trans-unit id="fe_user.news_filter">
-				<source>News Filter</source>
-			</trans-unit>
+		<body>			
 		</body>
 	</file>
 </xliff>

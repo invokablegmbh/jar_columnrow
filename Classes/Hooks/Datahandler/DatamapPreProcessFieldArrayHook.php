@@ -60,12 +60,11 @@ class DatamapPreProcessFieldArrayHook
             if (!$container->isConnectedMode()) {                
                 $sourceColumnUid = ColumnRowUtility::encodeColPos((int)$incomingFieldArray['colPos']);
                 if($sourceColumnUid !== (int)$incomingFieldArray['colPos']) {
-                    
+                    $translatedTargetColumn = $this->columnDatabase->fetchOneTranslatedRecordByl10nSource($sourceColumnUid, $incomingFieldArray['sys_language_uid']);
+                    if(!empty($translatedTargetColumn)) {
+                        $incomingFieldArray['colPos'] = ColumnRowUtility::decodeColPos($translatedTargetColumn, $translatedContainerRecord);
+                    }                    
                 }
-                DebuggerUtility::var_dump($translatedContainerRecord);
-                DebuggerUtility::var_dump($sourceColumnUid);
-                die();
-         
             }
         } catch (Exception $e) {
             // not a container
