@@ -16,6 +16,7 @@ use B13\Container\Domain\Service\ContainerService;
 use B13\Container\Domain\Factory\Exception;
 use B13\Container\Hooks\Datahandler\Database;
 use B13\Container\Tca\Registry;
+use Jar\Columnrow\Hooks\Datahandler\Database as ColumnDatabase;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -26,6 +27,7 @@ class DatamapPreProcessFieldArrayHook
     public function __construct(
         private readonly ContainerFactory $containerFactory,
         private readonly Database $database,
+        private readonly ColumnDatabase $columnDatabase,
         private readonly Registry $tcaRegistry,
         private readonly ContainerService $containerService
     ) {
@@ -56,7 +58,12 @@ class DatamapPreProcessFieldArrayHook
             $container = $this->containerFactory->buildContainer((int)$translatedContainerRecord['uid']);
 
             if (!$container->isConnectedMode()) {                
-                DebuggerUtility::var_dump(ColumnRowUtility::encodeColPos((int)$incomingFieldArray['colPos']));
+                $sourceColumnUid = ColumnRowUtility::encodeColPos((int)$incomingFieldArray['colPos']);
+                if($sourceColumnUid !== (int)$incomingFieldArray['colPos']) {
+                    
+                }
+                DebuggerUtility::var_dump($translatedContainerRecord);
+                DebuggerUtility::var_dump($sourceColumnUid);
                 die();
          
             }
