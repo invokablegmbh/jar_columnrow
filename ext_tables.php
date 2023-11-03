@@ -12,5 +12,8 @@ $GLOBALS['TBE_STYLES']['skins']['jar_columnrow'] = [
 ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns');
 
 /*
-    next: Row Config unter columns? Verschieben der Appearence in ein oder zwei (Allgemien / Backround) in paletten
+    GateService->getReflectedRow Zeile 127, keine Labels ladbar da diese über itemProcFuncs geladen werden
+    Variante a) TCA Utility erweitern und die Labels laden
+    Variante b) Labels berechnern lassen und undefinierte custom Felder entsprechend benennen
+    Variante c) Ich schreibe einfach gar keine Labels mehr ins Backend (gemacht - ist doof, verliert man schnell den Überblick)
 */

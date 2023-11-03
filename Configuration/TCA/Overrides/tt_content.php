@@ -1,4 +1,7 @@
 <?php
+
+use Jar\Columnrow\ItemsProcFuncs\ColumnItemsProcFunc;
+
 defined('TYPO3_MODE') || die();
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
@@ -16,7 +19,7 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_columnro
 $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_columnrow']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
 
 $contentTableColumns = [
-	'feditorce_feditor_columnrow_content_width' => [
+	'columnrow_content_width' => [
 		'exclude' => false,
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:width_of_content',
 		'l10n_mode' => 'exclude',
@@ -38,7 +41,7 @@ $contentTableColumns = [
 			'eval' => '',
 		],
 	],
-	'feditorce_feditor_columnrow_select_background' => [
+	'columnrow_select_background' => [
 		'exclude' => false,
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background',
 		'l10n_mode' => 'exclude',
@@ -65,7 +68,7 @@ $contentTableColumns = [
 		],
 		'onChange' => 'reload',
 	],
-	'feditorce_feditor_columnrow_row_background' => [
+	'columnrow_row_background' => [
 		'exclude' => false,
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',
 		'l10n_mode' => 'exclude',
@@ -82,10 +85,10 @@ $contentTableColumns = [
 			'maxitems' => 1,
 			'eval' => '',
 		],
-		'displayCond' => 'FIELD:feditorce_feditor_columnrow_select_background:=:1',
+		'displayCond' => 'FIELD:columnrow_select_background:=:1',
 		'onChange' => 'reload',
 	],
-	'feditorce_feditor_columnrow_row_user_background' => [
+	'columnrow_row_user_background' => [
 		'exclude' => false,
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom_background',
 		'l10n_mode' => 'exclude',
@@ -98,12 +101,12 @@ $contentTableColumns = [
 		'displayCond' =>
 		[
 			'AND' => [
-				'FIELD:feditorce_feditor_columnrow_row_background:=:user',
-				'FIELD:feditorce_feditor_columnrow_select_background:=:1',
+				'FIELD:columnrow_row_background:=:user',
+				'FIELD:columnrow_select_background:=:1',
 			],
 		], 
 	],
-	'feditorce_feditor_columnrow_row_background_image' => [
+	'columnrow_row_background_image' => [
 		'exclude' => false,
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_graph',
 		'l10n_mode' => 'exclude',
@@ -114,7 +117,7 @@ $contentTableColumns = [
 			'foreign_sortby' => 'sorting_foreign',
 			'foreign_table_field' => 'tablenames',
 			'foreign_match_fields' => [
-				'fieldname' => 'feditorce_feditor_columnrow_row_background_image',
+				'fieldname' => 'columnrow_row_background_image',
 			],
 			'foreign_label' => 'uid_local',
 			'foreign_selector' => 'uid_local',
@@ -163,11 +166,11 @@ $contentTableColumns = [
 			'maxitems' => 1,
 			'minitems' => 0,
 		],
-		'displayCond' => 'FIELD:feditorce_feditor_columnrow_select_background:=:2',
+		'displayCond' => 'FIELD:columnrow_select_background:=:2',
 	],
-	'feditorce_feditor_columnrow_additional_row_class' => [
+	'columnrow_additional_row_class' => [
 		'exclude' => false,
-		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:add_row_class',
+		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:css_class',
 		'l10n_mode' => 'exclude',
 		'config' => [
 			'type' => 'input',
@@ -175,7 +178,7 @@ $contentTableColumns = [
 			'eval' => 'trim',
 		],
 	],
-	'feditorce_feditor_columnrow_columns' => [
+	'columnrow_columns' => [
 		'exclude' => false,
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:columns',
 		'l10n_mode' => 'exclude',
@@ -218,26 +221,68 @@ $contentTableColumns = [
 ];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', $contentTableColumns);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+	'tt_content',
+	'columnrow_rowappearance',
+	'		
+		columnrow_select_background,
+		--linebreak--,				
+		columnrow_row_background,
+		columnrow_row_user_background,
+		columnrow_row_background_image,
+		--linebreak--,		
+		columnrow_content_width,
+		columnrow_additional_row_class,
+	',
+	'after:header'
+);
+
+$GLOBALS['TCA']['tt_content']['palettes']['columnrow_rowappearance']['label'] = 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:rowappearance';
+	
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
-	'feditorce_feditor_columnrow_content_width,
-	feditorce_feditor_columnrow_select_background,
-	feditorce_feditor_columnrow_row_background,
-	feditorce_feditor_columnrow_row_user_background,
-	feditorce_feditor_columnrow_row_background_image,
-	feditorce_feditor_columnrow_additional_row_class,
-	feditorce_feditor_columnrow_columns',
+	'columnrow_columns,--palette--;;columnrow_rowappearance',
 	'jarcolumnrow_columnrow',
 	'after:header'
 );
-// add $contentColuns to content ctpye 'feditor_columnrow'
 
+
+$columnWidthConfig = [
+	'type' => 'select',
+	'renderType' => 'selectSingle',	
+	'items' => [],
+	'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyWidthItems',
+	'size' => 1,
+	'maxitems' => 1,
+	'eval' => '',
+];
+
+$columnOrderConfig = [
+	'type' => 'select',
+	'renderType' => 'selectSingle',
+	'items' => [],
+	'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyOrderItems',
+	'size' => 1,
+	'maxitems' => 1,
+	'eval' => '',
+];
+
+$columnOffsetConfig = [
+	'type' => 'select',
+	'renderType' => 'selectSingle',
+	'items' => [],
+	'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyOffsetItems',
+	'size' => 1,
+	'maxitems' => 1,
+	'eval' => '',
+];
 
 $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 	'ctrl' => [
-		'title' => 'LLL:EXT:jar-columnrow/Resources/Private/Language/locallang_be.xlf:headline',
+		'title' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline',
 		'label' => 'col_lg',
 		'tstamp' => 'tstamp',
+		'type' => 'extended',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'versioningWS' => true,
@@ -251,15 +296,39 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 			'endtime' => 'endtime',
 		],
 		'searchFields' => null,
-		'iconfile' => 'EXT:jar-columnrow/Resources/Public/Icons/ColumnRow.svg',
+		'iconfile' => 'EXT:jar_columnrow/Resources/Public/Icons/ColumnRow.svg',
 		'typeicon_classes' => [
 			'default' => 'jar-column-row-content-icon',
 		],
 		'hideTable' => true
 	],
 	'types' => [
+		0 => [
+			'showitem' => '--palette--;;baseview',
+		],
 		1 => [
-			'showitem' => 'sys_language_uid, extended,col_lg,col_md,col_sm,col_xs,order_lg,order_md,order_sm,order_xs,offset_lg,offset_md,offset_sm,offset_xs,additional_col_class,parent_column_row, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
+			'showitem' => 'sys_language_uid,--palette--;;desktop,--palette--;;medium,--palette--;;small,--palette--;;mobile,additional_col_class,extended, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
+		],
+	],
+	'palettes' => [
+		'baseview' => [
+			'showitem' => 'col_lg, extended',
+		],
+		'desktop' => [
+			'showitem' => 'col_lg, order_lg, offset_lg',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:large_desktop',
+		],
+		'medium' => [
+			'showitem' => 'col_md, order_md, offset_md',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:small_desktop',
+		],
+		'small' => [
+			'showitem' => 'col_sm, order_sm, offset_sm',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:tablet',
+		],
+		'mobile' => [
+			'showitem' => 'col_xs, order_xs, offset_xs',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:smartphone',
 		],
 	],
 	'columns' => [
@@ -329,7 +398,7 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 		],
 		'extended' => [
 			'exclude' => false,
-			'label' => 'column_extended',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:show_extended',
 			'config' => [
 				'type' => 'check',
 				'default' => 0,
@@ -338,443 +407,67 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 		],		
 		'col_lg' => [
 			'exclude' => false,
-			'label' => 'column_width_large_desktop',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [					
-					1 => [
-						0 => '[12] 100%',
-						1 => 12,
-					],
-					2 => [
-						0 => '[11] 91.66%',
-						1 => 11,
-					],
-					3 => [
-						0 => '[10] 83.33%',
-						1 => 10,
-					],
-					4 => [
-						0 => '[9] 75%',
-						1 => 9,
-					],
-					5 => [
-						0 => '[8] 66.66%',
-						1 => 8,
-					],
-					6 => [
-						0 => '[7] 58.33%',
-						1 => 7,
-					],
-					7 => [
-						0 => '[6] 50%',
-						1 => 6,
-					],
-					8 => [
-						0 => '[5] 41.66%',
-						1 => 5,
-					],
-					9 => [
-						0 => '[4] 33.33%',
-						1 => 4,
-					],
-					10 => [
-						0 => '[3] 25%',
-						1 => 3,
-					],
-					11 => [
-						0 => '[2] 16.66%',
-						1 => 2,
-					],
-					12 => [
-						0 => '[1] 8.33%',
-						1 => 1,
-					],
-					/* TODO: ONLY MAKE SENSE WHEN EXTENDED IS TRUE */
-					13 => [
-						0 => 'do_not_show',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]			
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width',
+			'config' =>	$columnWidthConfig			
 		],
 		'col_md' => [
 			'exclude' => false,
-			'label' => 'column_width_small_desktop',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_automatic',
-						1 => 0,
-					],
-					1 => [
-						0 => '[12] 100%',
-						1 => 12,
-					],
-					2 => [
-						0 => '[11] 91.66%',
-						1 => 11,
-					],
-					3 => [
-						0 => '[10] 83.33%',
-						1 => 10,
-					],
-					4 => [
-						0 => '[9] 75%',
-						1 => 9,
-					],
-					5 => [
-						0 => '[8] 66.66%',
-						1 => 8,
-					],
-					6 => [
-						0 => '[7] 58.33%',
-						1 => 7,
-					],
-					7 => [
-						0 => '[6] 50%',
-						1 => 6,
-					],
-					8 => [
-						0 => '[5] 41.66%',
-						1 => 5,
-					],
-					9 => [
-						0 => '[4] 33.33%',
-						1 => 4,
-					],
-					10 => [
-						0 => '[3] 25%',
-						1 => 3,
-					],
-					11 => [
-						0 => '[2] 16.66%',
-						1 => 2,
-					],
-					12 => [
-						0 => '[1] 8.33%',
-						1 => 1,
-					],
-					13 => [
-						0 => 'do_not_show',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width',
+			'config' => $columnWidthConfig
 		],
 		'col_sm' => [
 			'exclude' => false,
-			'label' => 'column_width_tablet',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_automatic',
-						1 => 0,
-					],
-					1 => [
-						0 => '[12] 100%',
-						1 => 12,
-					],
-					2 => [
-						0 => '[11] 91.66%',
-						1 => 11,
-					],
-					3 => [
-						0 => '[10] 83.33%',
-						1 => 10,
-					],
-					4 => [
-						0 => '[9] 75%',
-						1 => 9,
-					],
-					5 => [
-						0 => '[8] 66.66%',
-						1 => 8,
-					],
-					6 => [
-						0 => '[7] 58.33%',
-						1 => 7,
-					],
-					7 => [
-						0 => '[6] 50%',
-						1 => 6,
-					],
-					8 => [
-						0 => '[5] 41.66%',
-						1 => 5,
-					],
-					9 => [
-						0 => '[4] 33.33%',
-						1 => 4,
-					],
-					10 => [
-						0 => '[3] 25%',
-						1 => 3,
-					],
-					11 => [
-						0 => '[2] 16.66%',
-						1 => 2,
-					],
-					12 => [
-						0 => '[1] 8.33%',
-						1 => 1,
-					],
-					13 => [
-						0 => 'do_not_show',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width',
+			'config' => $columnWidthConfig
 		],
 		'col_xs' => [
 			'exclude' => false,
-			'label' => 'column_width_mobile',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_automatic',
-						1 => 0,
-					],
-					1 => [
-						0 => '[12] 100%',
-						1 => 12,
-					],
-					2 => [
-						0 => '[11] 91.66%',
-						1 => 11,
-					],
-					3 => [
-						0 => '[10] 83.33%',
-						1 => 10,
-					],
-					4 => [
-						0 => '[9] 75%',
-						1 => 9,
-					],
-					5 => [
-						0 => '[8] 66.66%',
-						1 => 8,
-					],
-					6 => [
-						0 => '[7] 58.33%',
-						1 => 7,
-					],
-					7 => [
-						0 => '[6] 50%',
-						1 => 6,
-					],
-					8 => [
-						0 => '[5] 41.66%',
-						1 => 5,
-					],
-					9 => [
-						0 => '[4] 33.33%',
-						1 => 4,
-					],
-					10 => [
-						0 => '[3] 25%',
-						1 => 3,
-					],
-					11 => [
-						0 => '[2] 16.66%',
-						1 => 2,
-					],
-					12 => [
-						0 => '[1] 8.33%',
-						1 => 1,
-					],
-					13 => [
-						0 => 'do_not_show',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width',
+			'config' => $columnWidthConfig
 		],
 		'order_lg' => [
 			'exclude' => false,
-			'label' => 'order_large_desktop',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_up_high',
-						1 => 0,
-					],
-					1 => [
-						0 => 'item_bottom',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order',
+			'config' => $columnOrderConfig
 		],
 		'order_md' => [
 			'exclude' => false,
-			'label' => 'order_small_desktop',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_up_high',
-						1 => 0,
-					],
-					1 => [
-						0 => 'item_bottom',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order',
+			'config' => $columnOrderConfig
 		],
 		'order_sm' => [
 			'exclude' => false,
-			'label' => 'order_tablet',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_up_high',
-						1 => 0,
-					],
-					1 => [
-						0 => 'item_bottom',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order',
+			'config' => $columnOrderConfig
 		],
 		'order_xs' => [
 			'exclude' => false,
-			'label' => 'order_smartphone',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_up_high',
-						1 => 0,
-					],
-					1 => [
-						0 => 'item_bottom',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order',
+			'config' => $columnOrderConfig
 		],
 		'offset_lg' => [
 			'exclude' => false,
-			'label' => 'offset_large_desktop',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'no_offset',
-						1 => 0,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset',
+			'config' => $columnOffsetConfig
 		],
 		'offset_md' => [
 			'exclude' => false,
-			'label' => 'offset_small_desktop',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'no_offset',
-						1 => 0,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset',
+			'config' => $columnOffsetConfig
 		],
 		'offset_sm' => [
 			'exclude' => false,
-			'label' => 'offset_tablet',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'no_offset',
-						1 => 0,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset',
+			'config' => $columnOffsetConfig
 		],
 		'offset_xs' => [
 			'exclude' => false,
-			'label' => 'offset_smartphone',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'no_offset',
-						1 => 0,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			],
-			'displayCond' => 'FIELD:extended:=:1',
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset',
+			'config' => $columnOffsetConfig
 		],
 		'additional_col_class' => [
-			'exclude' => false,
-			'label' => 'add_column_class',
+			'exclude' => false,			
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:css_class',
 			'config' => [
 				'type' => 'input',
 				'size' => 30,

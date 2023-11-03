@@ -33,10 +33,10 @@ class GateService implements SingletonInterface
     ) {
         $reflectionService
         ->setTableColumnWhitelist([
-            'tt_content' => ['feditorce_feditor_columnrow_*']
+            'tt_content' => ['columnrow_*']
         ])
         ->setTableColumnRemoveablePrefixes([
-            'tt_content' => ['feditorce_feditor_columnrow_']
+            'tt_content' => ['columnrow_']
         ]);
     }   
     
@@ -62,9 +62,8 @@ class GateService implements SingletonInterface
 
         // Create a full-width column to display the child columns at the correct width
         // we have to use the name "unused" to make this column unuseable (@see TYPO3\CMS\Backend\View\BackendLayout\Grid\GridRow)
-
-        // @todo: load this from site configuration
-        $gridbase = 12;
+        
+        $gridbase = ColumnRowUtility::getGridBase();
 
         $grid = [
             [
@@ -82,6 +81,9 @@ class GateService implements SingletonInterface
         foreach($reflectedRow['columns'] as $column) {
             // Check if we need to start a new row with the column width
             $currentColumntWidth = $column['col_lg'];
+            if($currentColumntWidth < 1) {
+                $currentColumntWidth = $gridbase;
+            }
             $existingColumnWidth = IteratorUtility::pluck($grid[count($grid) - 1], 'colspan');
             // create the sum of existing columns
             $newColumnWidth = (int) array_reduce($existingColumnWidth, function($carry, $item) {
@@ -92,7 +94,7 @@ class GateService implements SingletonInterface
                 $grid[] = [];
             }
             $grid[count($grid) - 1][] = [
-                'name' => $currentColumntWidth,
+                'name' => '',//$currentColumntWidth,
                 'colPos' => ColumnRowUtility::decodeColPos($column, $row),
                 'colspan' => $currentColumntWidth,
             ];
@@ -122,7 +124,7 @@ class GateService implements SingletonInterface
         if(isset($this->reflectedRows[$row['uid']])) {            
             return $this->reflectedRows[$row['uid']];
         }
-        $reflectedRow = $this->reflectionService->buildArrayByRow($row, 'tt_content');
+        $reflectedRow = $this->reflectionService->buildArrayByRow($row, 'tt_content');   
         $this->reflectedRows[$row['uid']] = $reflectedRow;
         return $reflectedRow;
     }

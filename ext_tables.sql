@@ -21,11 +21,11 @@ CREATE TABLE tx_jarcolumnrow_columns (
 );
 
 CREATE TABLE tt_content ( 
-    feditorce_feditor_columnrow_content_width TINYTEXT,
-    feditorce_feditor_columnrow_select_background TINYTEXT,
-    feditorce_feditor_columnrow_row_background TINYTEXT,
-    feditorce_feditor_columnrow_row_user_background TINYTEXT,
-    feditorce_feditor_columnrow_row_background_image int(11) unsigned NOT NULL default '0',
-    feditorce_feditor_columnrow_additional_row_class TINYTEXT,
-    feditorce_feditor_columnrow_columns int(11) unsigned NOT NULL default '0',
+    columnrow_content_width TINYTEXT,
+    columnrow_select_background TINYTEXT,
+    columnrow_row_background TINYTEXT,
+    columnrow_row_user_background TINYTEXT,
+    columnrow_row_background_image int(11) unsigned NOT NULL default '0',
+    columnrow_additional_row_class TINYTEXT,
+    columnrow_columns int(11) unsigned NOT NULL default '0',
 );

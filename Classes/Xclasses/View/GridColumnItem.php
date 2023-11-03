@@ -21,8 +21,7 @@ class GridColumnItem extends \TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColu
     public function getRecord(): array
     {
         if(array_key_exists('CType', $this->record) && ColumnRowUtility::isOurContainerCType($this->record['CType'])) {
-            $recordWithUidCType = $this->record;
-            //$recordWithUidCType['CType'] .= ' ' . $this->record['uid'];
+            $recordWithUidCType = $this->record;           
             return $recordWithUidCType;
         }        
         return $this->record;
