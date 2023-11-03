@@ -81,6 +81,9 @@ class GateService implements SingletonInterface
         foreach($reflectedRow['columns'] as $column) {
             // Check if we need to start a new row with the column width
             $currentColumntWidth = $column['col_lg'];
+            if($currentColumntWidth < 1) {
+                $currentColumntWidth = $gridbase;
+            }
             $existingColumnWidth = IteratorUtility::pluck($grid[count($grid) - 1], 'colspan');
             // create the sum of existing columns
             $newColumnWidth = (int) array_reduce($existingColumnWidth, function($carry, $item) {
@@ -91,7 +94,7 @@ class GateService implements SingletonInterface
                 $grid[] = [];
             }
             $grid[count($grid) - 1][] = [
-                'name' => $currentColumntWidth,
+                'name' => '',//$currentColumntWidth,
                 'colPos' => ColumnRowUtility::decodeColPos($column, $row),
                 'colspan' => $currentColumntWidth,
             ];
@@ -121,9 +124,7 @@ class GateService implements SingletonInterface
         if(isset($this->reflectedRows[$row['uid']])) {            
             return $this->reflectedRows[$row['uid']];
         }
-        $reflectedRow = $this->reflectionService->buildArrayByRow($row, 'tt_content');
-        DebuggerUtility::var_dump($reflectedRow);
-        die();
+        $reflectedRow = $this->reflectionService->buildArrayByRow($row, 'tt_content');   
         $this->reflectedRows[$row['uid']] = $reflectedRow;
         return $reflectedRow;
     }
