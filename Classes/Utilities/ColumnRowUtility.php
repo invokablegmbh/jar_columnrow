@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Jar\Columnrow\Utilities;
 
+use Jar\Utilities\Utilities\BackendUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
  *
@@ -64,6 +67,18 @@ class ColumnRowUtility
         return substr((string) $colPos, 0, strlen(self::$colPosPrefix)) === self::$colPosPrefix;
     }
 
+    /**     
+     * @return int 
+     */
+    public static function getGridBase(): int
+    {
+        $pageTs = BackendUtility::getCurrentPageTS();
 
+        if(array_key_exists('jar_columnrow', $pageTs) && array_key_exists('gridBase', $pageTs['jar_columnrow'])) {
+            return (int) $pageTs['jar_columnrow']['gridBase'];
+        }
+
+        return 12;
+    }
     
 }
