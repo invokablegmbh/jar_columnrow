@@ -12,5 +12,5 @@ $GLOBALS['TBE_STYLES']['skins']['jar_columnrow'] = [
 ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns');
 
 /*
-    next: Row Config unter columns? Verschieben der Appearence in ein oder zwei (Allgemien / Backround) in paletten
+
 */
