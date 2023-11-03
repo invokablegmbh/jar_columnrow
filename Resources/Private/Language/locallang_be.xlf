@@ -15,9 +15,9 @@
 			<trans-unit id="column_manager">
 				<source>Column management</source>
 			</trans-unit>
-			<trans-unit id="column_extended">
-				<source>Extended column view</source>
-			</trans-unit>
+			<trans-unit id="show_extended">
+				<source>Show extended configuration</source>
+			</trans-unit>			
 			<trans-unit id="column">
 				<source>Column</source>
 			</trans-unit>
@@ -27,42 +27,12 @@
 			<trans-unit id="column_width">
 				<source>Column width</source>
 			</trans-unit>
-			<trans-unit id="column_width_mobile">
-				<source>Column width (mobile)</source>
-			</trans-unit>
-			<trans-unit id="column_width_tablet">
-				<source>Column width (Tablet)</source>
-			</trans-unit>
-			<trans-unit id="column_width_small_desktop">
-				<source>Column width (small desktop)</source>
-			</trans-unit>
-			<trans-unit id="column_width_large_desktop">
-				<source>Column width (large desktop)</source>
-			</trans-unit>
-			<trans-unit id="order_smartphone">
-				<source>Order (smartphone)</source>
-			</trans-unit>
-			<trans-unit id="order_tablet">
-				<source>Order (tablet)</source>
-			</trans-unit>
-			<trans-unit id="order_small_desktop">
-				<source>Order (small desktop)</source>
-			</trans-unit>
-			<trans-unit id="order_large_desktop">
-				<source>Order (large desktop)</source>
-			</trans-unit>
-			<trans-unit id="offset_smartphone">
-				<source>Offset (smartphone)</source>
-			</trans-unit>
-			<trans-unit id="offset_tablet">
-				<source>Offset (tablet)</source>
-			</trans-unit>
-			<trans-unit id="offset_small_desktop">
-				<source>Offset (small desktop)</source>
-			</trans-unit>
-			<trans-unit id="offset_large_desktop">
-				<source>Offset (large desktop)</source>
-			</trans-unit>
+			<trans-unit id="order">
+				<source>Order</source>
+			</trans-unit>			
+			<trans-unit id="offset">
+				<source>Offset</source>
+			</trans-unit>			
 			<trans-unit id="background">
 				<source>Background</source>
 			</trans-unit>
@@ -108,12 +78,9 @@
 			<trans-unit id="custom_background">
 				<source>Customized background color</source>
 			</trans-unit>
-			<trans-unit id="add_row_class">
-				<source>Additional CSS class (row)</source>
-			</trans-unit>
-			<trans-unit id="add_column_class">
-				<source>Additional CSS class (column)</source>
-			</trans-unit>
+			<trans-unit id="css_class">
+				<source>Additional CSS class</source>
+			</trans-unit>			
 			<trans-unit id="100_percent_nogrid">
 				<source>100% without Grid</source>
 			</trans-unit>
@@ -134,6 +101,21 @@
 			</trans-unit>
 			<trans-unit id="default">
 				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="rowappearance">
+				<source>Appearance</source>
+			</trans-unit>
+			<trans-unit id="smartphone">
+				<source>Smartphone</source>
+			</trans-unit>
+			<trans-unit id="tablet">
+				<source>Tablet</source>
+			</trans-unit>
+			<trans-unit id="small_desktop">
+				<source>Small desktop</source>
+			</trans-unit>
+			<trans-unit id="large_desktop">
+				<source>Large desktop</source>
 			</trans-unit>
 		</body>
 	</file>

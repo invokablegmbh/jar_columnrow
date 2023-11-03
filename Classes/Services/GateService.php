@@ -33,10 +33,10 @@ class GateService implements SingletonInterface
     ) {
         $reflectionService
         ->setTableColumnWhitelist([
-            'tt_content' => ['feditorce_feditor_columnrow_*']
+            'tt_content' => ['columnrow_*']
         ])
         ->setTableColumnRemoveablePrefixes([
-            'tt_content' => ['feditorce_feditor_columnrow_']
+            'tt_content' => ['columnrow_']
         ]);
     }   
     
