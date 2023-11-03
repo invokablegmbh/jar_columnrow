@@ -62,9 +62,8 @@ class GateService implements SingletonInterface
 
         // Create a full-width column to display the child columns at the correct width
         // we have to use the name "unused" to make this column unuseable (@see TYPO3\CMS\Backend\View\BackendLayout\Grid\GridRow)
-
-        // @todo: load this from site configuration
-        $gridbase = 12;
+        
+        $gridbase = ColumnRowUtility::getGridBase();
 
         $grid = [
             [
@@ -123,6 +122,8 @@ class GateService implements SingletonInterface
             return $this->reflectedRows[$row['uid']];
         }
         $reflectedRow = $this->reflectionService->buildArrayByRow($row, 'tt_content');
+        DebuggerUtility::var_dump($reflectedRow);
+        die();
         $this->reflectedRows[$row['uid']] = $reflectedRow;
         return $reflectedRow;
     }

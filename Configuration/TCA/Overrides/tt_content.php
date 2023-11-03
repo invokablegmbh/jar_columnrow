@@ -1,4 +1,7 @@
 <?php
+
+use Jar\Columnrow\ItemsProcFuncs\ColumnItemsProcFunc;
+
 defined('TYPO3_MODE') || die();
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
@@ -244,6 +247,36 @@ $GLOBALS['TCA']['tt_content']['palettes']['columnrow_rowappearance']['label'] = 
 );
 
 
+$columnWidthConfig = [
+	'type' => 'select',
+	'renderType' => 'selectSingle',	
+	'items' => [],
+	'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyWidthItems',
+	'size' => 1,
+	'maxitems' => 1,
+	'eval' => '',
+];
+
+$columnOrderConfig = [
+	'type' => 'select',
+	'renderType' => 'selectSingle',
+	'items' => [],
+	'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyOrderItems',
+	'size' => 1,
+	'maxitems' => 1,
+	'eval' => '',
+];
+
+$columnOffsetConfig = [
+	'type' => 'select',
+	'renderType' => 'selectSingle',
+	'items' => [],
+	'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyOffsetItems',
+	'size' => 1,
+	'maxitems' => 1,
+	'eval' => '',
+];
+
 $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 	'ctrl' => [
 		'title' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline',
@@ -375,427 +408,62 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 		'col_lg' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [					
-					1 => [
-						0 => '[12] 100%',
-						1 => 12,
-					],
-					2 => [
-						0 => '[11] 91.66%',
-						1 => 11,
-					],
-					3 => [
-						0 => '[10] 83.33%',
-						1 => 10,
-					],
-					4 => [
-						0 => '[9] 75%',
-						1 => 9,
-					],
-					5 => [
-						0 => '[8] 66.66%',
-						1 => 8,
-					],
-					6 => [
-						0 => '[7] 58.33%',
-						1 => 7,
-					],
-					7 => [
-						0 => '[6] 50%',
-						1 => 6,
-					],
-					8 => [
-						0 => '[5] 41.66%',
-						1 => 5,
-					],
-					9 => [
-						0 => '[4] 33.33%',
-						1 => 4,
-					],
-					10 => [
-						0 => '[3] 25%',
-						1 => 3,
-					],
-					11 => [
-						0 => '[2] 16.66%',
-						1 => 2,
-					],
-					12 => [
-						0 => '[1] 8.33%',
-						1 => 1,
-					],
-					/* TODO: ONLY MAKE SENSE WHEN EXTENDED IS TRUE */
-					13 => [
-						0 => 'do_not_show',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]			
+			'config' =>	$columnWidthConfig			
 		],
 		'col_md' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_automatic',
-						1 => 0,
-					],
-					1 => [
-						0 => '[12] 100%',
-						1 => 12,
-					],
-					2 => [
-						0 => '[11] 91.66%',
-						1 => 11,
-					],
-					3 => [
-						0 => '[10] 83.33%',
-						1 => 10,
-					],
-					4 => [
-						0 => '[9] 75%',
-						1 => 9,
-					],
-					5 => [
-						0 => '[8] 66.66%',
-						1 => 8,
-					],
-					6 => [
-						0 => '[7] 58.33%',
-						1 => 7,
-					],
-					7 => [
-						0 => '[6] 50%',
-						1 => 6,
-					],
-					8 => [
-						0 => '[5] 41.66%',
-						1 => 5,
-					],
-					9 => [
-						0 => '[4] 33.33%',
-						1 => 4,
-					],
-					10 => [
-						0 => '[3] 25%',
-						1 => 3,
-					],
-					11 => [
-						0 => '[2] 16.66%',
-						1 => 2,
-					],
-					12 => [
-						0 => '[1] 8.33%',
-						1 => 1,
-					],
-					13 => [
-						0 => 'do_not_show',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnWidthConfig
 		],
 		'col_sm' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_automatic',
-						1 => 0,
-					],
-					1 => [
-						0 => '[12] 100%',
-						1 => 12,
-					],
-					2 => [
-						0 => '[11] 91.66%',
-						1 => 11,
-					],
-					3 => [
-						0 => '[10] 83.33%',
-						1 => 10,
-					],
-					4 => [
-						0 => '[9] 75%',
-						1 => 9,
-					],
-					5 => [
-						0 => '[8] 66.66%',
-						1 => 8,
-					],
-					6 => [
-						0 => '[7] 58.33%',
-						1 => 7,
-					],
-					7 => [
-						0 => '[6] 50%',
-						1 => 6,
-					],
-					8 => [
-						0 => '[5] 41.66%',
-						1 => 5,
-					],
-					9 => [
-						0 => '[4] 33.33%',
-						1 => 4,
-					],
-					10 => [
-						0 => '[3] 25%',
-						1 => 3,
-					],
-					11 => [
-						0 => '[2] 16.66%',
-						1 => 2,
-					],
-					12 => [
-						0 => '[1] 8.33%',
-						1 => 1,
-					],
-					13 => [
-						0 => 'do_not_show',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnWidthConfig
 		],
 		'col_xs' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:column_width',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_automatic',
-						1 => 0,
-					],
-					1 => [
-						0 => '[12] 100%',
-						1 => 12,
-					],
-					2 => [
-						0 => '[11] 91.66%',
-						1 => 11,
-					],
-					3 => [
-						0 => '[10] 83.33%',
-						1 => 10,
-					],
-					4 => [
-						0 => '[9] 75%',
-						1 => 9,
-					],
-					5 => [
-						0 => '[8] 66.66%',
-						1 => 8,
-					],
-					6 => [
-						0 => '[7] 58.33%',
-						1 => 7,
-					],
-					7 => [
-						0 => '[6] 50%',
-						1 => 6,
-					],
-					8 => [
-						0 => '[5] 41.66%',
-						1 => 5,
-					],
-					9 => [
-						0 => '[4] 33.33%',
-						1 => 4,
-					],
-					10 => [
-						0 => '[3] 25%',
-						1 => 3,
-					],
-					11 => [
-						0 => '[2] 16.66%',
-						1 => 2,
-					],
-					12 => [
-						0 => '[1] 8.33%',
-						1 => 1,
-					],
-					13 => [
-						0 => 'do_not_show',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnWidthConfig
 		],
 		'order_lg' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_up_high',
-						1 => 0,
-					],
-					1 => [
-						0 => 'item_bottom',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnOrderConfig
 		],
 		'order_md' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_up_high',
-						1 => 0,
-					],
-					1 => [
-						0 => 'item_bottom',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnOrderConfig
 		],
 		'order_sm' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_up_high',
-						1 => 0,
-					],
-					1 => [
-						0 => 'item_bottom',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnOrderConfig
 		],
 		'order_xs' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:order',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'item_up_high',
-						1 => 0,
-					],
-					1 => [
-						0 => 'item_bottom',
-						1 => -1,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnOrderConfig
 		],
 		'offset_lg' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'no_offset',
-						1 => 0,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnOffsetConfig
 		],
 		'offset_md' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'no_offset',
-						1 => 0,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnOffsetConfig
 		],
 		'offset_sm' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'no_offset',
-						1 => 0,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnOffsetConfig
 		],
 		'offset_xs' => [
 			'exclude' => false,
 			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset',
-			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'items' => [
-					0 => [
-						0 => 'no_offset',
-						1 => 0,
-					],
-				],
-				'size' => 1,
-				'maxitems' => 1,
-				'eval' => '',
-			]
+			'config' => $columnOffsetConfig
 		],
 		'additional_col_class' => [
 			'exclude' => false,			
