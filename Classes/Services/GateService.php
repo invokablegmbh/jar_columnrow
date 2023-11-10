@@ -79,11 +79,16 @@ class GateService implements SingletonInterface
         ];
 
         foreach($reflectedRow['columns'] as $column) {
-            // Check if we need to start a new row with the column width
+
             $currentColumntWidth = $column['col_lg'];
-            if($currentColumntWidth < 1) {
+
+            // Special Column Marker (-1,0, custom values)
+            $isSpecialColumn = $currentColumntWidth < 0 || $currentColumntWidth > $gridbase;            
+            if($isSpecialColumn) {
                 $currentColumntWidth = $gridbase;
             }
+
+            // Check if we need to start a new row with the column width
             $existingColumnWidth = IteratorUtility::pluck($grid[count($grid) - 1], 'colspan');
             // create the sum of existing columns
             $newColumnWidth = (int) array_reduce($existingColumnWidth, function($carry, $item) {
@@ -93,8 +98,10 @@ class GateService implements SingletonInterface
             if($newColumnWidth > $gridbase) {
                 $grid[] = [];
             }
+
+            $columnLabel = !$isSpecialColumn ? number_format($currentColumntWidth  / $gridbase * 100, 2, '.', '') . '%' : 'custom';
             $grid[count($grid) - 1][] = [
-                'name' => '',//$currentColumntWidth,
+                'name' => $columnLabel,
                 'colPos' => ColumnRowUtility::decodeColPos($column, $row),
                 'colspan' => $currentColumntWidth,
             ];
