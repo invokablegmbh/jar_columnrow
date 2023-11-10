@@ -128,6 +128,10 @@
 				<source>Large desktop</source>
 				<target>Große Desktopgeräte</target>
 			</trans-unit>
+			<trans-unit id="custom">
+				<source>Custom</source>
+				<target>Benutzerdefiniert</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

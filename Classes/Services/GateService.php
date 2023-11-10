@@ -7,6 +7,7 @@ use Doctrine\DBAL\Schema\Column;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
 use Jar\Utilities\Services\ReflectionService;
 use Jar\Utilities\Utilities\IteratorUtility;
+use Jar\Utilities\Utilities\LocalizationUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
@@ -79,11 +80,16 @@ class GateService implements SingletonInterface
         ];
 
         foreach($reflectedRow['columns'] as $column) {
-            // Check if we need to start a new row with the column width
+
             $currentColumntWidth = $column['col_lg'];
-            if($currentColumntWidth < 1) {
+
+            // Special Column Marker (-1,0, custom values)
+            $isSpecialColumn = $currentColumntWidth < 0 || $currentColumntWidth > $gridbase;            
+            if($isSpecialColumn) {
                 $currentColumntWidth = $gridbase;
             }
+
+            // Check if we need to start a new row with the column width
             $existingColumnWidth = IteratorUtility::pluck($grid[count($grid) - 1], 'colspan');
             // create the sum of existing columns
             $newColumnWidth = (int) array_reduce($existingColumnWidth, function($carry, $item) {
@@ -93,8 +99,10 @@ class GateService implements SingletonInterface
             if($newColumnWidth > $gridbase) {
                 $grid[] = [];
             }
+
+            $columnLabel = !$isSpecialColumn ? number_format($currentColumntWidth  / $gridbase * 100, 2, '.', '') . '%' : LocalizationUtility::localize('LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom') . ' (' . $column['col_lg'] . ')';
             $grid[count($grid) - 1][] = [
-                'name' => '',//$currentColumntWidth,
+                'name' => $columnLabel,
                 'colPos' => ColumnRowUtility::decodeColPos($column, $row),
                 'colspan' => $currentColumntWidth,
             ];
@@ -115,7 +123,7 @@ class GateService implements SingletonInterface
      * @param null|array $row 
      * @return null|array 
      */
-    protected function getReflectedRow(?array $row): ?array
+    public function getReflectedRow(?array $row): ?array
     {
         if($row === null) {
             return null;
