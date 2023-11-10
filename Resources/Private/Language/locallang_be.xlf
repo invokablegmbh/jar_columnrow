@@ -117,6 +117,9 @@
 			<trans-unit id="large_desktop">
 				<source>Large desktop</source>
 			</trans-unit>
+			<trans-unit id="custom">
+				<source>Custom</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
