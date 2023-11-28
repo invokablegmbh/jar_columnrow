@@ -91,7 +91,6 @@ class ColumnRowUtility
             'content_width' => 'content',
             'class' => '',
             'style' => '',
-            'bgimage' => '',
         ];
 
         if(
@@ -104,6 +103,23 @@ class ColumnRowUtility
         ) {
             return $result;
         }
+
+        // content width
+        $result['content_width'] = $row['content_width'];
+
+        // Background Image Mode
+        if($row['select_background'] == 2 && is_array($row['row_background_image']) && count($row['row_background_image'])) {
+            $result['style'] .= 'background-image:url(' . $row['row_background_image'][0]['url'] . ');';
+        }
+        // Selected color mode
+        else if ($row['select_background'] == 1) {
+            // predefined color
+            // predefined class
+            // custom color
+            //$result['style'] .= 'background-image:url(' . $row['row_background_image'][0]['url'] . ');';
+        }
+
+        
         DebuggerUtility::var_dump($row);
         return $result;
     }
