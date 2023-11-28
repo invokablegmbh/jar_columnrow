@@ -2,7 +2,9 @@
 
 namespace Jar\Columnrow\ViewHelpers;
 
+use Doctrine\DBAL\Schema\Column;
 use Jar\Columnrow\Services\GateService;
+use Jar\Columnrow\Utilities\ColumnRowUtility;
 use Jar\Utilities\Services\ReflectionService;
 use TYPO3\CMS\Backend\View\BackendLayout\Grid\Grid;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -75,8 +77,9 @@ class GridSettingsViewHelper extends AbstractViewHelper
         if(is_array($rows) && count($rows) > 1) {
             $firstUseableColumn = reset($rows[1]->getColumns());
             $containerRecord = $firstUseableColumn->getContainer()->getContainerRecord();
-            $columnRowSettings = GeneralUtility::makeInstance(GateService::class)->getReflectedRow($containerRecord);
-            $result = $columnRowSettings;
+            $columnRow = GeneralUtility::makeInstance(GateService::class)->getReflectedRow($containerRecord);
+            $result['row'] = $columnRow;
+            $result['appearance'] = ColumnRowUtility::getFrontendAttributesByPopulatedRow($columnRow);
         }
 
         

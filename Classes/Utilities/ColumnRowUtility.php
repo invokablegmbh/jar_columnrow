@@ -81,4 +81,30 @@ class ColumnRowUtility
         return 12;
     }
     
+    /**
+     * Returns frontend Classes, colors and background images based on backend configuration
+     * @param array $row 
+     * @return array 
+     */
+    public static function getFrontendAttributesByPopulatedRow(array $row): array {
+        $result = [
+            'content_width' => 'content',
+            'class' => '',
+            'style' => '',
+            'bgimage' => '',
+        ];
+
+        if(
+            !array_key_exists('select_background', $row) ||
+            !array_key_exists('row_background', $row) ||
+            !array_key_exists('row_user_background', $row) ||
+            !array_key_exists('row_background_image', $row) ||
+            !array_key_exists('content_width', $row) ||
+            !array_key_exists('additional_row_class', $row)
+        ) {
+            return $result;
+        }
+        DebuggerUtility::var_dump($row);
+        return $result;
+    }
 }
