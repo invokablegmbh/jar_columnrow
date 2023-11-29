@@ -117,11 +117,19 @@ class ColumnRowUtility
             // custom color
             if ($row['row_background'] === 'user') {
                 $result['style'] .= 'background-color:' . $row['row_user_background'] . ';';
+            } else {
+                // if $row['row_background'] starts with a '.' it is a class otherwise a colorcode
+                if (substr($row['row_background'], 0, 1) === '.') {
+                    $result['class'] .= ' ' . substr(implode(' ', explode('.', $row['row_background'])), 1);
+                } else {
+                    $result['style'] .= 'background-color:' . $row['row_background'] . ';';
+                }
             }
-            // predefined color
-            // predefined class
-            
-            //$result['style'] .= 'background-image:url(' . $row['row_background_image'][0]['url'] . ');';
+        }
+
+        // Additional Row Class
+        if ($row['additional_row_class']) {
+            $result['class'] .= ' ' . implode(' ', explode('.', $row['additional_row_class']));
         }
 
         

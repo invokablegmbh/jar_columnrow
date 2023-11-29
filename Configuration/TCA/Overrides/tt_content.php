@@ -1,5 +1,6 @@
 <?php
 
+use Jar\Columnrow\ItemsProcFuncs\ColorItemsProcFunc;
 use Jar\Columnrow\ItemsProcFuncs\ColumnItemsProcFunc;
 
 defined('TYPO3_MODE') || die();
@@ -81,6 +82,7 @@ $contentTableColumns = [
 					1 => 'user',
 				],
 			],
+			'itemsProcFunc' => ColorItemsProcFunc::class . '->modifyItems',
 			'size' => 1,
 			'maxitems' => 1,
 			'eval' => '',

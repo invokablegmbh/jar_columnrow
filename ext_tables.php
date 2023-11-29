@@ -26,4 +26,7 @@ element.style {
     bottom: 29px;
 }
     Kapseln der Daten mit Ausgabe im FE im Hinterkopf behalten
+
+
+    Color Pflege im TSConfig (2x direkt, allgemein über JAR) / TCA 
 */
