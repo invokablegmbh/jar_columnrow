@@ -111,11 +111,16 @@ class ColumnRowUtility
         if($row['select_background'] == 2 && is_array($row['row_background_image']) && count($row['row_background_image'])) {
             $result['style'] .= 'background-image:url(' . $row['row_background_image'][0]['url'] . ');';
         }
-        // Selected color mode
-        else if ($row['select_background'] == 1) {
+        // Selected color mode - custom color
+        else if ($row['select_background'] == 1 ) {
+            
+            // custom color
+            if ($row['row_background'] === 'user') {
+                $result['style'] .= 'background-color:' . $row['row_user_background'] . ';';
+            }
             // predefined color
             // predefined class
-            // custom color
+            
             //$result['style'] .= 'background-image:url(' . $row['row_background_image'][0]['url'] . ');';
         }
 
