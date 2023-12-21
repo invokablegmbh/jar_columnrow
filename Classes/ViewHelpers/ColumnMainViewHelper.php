@@ -61,7 +61,8 @@ class ColumnMainViewHelper extends AbstractViewHelper
         $config = [];
         
         $backgroundRowStyle = $backgroundColor = $backgroundColorLabel = '';
-        
+
+            
         if(isset($options['selectBackground'])) {
             if($options['selectBackground'] == 1 && isset($options['rowBackground']) && $options['rowBackground'] != ''){
                 if($options['rowBackground'] != 'default' && $options['rowBackground'] != 'user') {
@@ -82,7 +83,7 @@ class ColumnMainViewHelper extends AbstractViewHelper
                         }
                     }
                 }
-            } else if($options['selectBackground'] == 2 && $options['rowBackgroundImage'] == 1) {
+            } else if($options['selectBackground'] ==2 && !empty($options['rowBackgroundImage']) && $options['rowBackgroundImage'] == 1) {
                 if($url = static::getImage($options['record']['uid'])) {
                     $backgroundRowStyle = 'background-image: url('. $url .')';
                 }
