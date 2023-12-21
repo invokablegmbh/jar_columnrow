@@ -106,10 +106,10 @@
 				<target>Dunkel Grau</target>
 			</trans-unit>
 			<trans-unit id="user_customized">
-				<target>Benuterdefiniert</target>
+				<target>Farbverlauf</target>
 			</trans-unit>
 			<trans-unit id="custom_background">
-				<target>Benuterdefinierter Hintergrund</target>
+				<target>Farbverlauf</target>
 			</trans-unit>
 			<trans-unit id="add_row_class">
 				<target>Zusätzliche Reihen CSS-Klasse</target>

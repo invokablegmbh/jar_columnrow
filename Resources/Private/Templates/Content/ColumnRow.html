@@ -143,10 +143,10 @@
 				<f:then>
 					<f:if condition="{sectionObject.column.col-background-color} != 'default' && {sectionObject.column.col-background-color} != 'user'">
 						<f:then>
-							<f:variable name="colBackground" value="background-color:{sectionObject.column.col-background-color};" />
+							<f:variable name="colBackground" value="background:{sectionObject.column.col-background-color};" />
 						</f:then>
 						<f:else if="{sectionObject.column.col-background-color} == 'user'">
-							<f:variable name="colBackground" value="background-color:{sectionObject.column.col-user-background-color};" />
+							<f:variable name="colBackground" value="background:{sectionObject.column.col-user-background-color};" />
 						</f:else>
 					</f:if>
 				</f:then>
