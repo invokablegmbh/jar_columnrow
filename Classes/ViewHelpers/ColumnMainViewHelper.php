@@ -96,7 +96,7 @@ class ColumnMainViewHelper extends AbstractViewHelper
                     if(isset($column['column']['col']) && $column['column']['col'] != 12){
                         $colClasses = 'col-12 col-md-' . $column['column']['col'];
                     } else {
-                        $colClasses = 'col-' . $column['column']['col'];
+                        $colClasses = 'col-12 col-md-' . $column['column']['col'];
                     }
                     if(array_key_exists('col-background-color', $column['column'])) {
                         if($column['column']['col-background-color'] != 'default' && $column['column']['col-background-color'] != 'user') {
