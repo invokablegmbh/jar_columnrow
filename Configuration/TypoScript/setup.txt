@@ -1,5 +1,6 @@
 tt_content.jarcolumnrow_columnrow < lib.contentElement 
 tt_content.jarcolumnrow_columnrow {
+   templateName = ColumnRow
    templateRootPaths {
       0 = EXT:jar_columnrow/Resources/Private/Templates/Content/
    }
