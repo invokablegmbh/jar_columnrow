@@ -36,3 +36,15 @@
     bottom: 0;
 }
 */
+
+/* Draw background */
+.jar-columnrow-appearance-background {    
+    width: 100%;
+    display: block;
+    top: 72px;
+    position: absolute;
+    background-size: cover;
+    opacity: 0.5;
+    bottom: 29px;
+    pointer-events: none;
+}
