@@ -31,7 +31,8 @@ if (version_compare(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExten
 }
 
 // Update Wizards
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['feditor_columnRowCtypeUpdateWizard'] = \Jar\Columnrow\Update\ColumnRowCtypeUpdateWizard::class;
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['columnrow_CtypeUpdateWizard'] = \Jar\Columnrow\Update\ColumnRowCtypeUpdateWizard::class;
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['columnrow_migrateFluxToContainer'] = \Jar\Columnrow\Update\MigrateFluxToContainer::class;
 
 // extend Container Classes
 
