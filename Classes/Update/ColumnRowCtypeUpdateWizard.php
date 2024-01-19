@@ -24,7 +24,7 @@ class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
      */
     public function getIdentifier(): string
     {
-        return 'feditor_columnRowCtypeUpdateWizard';
+        return 'columnrow_CtypeUpdateWizard';
     }
 
     /**
@@ -34,7 +34,7 @@ class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
      */
     public function getTitle(): string
     {
-        return 'Jar: Update old tt_content column row CTypes';
+        return 'ColumnRow: Update old tt_content column row CTypes';
     }
 
     /**
