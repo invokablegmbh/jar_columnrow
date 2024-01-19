@@ -2,10 +2,9 @@
 <f:if condition="{grid}">
     {j:gridSettings(grid: grid) -> f:variable(name: 'settings')}    
 </f:if>
+
 <div class="t3-grid-container jar-columnrow-grid-container">
-    <f:if condition="{settings.row_background_image.0.url}">
-        <div class="jar-columnrow-background" style="background: url('{settings.row_background_image.0.url}') no-repeat cover;"></div>
-    </f:if>
+    <div class="jar-columnrow-appearance-background {settings.appearance.class}" style="{settings.appearance.style}"></div>
     <table border="0" cellspacing="0" cellpadding="0" width="100%" class="t3-page-columns t3-grid-table t3js-page-columns">        
         <f:for each="{grid.rows}" as="row">
             <tr>
