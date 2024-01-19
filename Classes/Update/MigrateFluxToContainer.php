@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Jar\Columnrow\Update;
 
 use IteratorIterator;
+use Jar\Columnrow\Utilities\ColumnRowUtility;
 use Jar\Utilities\Utilities\IteratorUtility;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Database\Connection;
@@ -98,61 +99,70 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
             }
 
             if(isset($flexForm['columns']) && is_array($flexForm['columns']) && count($flexForm['columns'])) {
-                $columns = IteratorUtility::pluck($flexForm['columns'], 'column');
-                DebuggerUtility::var_dump($columns, 'columns');
-                /*$columnRows = [];
-                foreach(array_values($flexForm['columns']) as $index => $column) {
-                    $columnRows[] = [
-                        'extended' => isset($flexForm['extended']) ? $flexForm['extended'] : 0,
-                        'col_lg' => 
-                        'col_md' =>
-                        'col_sm' =>
-                        'col_xs' =>
-                        'order_lg' =>
-                        'order_md' =>
-                        'order_sm' =>
-                        'order_xs' =>
-                        'offset_lg' =>
-                        'offset_md' =>
-                        'offset_sm' =>
-                        'offset_xs' =>
-                        'additional_col_class' =>
-                        'parent_column_row' => $contentElement['uid']
-                        'sorting' => $index
+                $columns = IteratorUtility::pluck($flexForm['columns'], 'column');               
+                
+                $extended = isset($flexForm['extended']) ? ((int) $flexForm['extended']) : 0;
+                foreach($columns as $index => $column) {  
+                    // in V2 we merged the col-lg and col into one field
+                    $classicCol = isset($column['col']) ? ((int) $column['col']) : null;
+                    $classicColLg = isset($column['col-lg']) ? ((int) $column['col-lg']) : null;
+
+                    $colLg = $extended ? ($classicColLg ?? $classicCol) : $classicCol;
+
+                    if($colLg === null) {
+                        throw new \Exception("Not matching main col size found at tt_content " . $contentElement['uid']);                        
+                    }
+
+                    $columnRow = [
+                        'extended' => $extended,
+                        'col_lg' => $colLg,
+                        'col_md' => isset($column['col-md']) ? $column['col-md'] : null,
+                        'col_sm' => isset($column['col-sm']) ? $column['col-sm'] : null,
+                        'col_xs' => isset($column['col-xs']) ? $column['col-xs'] : null,
+                        'order_lg' => isset($column['order-lg']) ? $column['order-lg'] : null,
+                        'order_md' => isset($column['order-md']) ? $column['order-md'] : null,
+                        'order_sm' => isset($column['order-sm']) ? $column['order-sm'] : null,
+                        'order_xs' => isset($column['order-xs']) ? $column['order-xs'] : null,
+                        'offset_lg' => isset($column['offset-lg']) ? $column['offset-lg'] : null,
+                        'offset_md' => isset($column['offset-md']) ? $column['offset-md'] : null,
+                        'offset_sm' => isset($column['offset-sm']) ? $column['offset-sm'] : null,
+                        'offset_xs' => isset($column['offset-xs']) ? $column['offset-xs'] : null,
+                        'additional_col_class' => isset($column['additionalColClass']) ? $column['additionalColClass'] : '',
+                        'parent_column_row' => $contentElement['uid'],
+                        'sorting' => $index + 1
                     ];
-                }*/
+
+                    // write columns to database
+                    $connectionPool->getConnectionForTable('tx_jarcolumnrow_columns')
+                        ->insert(
+                            'tx_jarcolumnrow_columns',
+                            $columnRow
+                        );
+                    
+                    // get the uid of the new column
+                    $columnUid = $connectionPool->getConnectionForTable('tx_jarcolumnrow_columns')
+                        ->lastInsertId('tx_jarcolumnrow_columns');
+                    
+                    // move content elements to the new colpos
+                    $fluxBasedColPos = ($contentElement['uid'] * 100) + ($index + 1);
+                    $ContainerBasedColPos = ColumnRowUtility::decodeColPos(['uid' => $columnUid]);
+
+                    $connectionPool->getConnectionForTable('tt_content')
+                    ->update(
+                        'tt_content',
+                        [
+                            'colPos' => $ContainerBasedColPos,
+                            'tx_container_parent' => $contentElement['uid']
+                        ],
+                        [
+                            'colPos' => $fluxBasedColPos,
+                            'pid' => $contentElement['pid']
+                        ]
+                    );
+                }
             }
-
-
-
-     //extended => '1' (1 chars)
-
-    // flexform fields to table fields mapping
-
-
-            /*$columnDefinitions = $flexForm['data']['sDEF']['lDEF']['columns']['vDEF'];
-
-            $containerColumns = [];
-            foreach ($columnDefinitions as $columnDefinition) {
-                $containerColumns[] = [
-                    'colPos' => $columnDefinition['colPos'],
-                    'name' => $columnDefinition['name'],
-                    'colspan' => $columnDefinition['colspan'],
-                    'rowspan' => $columnDefinition['rowspan'],
-                    'data' => $columnDefinition['data'],
-                ];
-            }
-
-            $containerColumns = GeneralUtility::makeInstance(ConnectionPool::class)
-                ->getQueryBuilderForTable('tx_jarcolumnrow_columns')
-                ->insert('tx_jarcolumnrow_columns')
-                ->values([
-                    'parent_column_row' => $contentElement['uid'],
-                    'columns' => json_encode($containerColumns),
-                ])
-                ->execute();*/
         }
-        return false;
+        return true;
     }
 
     /**
