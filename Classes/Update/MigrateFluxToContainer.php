@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /** @package Jar\Columnrow\Update */
 class MigrateFluxToContainer implements UpgradeWizardInterface
-{
+{    
     /**
      * Return the identifier for this wizard
      * This should be the same string as used in the ext_localconf class registration
@@ -64,6 +64,72 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
         foreach ($contentElements as $contentElement) {
             $flexForm = GeneralUtility::makeInstance(FlexFormService::class)->convertFlexFormContentToArray($contentElement['pi_flexform']);
             DebuggerUtility::var_dump($flexForm, (string) $contentElement['uid']);
+
+            $contentRow = [
+                'columnrow_content_width' => isset($flexForm['contentWidth']) ? $flexForm['contentWidth'] : '',
+                'columnrow_select_background' => isset($flexForm['selectBackground']) ? $flexForm['selectBackground'] : '',
+                'columnrow_row_background' => isset($flexForm['rowBackground']) ? $flexForm['rowBackground'] : '',
+                'columnrow_row_user_background' => isset($flexForm['rowUserBackground']) ? $flexForm['rowUserBackground'] : '',
+                'columnrow_row_background_image' => isset($flexForm['rowBackgroundImage']) ? $flexForm['rowBackgroundImage'] : '',
+                'columnrow_additional_row_class' => isset($flexForm['additionalRowClass']) ? $flexForm['additionalRowClass'] : '',
+                'columnrow_columns' => isset($flexForm['columns']) ? count($flexForm['columns']) : 0,
+            ];
+
+            $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+            $connectionPool->getConnectionForTable('tt_content')
+                ->update(
+                    'tt_content',
+                    $contentRow,
+                    ['uid' => $contentElement['uid']]
+                );
+
+            // update sys_file_reference when image is set
+            if(!empty($contentRow['columnrow_row_background_image']) && ((int) $contentRow['columnrow_row_background_image']) > 0) {                
+                $connectionPool->getConnectionForTable('sys_file_reference')
+                    ->update(
+                        'sys_file_reference',
+                        [                            
+                            'fieldname' => 'columnrow_row_background_image'
+                        ],
+                        [
+                            'uid_foreign' => $contentElement['uid']   
+                        ]
+                    );
+            }
+
+            if(isset($flexForm['columns']) && is_array($flexForm['columns']) && count($flexForm['columns'])) {
+                $columns = IteratorUtility::pluck($flexForm['columns'], 'column');
+                DebuggerUtility::var_dump($columns, 'columns');
+                /*$columnRows = [];
+                foreach(array_values($flexForm['columns']) as $index => $column) {
+                    $columnRows[] = [
+                        'extended' => isset($flexForm['extended']) ? $flexForm['extended'] : 0,
+                        'col_lg' => 
+                        'col_md' =>
+                        'col_sm' =>
+                        'col_xs' =>
+                        'order_lg' =>
+                        'order_md' =>
+                        'order_sm' =>
+                        'order_xs' =>
+                        'offset_lg' =>
+                        'offset_md' =>
+                        'offset_sm' =>
+                        'offset_xs' =>
+                        'additional_col_class' =>
+                        'parent_column_row' => $contentElement['uid']
+                        'sorting' => $index
+                    ];
+                }*/
+            }
+
+
+
+     //extended => '1' (1 chars)
+
+    // flexform fields to table fields mapping
+
+
             /*$columnDefinitions = $flexForm['data']['sDEF']['lDEF']['columns']['vDEF'];
 
             $containerColumns = [];
@@ -150,5 +216,6 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
             \Jar\Columnrow\Update\ColumnRowCtypeUpdateWizard::class
         ];
     }
+
     
 }
