@@ -131,9 +131,7 @@ class ColumnRowUtility
         if ($row['additional_row_class']) {
             $result['class'] .= ' ' . implode(' ', explode('.', $row['additional_row_class']));
         }
-
         
-        DebuggerUtility::var_dump($row);
         return $result;
     }
 }

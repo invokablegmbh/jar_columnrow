@@ -2,7 +2,6 @@
 <f:if condition="{grid}">
     {j:gridSettings(grid: grid) -> f:variable(name: 'settings')}    
 </f:if>
-<f:debug>{settings}</f:debug>
 <div class="t3-grid-container jar-columnrow-grid-container">
     <f:if condition="{settings.row_background_image.0.url}">
         <div class="jar-columnrow-background" style="background: url('{settings.row_background_image.0.url}') no-repeat cover;"></div>
