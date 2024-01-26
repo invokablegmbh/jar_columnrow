@@ -20,7 +20,7 @@ class ColumnRowDataProcessor implements DataProcessorInterface
      * @return array the processed data as key/value store
      */
     public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
-    {
+    {        
         $processedData = ColumnRowUtility::getFrontendAttributesByPopulatedRow($processedData) + $processedData;
         $containerProcessor = GeneralUtility::makeInstance(ContainerProcessor::class);
         $processedData = $containerProcessor->process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);

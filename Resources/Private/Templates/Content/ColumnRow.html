@@ -1,18 +1,28 @@
-{namespace container=B13\Container\ViewHelpers}
+<f:layout name="Default" />
+<f:section name="Header" />
+<f:section name="Main">
+	<div class="jar-column-row container-fluid {class}" style="{style}">
+		<div class="container {content_width}">
+			<div class="row">
+				<f:if condition="{columns}">
+					<f:for each="{columns}" as="column" iteration="iteration" key="key">
+						<f:debug>{column}</f:debug>
+						<div data-index="{iteration.index}"
+							class="{config.columns.{key}.colClasses} {f:if(condition: sectionObject.column.additionalColClass, then: '{sectionObject.column.additionalColClass}')}"
+							style="{config.columns.{key}.colBackground}">
+							<f:if condition="{children_{column.colPos}}">
+								<f:for each="{children_{column.colPos}}" as="ce">
+									{ce.renderedContent -> f:format.raw()}
+								</f:for>
+							</f:if>
+						</div>
+					</f:for>
+				</f:if>
+			</div>
+		</div>
+	</div>
+</f:section>
 
-<div class="jar-column-row container-fluid<f:if condition="{record.space_before_class}"> frame-space-before-{record.space_before_class}</f:if><f:if condition="{record.space_after_class}"> frame-space-after-{record.space_after_class}</f:if>" style="{style}">
-    <div class="container {content_width}">
-        <div class="row{f:if(condition: class, then: ' {class}')}"> 
-            <f:if condition="{columns}">
-                <f:for each="{columns}" as="sectionObject" iteration="iteration" key="key">
-                    <container:drawChildren uid="{uid}" colPos="{sectionObject.colPos}" />
-                    <f:comment>
-                    <div data-index="{iteration.index}" class="{config.columns.{key}.colClasses} {f:if(condition: sectionObject.column.additionalColClass, then: '{sectionObject.column.additionalColClass}')}"  style="{config.columns.{key}.colBackground}">				
-                        
-                    </div>
-                    </f:comment>
-                </f:for>
-            </f:if>
-        </div>
-    </div>
-</div>
+
+
+

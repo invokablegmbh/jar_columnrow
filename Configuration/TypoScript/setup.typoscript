@@ -1,4 +1,4 @@
-tt_content.jarcolumnrow_columnrow < lib.contentElement 
+tt_content.jarcolumnrow_columnrow =< lib.contentElement 
 tt_content.jarcolumnrow_columnrow {
    templateName = ColumnRow
    templateRootPaths {
