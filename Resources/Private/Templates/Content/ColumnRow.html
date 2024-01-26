@@ -7,9 +7,7 @@
 				<f:if condition="{columns}">
 					<f:for each="{columns}" as="column" iteration="iteration" key="key">
 						<f:debug>{column}</f:debug>
-						<div data-index="{iteration.index}"
-							class="{config.columns.{key}.colClasses} {f:if(condition: sectionObject.column.additionalColClass, then: '{sectionObject.column.additionalColClass}')}"
-							style="{config.columns.{key}.colBackground}">
+						<div data-index="{iteration.index}" class="{f:if(condition: column.additional_col_class, then: column.additional_col_class)}">
 							<f:if condition="{children_{column.colPos}}">
 								<f:for each="{children_{column.colPos}}" as="ce">
 									{ce.renderedContent -> f:format.raw()}
