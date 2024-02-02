@@ -19,6 +19,6 @@ $EM_CONF['jar_columnrow'] = array(
 			'container' => '2.2.0-2.2.99'
 		),
 		'conflicts' => array(),
-		'suggests' => array(),
+		'suggests' => array(), 
 	),
 );
