@@ -1,13 +1,11 @@
 <f:layout name="Default" />
 <f:section name="Header" />
 <f:section name="Main">
-	<div class="jar-column-row container-fluid {class}" style="{style}">
-		<div class="container {content_width}">
+	<div id="c{uid}" class="jar-column-row {class} {space_before_class} {space_after_class}" style="{style}">
+		<div class="{content_width}">
 			<div class="row">
 				<f:if condition="{columns}">
 					<f:for each="{columns}" as="column" iteration="iteration" key="key">
-						<f:debug title="column">{column}</f:debug>
-
 						<div data-index="{iteration.index}" class="{column.cssClass} {column.orderClass} {column.offsetClass} {f:if(condition: column.additional_col_class, then: column.additional_col_class)}">
 							<f:if condition="{children_{column.colPos}}">
 								<f:for each="{children_{column.colPos}}" as="ce">

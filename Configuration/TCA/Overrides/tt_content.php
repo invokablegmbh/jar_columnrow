@@ -30,11 +30,11 @@ $contentTableColumns = [
 			'items' => [
 				0 => [
 					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:content_width',
-					1 => 'content',
+					1 => 'container',
 				],
 				1 => [
 					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:full_width',
-					1 => 'fullwidth',
+					1 => 'container-fluid',
 				],
 			],
 			'size' => 1,

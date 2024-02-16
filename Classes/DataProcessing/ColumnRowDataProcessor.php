@@ -69,6 +69,10 @@ class ColumnRowDataProcessor implements DataProcessorInterface
             $processedData['columns'][$k]['orderClass'] = $finalOrderClass;
             $processedData['columns'][$k]['offsetClass'] = $finalOffsetClass;
         }
+
+        $processedData['space_before_class'] = $processedData['space_before_class'] ? 'space-before-' . $processedData['space_before_class'] : '';
+        $processedData['space_after_class'] = $processedData['space_after_class'] ? 'space-after-' . $processedData['space_after_class'] : '';
+
         return $processedData;
     }
 
