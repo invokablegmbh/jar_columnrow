@@ -50,6 +50,7 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
     {
         $result = parent::getRegisteredCTypes();
         $result[] = 'jarcolumnrow_columnrow';
+        $result[] = 'jarcolumnrow_accordion';
         return $result;
     }
 

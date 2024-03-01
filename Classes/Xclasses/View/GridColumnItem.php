@@ -20,12 +20,6 @@ class GridColumnItem extends \TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColu
 {
     public function getRecord(): array
     {
-        // TODO: screamtest
-        /*if(array_key_exists('CType', $this->record) && ColumnRowUtility::isOurContainerCType($this->record['CType'])) {
-            $recordWithUidCType = $this->record; 
-            DebuggerUtility::var_dump($recordWithUidCType);
-            return $recordWithUidCType;
-        }        */
         return $this->record;
     }
 }

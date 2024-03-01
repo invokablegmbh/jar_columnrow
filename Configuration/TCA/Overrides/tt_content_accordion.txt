@@ -1,8 +1,5 @@
 <?php
 
-use Jar\Columnrow\ItemsProcFuncs\ColorItemsProcFunc;
-use Jar\Columnrow\ItemsProcFuncs\ColumnItemsProcFunc;
-
 defined('TYPO3_MODE') || die();
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
@@ -16,7 +13,7 @@ defined('TYPO3_MODE') || die();
 );
 
 
-$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_columnrow'] = 'jar-accordion-content-icon';
+$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_accordion'] = 'jar-accordion-content-icon';
 
 $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
 
@@ -72,37 +69,6 @@ $contentTableColumns = [
 	'after:header'
 );
 
-
-$columnWidthConfig = [
-	'type' => 'select',
-	'renderType' => 'selectSingle',	
-	'items' => [],
-	'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyWidthItems',
-	'size' => 1,
-	'maxitems' => 1,
-	'eval' => '',
-];
-
-$columnOrderConfig = [
-	'type' => 'select',
-	'renderType' => 'selectSingle',
-	'items' => [],
-	'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyOrderItems',
-	'size' => 1,
-	'maxitems' => 1,
-	'eval' => '',
-];
-
-$columnOffsetConfig = [
-	'type' => 'select',
-	'renderType' => 'selectSingle',
-	'items' => [],
-	'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyOffsetItems',
-	'size' => 1,
-	'maxitems' => 1,
-	'eval' => '',
-];
-
 $GLOBALS['TCA']['tx_jarcolumnrow_accordion_items'] = [
 	'ctrl' => [
 		'title' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item',
@@ -131,7 +97,7 @@ $GLOBALS['TCA']['tx_jarcolumnrow_accordion_items'] = [
 		0 => [
 			'showitem' => 'title',
 		]
-		],
+	],
 	'columns' => [
 		'sys_language_uid' => [
 			'exclude' => true,

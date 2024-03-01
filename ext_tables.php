@@ -12,6 +12,7 @@ $GLOBALS['TBE_STYLES']['skins']['jar_columnrow'] = [
 ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns');
 
 /*
+    Copy Paste funktioniert nicht
     Doku:    
         Color Pflege im TSConfig (2x direkt, allgemein über JAR) / TCA 
         Hinzufügen von neuen Farben

@@ -24,8 +24,7 @@ class RecordLocalizeSummaryModifier extends \B13\Container\Service\RecordLocaliz
      * @return array
      */
     public function rebuildPayload(array $payload): array
-    {
-        $colPosPrefix = ColumnRowUtility::$colPosPrefix;
+    {        
         $payload = parent::rebuildPayload($payload);
 
         // check for content elements with our colPos prefix and add them to the column list

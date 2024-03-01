@@ -46,7 +46,7 @@ class GateService implements SingletonInterface
      * @return array 
      */
     public function getContainerGridFromRow(?array $row): array
-    {
+    {        
         $reflectedRow = $this->getReflectedRow($row);
 
         if($reflectedRow === null) {
@@ -80,8 +80,8 @@ class GateService implements SingletonInterface
         ];
 
         foreach($reflectedRow['columns'] as $column) {
-
-            $currentColumntWidth = $column['col_lg'];
+            // fallback to gridbase if no column width is set (like the accordion items do)
+            $currentColumntWidth = $column['col_lg'] ?? $gridbase;
 
             // Special Column Marker (-1,0, custom values)
             $isSpecialColumn = $currentColumntWidth < 0 || $currentColumntWidth > $gridbase;            
@@ -99,8 +99,12 @@ class GateService implements SingletonInterface
             if($newColumnWidth > $gridbase) {
                 $grid[] = [];
             }
-
-            $columnLabel = !$isSpecialColumn ? number_format($currentColumntWidth  / $gridbase * 100, 2, '.', '') . '%' : LocalizationUtility::localize('LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom') . ' (' . $column['col_lg'] . ')';
+            $columnLabel = '';
+            if($isSpecialColumn) {                
+                $columnLabel = LocalizationUtility::localize('LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom') . ' (' . $column['col_lg'] . ')';
+            } else {
+                $columnLabel = $column['title'] ?? number_format($currentColumntWidth  / $gridbase * 100, 2, '.', '') . '%';
+            }
             $grid[count($grid) - 1][] = [
                 'name' => $columnLabel,
                 'colPos' => ColumnRowUtility::decodeColPos($column, $row),
@@ -132,7 +136,8 @@ class GateService implements SingletonInterface
         if(isset($this->reflectedRows[$row['uid']])) {            
             return $this->reflectedRows[$row['uid']];
         }
-        $reflectedRow = $this->reflectionService->buildArrayByRow($row, 'tt_content');   
+        $reflectedRow = $this->reflectionService->buildArrayByRow($row, 'tt_content');
+        
         $this->reflectedRows[$row['uid']] = $reflectedRow;
         return $reflectedRow;
     }

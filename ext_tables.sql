@@ -1,7 +1,8 @@
 CREATE TABLE tx_jarcolumnrow_columns ( 
     uid int(11) NOT NULL auto_increment,
     pid int(11) DEFAULT '0' NOT NULL,
-    extended int(5) DEFAULT '0' NOT NULL,    
+    extended int(5) DEFAULT '0' NOT NULL,
+    title TINYTEXT,
     col_lg TINYTEXT,
     col_md TINYTEXT,
     col_sm TINYTEXT,
@@ -20,15 +21,6 @@ CREATE TABLE tx_jarcolumnrow_columns (
     PRIMARY KEY (uid)
 );
 
-CREATE TABLE tx_jarcolumnrow_accordion_items ( 
-    uid int(11) NOT NULL auto_increment,
-    pid int(11) DEFAULT '0' NOT NULL,    
-    title TINYTEXT,
-    parent_accordion TINYTEXT,
-    sorting int(11) DEFAULT '0' NOT NULL,
-    PRIMARY KEY (uid)
-);
-
 CREATE TABLE tt_content ( 
     columnrow_content_width TINYTEXT,
     columnrow_select_background TINYTEXT,
@@ -37,5 +29,4 @@ CREATE TABLE tt_content (
     columnrow_row_background_image int(11) unsigned NOT NULL default '0',
     columnrow_additional_row_class TINYTEXT,
     columnrow_columns int(11) unsigned NOT NULL default '0',
-    columnrow_accordion_items int(11) unsigned NOT NULL default '0',
 );

@@ -2,6 +2,7 @@
 
 use Jar\Columnrow\ItemsProcFuncs\ColorItemsProcFunc;
 use Jar\Columnrow\ItemsProcFuncs\ColumnItemsProcFunc;
+use Jar\Columnrow\TitleFuncs\ColumnTitleFunc;
 
 defined('TYPO3_MODE') || die();
 
@@ -16,8 +17,22 @@ defined('TYPO3_MODE') || die();
 );
 
 $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_columnrow'] = 'jar-column-row-content-icon';
-
 $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_columnrow']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+	[
+		'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:accordion_headline',
+		'jarcolumnrow_accordion',
+		'EXT:jar_columnrow/Resources/Public/Icons/Accordion.svg',
+	],
+	'CType',
+	'jar_columnrow'
+);
+
+
+$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_accordion'] = 'jar-accordion-content-icon';
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
+
 
 $contentTableColumns = [
 	'columnrow_content_width' => [
@@ -192,7 +207,6 @@ $contentTableColumns = [
 			'minitems' => '1',
 			'maxitems' => 99,
 			'appearance' => [
-				'collapseAll' => 1,
 				'levelLinksPosition' => 'bottom',
 				'showSynchronizationLink' => true,
 				'showPossibleLocalizationRecords' => true,
@@ -210,6 +224,13 @@ $contentTableColumns = [
 			'overrideChildTca' => [
 				'columns' => [
 					'sys_language_uid' => [
+						'config' => [
+							'type' => 'passthrough',
+							'renderType' => NULL,
+							'special' => NULL,
+						],
+					],
+					'title' => [
 						'config' => [
 							'type' => 'passthrough',
 							'renderType' => NULL,
@@ -248,6 +269,26 @@ $GLOBALS['TCA']['tt_content']['palettes']['columnrow_rowappearance']['label'] = 
 	'after:header'
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+	'tt_content',
+	'columnrow_columns',
+	'jarcolumnrow_accordion',
+	'after:header'
+);
+
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrides']['columnrow_columns'] = [
+	'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:items',
+];
+
+
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrides']['columnrow_columns']['config']['overrideChildTca']['columns']['title'] = [
+	'config' => [
+		'type' => 'input',
+		'size' => 30,
+		'eval' => 'trim',
+	],
+];
+
 
 $columnWidthConfig = [
 	'type' => 'select',
@@ -282,7 +323,9 @@ $columnOffsetConfig = [
 $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 	'ctrl' => [
 		'title' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline',
-		'label' => 'col_lg',
+		'label' => 'title',
+		'label_alt' => 'col_lg', 
+		//'label_userFunc' => ColumnTitleFunc::class . '->columnTitle',
 		'tstamp' => 'tstamp',
 		'type' => 'extended',
 		'crdate' => 'crdate',
@@ -306,10 +349,10 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 	],
 	'types' => [
 		0 => [
-			'showitem' => '--palette--;;baseview',
+			'showitem' => 'title,--palette--;;baseview',
 		],
 		1 => [
-			'showitem' => 'sys_language_uid,--palette--;;desktop,--palette--;;medium,--palette--;;small,--palette--;;mobile,additional_col_class,extended, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
+			'showitem' => 'sys_language_uid,title,--palette--;;desktop,--palette--;;medium,--palette--;;small,--palette--;;mobile,additional_col_class,extended, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
 		],
 	],
 	'palettes' => [
@@ -406,6 +449,15 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 				'default' => 0,
 			],
 			'onChange' => 'reload',
+		],
+		'title' => [
+			'exclude' => false,
+			'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:title',
+			'config' => [
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim',
+			],
 		],		
 		'col_lg' => [
 			'exclude' => false,
