@@ -13,6 +13,7 @@ ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns')
 
 /*
     Copy Paste funktioniert nicht
+    Akkordeon englisches Label im backend und frontend anzeigen (ggf. anmerkung in der Doku, dass das nicht geht? wenn verbunden)
     Doku:    
         Color Pflege im TSConfig (2x direkt, allgemein über JAR) / TCA 
         Hinzufügen von neuen Farben

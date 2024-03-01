@@ -207,10 +207,10 @@ $contentTableColumns = [
 			'maxitems' => 99,
 			'appearance' => [
 				'levelLinksPosition' => 'bottom',
-				'showSynchronizationLink' => true,
-				'showPossibleLocalizationRecords' => true,
+				'showSynchronizationLink' => false,
+				'showPossibleLocalizationRecords' => false,
 				'showRemovedLocalizationRecords' => false,
-				'showAllLocalizationLink' => true,
+				'showAllLocalizationLink' => false,
 				'useSortable' => 1,
 				'enabledControls' => [
 					'info' => false,
@@ -218,7 +218,7 @@ $contentTableColumns = [
 			],
 			'behaviour' => [
 				'enableCascadingDelete' => true,
-				'allowLanguageSynchronization' => true,
+				'allowLanguageSynchronization' => false,
 			],
 			'overrideChildTca' => [
 				'columns' => [
@@ -275,8 +275,11 @@ $GLOBALS['TCA']['tt_content']['palettes']['columnrow_rowappearance']['label'] = 
 	'after:header'
 );
 
+// enable language overlay for tx_jarcolumnrow_columns when used as accordion (to rename accordion item titles in connected mode)
 $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrides']['columnrow_columns'] = [
 	'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:items',
+	'l10n_mode' => 'prefixLangTitle',
+	'l10n_display' => 'defaultAsReadonly',
 ];
 
 
