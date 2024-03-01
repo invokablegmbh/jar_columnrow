@@ -14,6 +14,7 @@ ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns')
 /*
     Copy Paste funktioniert nicht
         TARGET: /git/httpdocs/website/public/typo3conf/ext/container/Classes/Hooks/Datahandler/CommandMapBeforeStartHook.php ZEILE 180
+        /git/httpdocs/website/public/typo3conf/ext/container/Classes/Hooks/Datahandler/CommandMapPostProcessingHook.php Einstieg in das Kopieren von Kindern
     Akkordeon englisches Label im backend und frontend anzeigen
     Doku:    
         Color Pflege im TSConfig (2x direkt, allgemein über JAR) / TCA 

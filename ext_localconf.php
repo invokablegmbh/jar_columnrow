@@ -46,12 +46,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Tca\Registry::class
 	'className' => \Jar\Columnrow\Xclasses\Tca\Registry::class,
 ];
 
-// adding the uid to the ctype when fetching the grid
-// @TODO: Make still sense?
-/*$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumnItem::class] = [
-	'className' => \Jar\Columnrow\Xclasses\View\GridColumnItem::class,
-];*/
-
 // translation: adding our columns to the localication summary
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Service\RecordLocalizeSummaryModifier::class] = [
 	'className' => \Jar\Columnrow\Xclasses\Service\RecordLocalizeSummaryModifier::class,
@@ -63,4 +57,9 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 // backend preview: add getContainer to grid column to access image and color informations in the preview
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Backend\Grid\ContainerGridColumn::class] = [
 	'className' => \Jar\Columnrow\Xclasses\Backend\ContainerGridColumn::class,
+];
+
+// repair wrong children colPos when copying columnrow elements
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Hooks\Datahandler\CommandMapBeforeStartHook::class] = [
+	'className' => \Jar\Columnrow\Xclasses\Hooks\Datahandler\CommandMapBeforeStartHook::class,
 ];
