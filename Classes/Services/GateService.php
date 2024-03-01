@@ -100,11 +100,16 @@ class GateService implements SingletonInterface
                 $grid[] = [];
             }
             $columnLabel = '';
-            if($isSpecialColumn) {                
-                $columnLabel = LocalizationUtility::localize('LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom') . ' (' . $column['col_lg'] . ')';
+            if(isset($column['title']) && !empty($column['title'])) {
+                $columnLabel = $column['title'];
             } else {
-                $columnLabel = $column['title'] ?? number_format($currentColumntWidth  / $gridbase * 100, 2, '.', '') . '%';
+                if($isSpecialColumn) {                
+                    $columnLabel = LocalizationUtility::localize('LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom') . ' (' . $column['col_lg'] . ')';
+                } else {
+                    $columnLabel = number_format($currentColumntWidth  / $gridbase * 100, 2, '.', '') . '%';
+                }
             }
+            
             $grid[count($grid) - 1][] = [
                 'name' => $columnLabel,
                 'colPos' => ColumnRowUtility::decodeColPos($column, $row),
@@ -137,7 +142,7 @@ class GateService implements SingletonInterface
             return $this->reflectedRows[$row['uid']];
         }
         $reflectedRow = $this->reflectionService->buildArrayByRow($row, 'tt_content');
-        
+
         $this->reflectedRows[$row['uid']] = $reflectedRow;
         return $reflectedRow;
     }

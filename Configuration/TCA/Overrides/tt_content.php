@@ -2,7 +2,6 @@
 
 use Jar\Columnrow\ItemsProcFuncs\ColorItemsProcFunc;
 use Jar\Columnrow\ItemsProcFuncs\ColumnItemsProcFunc;
-use Jar\Columnrow\TitleFuncs\ColumnTitleFunc;
 
 defined('TYPO3_MODE') || die();
 
@@ -289,6 +288,12 @@ $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrid
 	],
 ];
 
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrides']['columnrow_columns']['config']['overrideChildTca']['types'] = [
+	0 => [
+		'showitem' => 'title',
+	]
+];
+
 
 $columnWidthConfig = [
 	'type' => 'select',
@@ -324,8 +329,7 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 	'ctrl' => [
 		'title' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline',
 		'label' => 'title',
-		'label_alt' => 'col_lg', 
-		//'label_userFunc' => ColumnTitleFunc::class . '->columnTitle',
+		'label_alt' => 'col_lg', 		
 		'tstamp' => 'tstamp',
 		'type' => 'extended',
 		'crdate' => 'crdate',
