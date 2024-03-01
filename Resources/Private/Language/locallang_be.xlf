@@ -7,10 +7,22 @@
 				<source>Template</source>
 			</trans-unit>
 			<trans-unit id="headline">
-				<source>Column Row (Grid)</source>
+				<source>Column Row</source>
 			</trans-unit>
 			<trans-unit id="description">
 				<source>Layout element that displays content in a column row.</source>
+			</trans-unit>
+			<trans-unit id="accordion_headline">
+				<source>Accordion</source>
+			</trans-unit>
+			<trans-unit id="accordion_description">
+				<source>Layout element that displays content in an accordion.</source>
+			</trans-unit>
+			<trans-unit id="items">
+				<source>Items</source>
+			</trans-unit>
+			<trans-unit id="item">
+				<source>Item</source>
 			</trans-unit>
 			<trans-unit id="column_manager">
 				<source>Column management</source>
@@ -119,6 +131,9 @@
 			</trans-unit>
 			<trans-unit id="custom">
 				<source>Custom</source>
+			</trans-unit>
+			<trans-unit id="title">
+				<source>Title</source>
 			</trans-unit>
 		</body>
 	</file>

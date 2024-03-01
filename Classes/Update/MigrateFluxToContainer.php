@@ -64,10 +64,9 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
 
         foreach ($contentElements as $contentElement) {
             $flexForm = GeneralUtility::makeInstance(FlexFormService::class)->convertFlexFormContentToArray($contentElement['pi_flexform']);
-            DebuggerUtility::var_dump($flexForm, (string) $contentElement['uid']);
 
             $contentRow = [
-                'columnrow_content_width' => isset($flexForm['contentWidth']) ? $flexForm['contentWidth'] : '',
+                'columnrow_content_width' => $flexForm['contentWidth'] == 'fullwidth' ? 'container-fluid' : 'container',
                 'columnrow_select_background' => isset($flexForm['selectBackground']) ? $flexForm['selectBackground'] : '',
                 'columnrow_row_background' => isset($flexForm['rowBackground']) ? $flexForm['rowBackground'] : '',
                 'columnrow_row_user_background' => isset($flexForm['rowUserBackground']) ? $flexForm['rowUserBackground'] : '',

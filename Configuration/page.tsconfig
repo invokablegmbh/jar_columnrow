@@ -5,6 +5,7 @@ jar_columnrow {
 }
 
 mod.wizards.newContentElement.wizardItems.container {
+    header = LLL:EXT:container/Resources/Private/Language/locallang.xlf:container
     elements {
         jarcolumnrow_columnrow {
             iconIdentifier = jar-column-row-content-icon
@@ -14,6 +15,14 @@ mod.wizards.newContentElement.wizardItems.container {
                 CType = jarcolumnrow_columnrow
             }
         }
+        jarcolumnrow_accordion {
+            iconIdentifier = jar-accordion-content-icon
+            title = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:accordion_headline
+            description = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:accordion_description
+            tt_content_defValues {
+                CType = jarcolumnrow_accordion
+            }
+        }
     }
-    show := addToList(jarcolumnrow_columnrow)
+    show := addToList(jarcolumnrow_columnrow, jarcolumnrow_accordion)
 }
