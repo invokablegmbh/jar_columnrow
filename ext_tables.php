@@ -13,7 +13,8 @@ ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns')
 
 /*
     Copy Paste funktioniert nicht
-    Akkordeon englisches Label im backend und frontend anzeigen (ggf. anmerkung in der Doku, dass das nicht geht? wenn verbunden)
+        TARGET: /git/httpdocs/website/public/typo3conf/ext/container/Classes/Hooks/Datahandler/CommandMapBeforeStartHook.php ZEILE 180
+    Akkordeon englisches Label im backend und frontend anzeigen
     Doku:    
         Color Pflege im TSConfig (2x direkt, allgemein über JAR) / TCA 
         Hinzufügen von neuen Farben
