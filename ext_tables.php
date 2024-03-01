@@ -12,10 +12,9 @@ $GLOBALS['TBE_STYLES']['skins']['jar_columnrow'] = [
 ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns');
 
 /*
-    Copy Paste funktioniert nicht
-        TARGET: /git/httpdocs/website/public/typo3conf/ext/container/Classes/Hooks/Datahandler/CommandMapBeforeStartHook.php ZEILE 180
-        /git/httpdocs/website/public/typo3conf/ext/container/Classes/Hooks/Datahandler/CommandMapPostProcessingHook.php Einstieg in das Kopieren von Kindern
     Akkordeon englisches Label im backend und frontend anzeigen
+        Automatisches Hinzufügen von Übersetzungen, wenn man im Original was anlegt                        
+            l10n_parent	und l10n source werden falsch gesetzt
     Doku:    
         Color Pflege im TSConfig (2x direkt, allgemein über JAR) / TCA 
         Hinzufügen von neuen Farben
