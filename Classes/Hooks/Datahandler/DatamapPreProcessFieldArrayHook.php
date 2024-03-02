@@ -34,7 +34,7 @@ class DatamapPreProcessFieldArrayHook
     }
 
     protected function copyToLanguageElementInContainer(array $incomingFieldArray): array
-    {        
+    { 
         if (!isset($incomingFieldArray['tx_container_parent']) || (int)$incomingFieldArray['tx_container_parent'] === 0) {
             return $incomingFieldArray;
         }
@@ -48,15 +48,12 @@ class DatamapPreProcessFieldArrayHook
             return $incomingFieldArray;
         }        
         $translatedContainerRecord = $this->database->fetchOneRecord((int)$incomingFieldArray['tx_container_parent']);  
-   
-        //$incomingFieldArray['colPos'] = 773144;
        
         if ($translatedContainerRecord === null) {
             return $incomingFieldArray;
         }
         try {            
             $container = $this->containerFactory->buildContainer((int)$translatedContainerRecord['uid']);
-
             if (!$container->isConnectedMode()) {                
                 $sourceColumnUid = ColumnRowUtility::encodeColPos((int)$incomingFieldArray['colPos']);
                 if($sourceColumnUid !== (int)$incomingFieldArray['colPos']) {
@@ -73,7 +70,7 @@ class DatamapPreProcessFieldArrayHook
     }
 
     public function processDatamap_preProcessFieldArray(array &$incomingFieldArray, string $table, $id, DataHandler $dataHandler): void
-    {        
+    {
         if ($table !== 'tt_content') {
             return;
         }
