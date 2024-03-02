@@ -8,6 +8,8 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use B13\Container\Domain\Factory\ContainerFactory;
+use Jar\Columnrow\Services\GateService;
+use Jar\Utilities\Utilities\IteratorUtility;
 
 class ColumnRowDataProcessor implements DataProcessorInterface
 {
@@ -22,10 +24,31 @@ class ColumnRowDataProcessor implements DataProcessorInterface
      */
     public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
     {  
-        DebuggerUtility::var_dump($processedData);
-        $processedData = ColumnRowUtility::getFrontendAttributesByPopulatedRow($processedData) + $processedData;
+        if(!isset($processedData['data'])) {
+            return $processedData;
+        }
+
+        $row = $processedData['data'];
+
+        DebuggerUtility::var_dump($row);
+        $isTranslatedElementInConnectedMode = $row['sys_language_uid'] > 0 && $row['l18n_parent'] > 0;
+        
+        $reflectedRow = GeneralUtility::makeInstance(GateService::class)->getReflectedRow($row);        
+        $processedData = ColumnRowUtility::getFrontendAttributesByPopulatedRow($reflectedRow) + $processedData;
+
         $containerProcessor = GeneralUtility::makeInstance(ContainerProcessor::class);
-        $processedData = $containerProcessor->process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
+        $containerProcessorResult = $containerProcessor->process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
+        $colsWithChildren = [];
+        foreach(array_keys($containerProcessorResult) as $key) {
+            if(strpos($key, 'children_') === 0) {
+                $colPos = explode('_', $key, 2)[1];
+                // for translated columns in connected mode, use the default uid for the colpos, not the translated one)
+
+                $colsWithChildren[$colPos] = IteratorUtility::pluck($containerProcessorResult[$key], 'renderedContent');
+            }
+        }
+        DebuggerUtility::var_dump($colsWithChildren);
+        die();
         $processedData = $this->mapContentInColumns($processedData);
         
         foreach($processedData['columns'] as $k => $column) {
@@ -76,23 +99,6 @@ class ColumnRowDataProcessor implements DataProcessorInterface
 
         $processedData['space_before_class'] = $processedData['space_before_class'] ? 'space-before-' . $processedData['space_before_class'] : '';
         $processedData['space_after_class'] = $processedData['space_after_class'] ? 'space-after-' . $processedData['space_after_class'] : '';
-
-        return $processedData;
-    }
-
-    protected function mapContentInColumns($processedData) {
-        $columns = $processedData['columns'];
-        foreach($processedData as $key => $value) {
-            $split = explode('_', $key);
-            if(str_contains($key, 'children_')) {
-                foreach($columns as $colKey => $col) {
-                    $strCount = strlen($col['uid']);
-                    if(substr($key, -$strCount) == $col['uid']) {
-                        $processedData['columns'][$colKey]['colPos'] = $split[1];
-                    }
-                }
-            }
-        }
 
         return $processedData;
     }

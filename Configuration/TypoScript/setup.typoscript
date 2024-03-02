@@ -4,14 +4,8 @@ tt_content.jarcolumnrow_columnrow {
    templateRootPaths {
       0 = EXT:jar_columnrow/Resources/Private/Templates/Content/
    }
-   dataProcessing {
-      50 = Jar\Utilities\DataProcessing\ReflectionProcessor
-      50 {
-         tableColumnRemoveablePrefixes.tt_content = columnrow_
-         columnBlacklist = deleted
-         #t3ver_*, hidden, deleted, starttime, endtime, colPos, sectionIndex, sys_language_uid
-      }
-      77 = Jar\Columnrow\DataProcessing\ColumnRowDataProcessor
+   dataProcessing {      
+      50 = Jar\Columnrow\DataProcessing\ColumnRowDataProcessor
    }
 }
 

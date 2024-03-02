@@ -33,13 +33,21 @@ class GateService implements SingletonInterface
     public function __construct(
         private readonly ReflectionService $reflectionService
     ) {
+        // unset blacklisting of language columns
+        $columnBlacklist = $reflectionService->getColumnBlacklist();        
+        $columnBlacklist = array_filter($columnBlacklist, function($value) {
+            return !in_array($value, ['l18n_*', 'l10n_*']);
+        });
+        
         $reflectionService
         ->setTableColumnWhitelist([
             'tt_content' => ['columnrow_*']
         ])
         ->setTableColumnRemoveablePrefixes([
             'tt_content' => ['columnrow_']
-        ]);
+        ])
+        ->setColumnBlacklist($columnBlacklist);
+
     }   
     
     /**

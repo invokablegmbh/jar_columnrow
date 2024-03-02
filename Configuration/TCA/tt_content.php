@@ -291,9 +291,10 @@ $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrid
 	],
 ];
 
+// Important: We need l10n_parent in the list, to be able to use it in the reflected service to get the default of connected translations
 $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrides']['columnrow_columns']['config']['overrideChildTca']['types'] = [
 	0 => [
-		'showitem' => 'title',
+		'showitem' => 'title,l10n_parent',
 	]
 ];
 
@@ -356,10 +357,10 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
 	],
 	'types' => [
 		0 => [
-			'showitem' => 'title,--palette--;;baseview',
+			'showitem' => 'title,--palette--;;baseview,l10n_parent',
 		],
 		1 => [
-			'showitem' => 'sys_language_uid,title,--palette--;;desktop,--palette--;;medium,--palette--;;small,--palette--;;mobile,additional_col_class,extended, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden',
+			'showitem' => 'sys_language_uid,title,--palette--;;desktop,--palette--;;medium,--palette--;;small,--palette--;;mobile,additional_col_class,extended, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden,l10n_parent',
 		],
 	],
 	'palettes' => [
