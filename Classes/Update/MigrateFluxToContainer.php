@@ -113,6 +113,7 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
                     }
 
                     $columnRow = [
+                        'pid' => $contentElement['pid'],
                         'extended' => $extended,
                         'col_lg' => $colLg,
                         'col_md' => isset($column['col-md']) ? $column['col-md'] : null,
@@ -196,17 +197,22 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
 
         $queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
         $queryBuilder->getRestrictions()->removeAll();
-        return $queryBuilder            
+        $query = $queryBuilder            
             ->from('tt_content')
             ->where(
                 $queryBuilder->expr()->like('CType', $queryBuilder->createNamedParameter('jarcolumnrow_%'))
             )
             ->andWhere(
                 $queryBuilder->expr()->neq('pi_flexform', $queryBuilder->createNamedParameter(''))
-            )
-            ->andWhere(
+            );
+
+        if(count($containerBasedColumnRowUids)) {
+            $query->andWhere(
                 $queryBuilder->expr()->notIn('UID', $containerBasedColumnRowUids)
             );
+        }
+
+        return $query;
         
     }
 

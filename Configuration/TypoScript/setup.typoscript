@@ -6,8 +6,10 @@ tt_content.jarcolumnrow_columnrow {
    }
    dataProcessing {
       50 = Jar\Utilities\DataProcessing\ReflectionProcessor
-      50.tableColumnRemoveablePrefixes {
-         tt_content = columnrow_
+      50 {
+         tableColumnRemoveablePrefixes.tt_content = columnrow_
+         columnBlacklist = deleted
+         #t3ver_*, hidden, deleted, starttime, endtime, colPos, sectionIndex, sys_language_uid
       }
       77 = Jar\Columnrow\DataProcessing\ColumnRowDataProcessor
    }

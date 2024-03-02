@@ -170,6 +170,7 @@ class GateService implements SingletonInterface
         // and store the original translation of the last used row
         // for using individual column titles in the grid
         if ($this->lastUsedRow !== null &&
+            $row !== null && 
             $this->lastUsedRow['sys_language_uid'] !== $row['sys_language_uid'] &&
             $this->lastUsedRow['sys_language_uid'] > 0 &&
             $this->lastUsedRow['l18n_parent'] === $row['uid']

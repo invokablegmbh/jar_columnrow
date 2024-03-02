@@ -15,7 +15,7 @@ ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns')
     Akkordeon englisches Label im backend und frontend anzeigen
         Automatisches Hinzufügen von Übersetzungen, wenn man im Original was anlegt                        
             l10n_parent	und l10n source werden falsch gesetzt (werden aber nach Speichern korrigiert, ebenso das erste mal "ReadOnly" nach dem Speichern im übersetzten Element)
-    Connected translated elemente werden nicht angezeigt
+    Connected translated elemente werden nicht angezeigt, dafür muss der Reflection Service umgeschrieben werden
     Doku:    
         Color Pflege im TSConfig (2x direkt, allgemein über JAR) / TCA 
         Hinzufügen von neuen Farben
