@@ -13,6 +13,11 @@ use Jar\Utilities\Utilities\IteratorUtility;
 
 class ColumnRowDataProcessor implements DataProcessorInterface
 {
+    public function __construct(
+        private readonly ContainerFactory $containerFactory
+    ) {
+    }
+
     /**
      * Process data of a record to resolve File objects to the view
      *
@@ -30,26 +35,49 @@ class ColumnRowDataProcessor implements DataProcessorInterface
 
         $row = $processedData['data'];
 
-        DebuggerUtility::var_dump($row);
-        $isTranslatedElementInConnectedMode = $row['sys_language_uid'] > 0 && $row['l18n_parent'] > 0;
-        
-        $reflectedRow = GeneralUtility::makeInstance(GateService::class)->getReflectedRow($row);        
-        $processedData = ColumnRowUtility::getFrontendAttributesByPopulatedRow($reflectedRow) + $processedData;
+        if(!isset($row['sys_language_uid']) || !isset($row['l18n_parent'])){
+            return $processedData;
+        }
 
+        $isTranslatedElementInConnectedMode = ColumnRowUtility::rowIsTranslatedInConnectionMode($row);
+
+        $container = $this->containerFactory->buildContainer($isTranslatedElementInConnectedMode ? $row['_LOCALIZED_UID'] : $row['uid']);
+
+        $toReflectedRow = $isTranslatedElementInConnectedMode ? $container->getContainerRecord() : $row;
+        $reflectedRow = GeneralUtility::makeInstance(GateService::class)->getReflectedRow($toReflectedRow);
+                
+
+
+        // render column content via container processor
         $containerProcessor = GeneralUtility::makeInstance(ContainerProcessor::class);
         $containerProcessorResult = $containerProcessor->process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
         $colsWithChildren = [];
-        foreach(array_keys($containerProcessorResult) as $key) {
-            if(strpos($key, 'children_') === 0) {
+        foreach (array_keys($containerProcessorResult) as $key) {
+            if (strpos($key, 'children_') === 0) {
                 $colPos = explode('_', $key, 2)[1];
-                // for translated columns in connected mode, use the default uid for the colpos, not the translated one)
-
                 $colsWithChildren[$colPos] = IteratorUtility::pluck($containerProcessorResult[$key], 'renderedContent');
             }
         }
-        DebuggerUtility::var_dump($colsWithChildren);
-        die();
-        $processedData = $this->mapContentInColumns($processedData);
+
+        $processedData = $processedData + $reflectedRow + ColumnRowUtility::getFrontendAttributesByPopulatedRow($reflectedRow);
+
+        if (!isset($processedData['columns'])) {
+            return $processedData;
+        }
+      
+        // add content to columns        
+        foreach($processedData['columns'] as $key => $column) {           
+            $colPos = ColumnRowUtility::decodeColPos([
+                'uid' => $column['uid']
+            ]);
+
+            if(isset($colsWithChildren[$colPos])) {
+                $processedData['columns'][$key]['content'] = $colsWithChildren[$colPos];
+            }
+        }
+
+        // add column css classes to columns        
+        // @todo: refactor this to a separate data processor
         
         foreach($processedData['columns'] as $k => $column) {
             $finalColumnClass = $finalOrderClass = $finalOffsetClass = '';
@@ -97,9 +125,11 @@ class ColumnRowDataProcessor implements DataProcessorInterface
             $processedData['columns'][$k]['offsetClass'] = $finalOffsetClass;
         }
 
-        $processedData['space_before_class'] = $processedData['space_before_class'] ? 'space-before-' . $processedData['space_before_class'] : '';
-        $processedData['space_after_class'] = $processedData['space_after_class'] ? 'space-after-' . $processedData['space_after_class'] : '';
+        // @todo: also refactor this to a separate data processor
+        $processedData['space_before_class'] = $row['space_before_class'] ? 'space-before-' . $row['space_before_class'] : '';
+        $processedData['space_after_class'] = $row['space_after_class'] ? 'space-after-' . $row['space_after_class'] : '';
 
+       
         return $processedData;
     }
 }

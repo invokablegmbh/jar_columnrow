@@ -19,6 +19,7 @@ use B13\Container\Tca\Registry;
 use Jar\Columnrow\Hooks\Datahandler\Database as ColumnDatabase;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
@@ -71,6 +72,8 @@ class DatamapPreProcessFieldArrayHook
 
     public function processDatamap_preProcessFieldArray(array &$incomingFieldArray, string $table, $id, DataHandler $dataHandler): void
     {
+        $this->validateColumns($incomingFieldArray, $table, $id, $dataHandler); 
+
         if ($table !== 'tt_content') {
             return;
         }
@@ -81,5 +84,62 @@ class DatamapPreProcessFieldArrayHook
             return;
         }      
         $incomingFieldArray = $this->copyToLanguageElementInContainer($incomingFieldArray);
+    }
+
+
+    protected function validateColumns(array &$incomingFieldArray, string $table, $id, DataHandler $dataHandler): void{
+        $dataMap = $dataHandler->datamap;
+
+        if ($table === 'tx_jarcolumnrow_columns') {
+
+            if(!isset($GLOBALS['fooo'])) {
+                $GLOBALS['fooo'] = [];
+            }
+
+            // look for the parent column row (first in dataset, then in database)              
+            $columnRow = false;
+            if(isset($dataMap['tt_content']) && is_array($dataMap['tt_content'])) {
+                $matchingColumnRows = array_filter($dataMap['tt_content'], function($element) use ($id) {
+                    if(isset($element['columnrow_columns']) && !empty($element['columnrow_columns'])) {
+                        $columndUids = GeneralUtility::trimExplode(',', $element['columnrow_columns']);
+                        return in_array($id, $columndUids);
+                    }
+                    return false;
+                });
+                $columnRow = reset($matchingColumnRows);
+            }
+            if(!$columnRow) {
+                $column = $this->columnDatabase->fetchOneRecord((int)$id);
+                if ($column) {
+                    $columnRow = $this->database->fetchOneRecord((int)$column['parent_column_row']);
+                }
+            }
+            
+            if($columnRow) {                   
+                // under some circumstances the sys_language_uid is set to 0 by free translated elements (if they are created via the translation wizard)
+                // we have to set them to the right language
+                if(
+                    isset($columnRow['sys_language_uid']) &&
+                    $columnRow['sys_language_uid'] > 0 && 
+                    !ColumnRowUtility::rowIsTranslatedInConnectionMode($columnRow)
+                ) {
+                    $incomingFieldArray['sys_language_uid'] = $columnRow['sys_language_uid'];
+                }
+
+                // when editing a element in default language, translated connected elements are created with sorting as 'l10n_source' and 'l10n_parent'
+                // you can solve that by re-saving the element in default language, but it is very anoying
+
+                /*if (
+                    isset($columnRow['sys_language_uid']) &&
+                    $columnRow['sys_language_uid'] > 0 && 
+                    !ColumnRowUtility::rowIsTranslatedInConnectionMode($columnRow)
+                ) {
+                   
+                    $column = $this->columnDatabase->fetchOneRecord((int)$id);
+                    DebuggerUtility::var_dump([$incomingFieldArray, $column]);
+                    die();
+                }*/
+            } 
+        }       
     }
 }

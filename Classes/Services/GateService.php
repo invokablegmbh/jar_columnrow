@@ -38,7 +38,7 @@ class GateService implements SingletonInterface
         $columnBlacklist = array_filter($columnBlacklist, function($value) {
             return !in_array($value, ['l18n_*', 'l10n_*']);
         });
-        
+
         $reflectionService
         ->setTableColumnWhitelist([
             'tt_content' => ['columnrow_*']
@@ -66,7 +66,9 @@ class GateService implements SingletonInterface
             return [];
         }
 
-        $cacheId = $this->originalTranslationOfLastUsedRow === null ? $row['uid'] : $this->originalTranslationOfLastUsedRow['uid'];
+        $inTranslationConnectedMode = $row !== null && $this->originalTranslationOfLastUsedRow !== null && $this->lastUsedRow === $row;
+
+        $cacheId = $inTranslationConnectedMode ? $this->originalTranslationOfLastUsedRow['uid'] : $row['uid'];
 
         if(isset($this->generatedGrids[$cacheId])) {            
             return $this->generatedGrids[$cacheId];
@@ -120,6 +122,7 @@ class GateService implements SingletonInterface
             if($newColumnWidth > $gridbase) {
                 $grid[] = [];
             }
+
             $columnLabel = '';
             if(isset($column['title']) && !empty($column['title'])) {
                 $columnLabel = $column['title'];

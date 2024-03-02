@@ -5,10 +5,9 @@
 		<f:if condition="{columns}">
 			<f:for each="{columns}" as="column" iteration="iteration" key="key">
 				<h2>{column.title}</h2>									
-				<f:debug>{children_{column.colPos}}</f:debug>
-				<f:if condition="{children_{column.colPos}}">
-					<f:for each="{children_{column.colPos}}" as="ce">
-						{ce.renderedContent -> f:format.raw()}
+				<f:if condition="{column.content}">
+					<f:for each="{column.content}" as="ce">
+						{ce -> f:format.raw()}
 					</f:for>
 				</f:if>
 			</f:for>

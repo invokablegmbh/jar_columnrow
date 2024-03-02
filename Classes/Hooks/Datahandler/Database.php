@@ -24,6 +24,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Database implements SingletonInterface
 {
+    private array $fetchedOneRecords = [];
+
     protected function getQueryBuilder(): QueryBuilder
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_jarcolumnrow_columns');
@@ -36,6 +38,10 @@ class Database implements SingletonInterface
 
     public function fetchOneRecord(int $uid): ?array
     {
+        if(isset($this->fetchedOneRecords[$uid])) {
+            return $this->fetchedOneRecords[$uid];
+        }
+
         $queryBuilder = $this->getQueryBuilder();
         $stm = $queryBuilder->select('*')
             ->from('tx_jarcolumnrow_columns')
@@ -54,6 +60,9 @@ class Database implements SingletonInterface
         if ($record === false) {
             return null;
         }
+
+        $this->fetchedOneRecords[$uid] = $record;
+
         return $record;
     }
 

@@ -9,3 +9,6 @@ services:
 
   Jar\Columnrow\Hooks\Datahandler\DatamapPreProcessFieldArrayHook:
     public: true
+  
+  Jar\Columnrow\DataProcessing\ColumnRowDataProcessor:
+    public: true

@@ -134,4 +134,9 @@ class ColumnRowUtility
         
         return $result;
     }
+
+    public static function rowIsTranslatedInConnectionMode(array $row): bool
+    {
+        return $row['sys_language_uid'] > 0 && $row['l18n_parent'] > 0;
+    }
 }
