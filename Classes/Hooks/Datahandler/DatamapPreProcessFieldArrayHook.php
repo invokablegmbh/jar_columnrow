@@ -86,16 +86,21 @@ class DatamapPreProcessFieldArrayHook
         $incomingFieldArray = $this->copyToLanguageElementInContainer($incomingFieldArray);
     }
 
+    // hook in the process when translated elements are created
+    public function processDatamap_postProcessFieldArray($status, $table, $id, array &$fieldArray): void
+    {
+        if ($table === 'tx_jarcolumnrow_columns' && $status=='new' && isset($fieldArray['sys_language_uid']) && $fieldArray['sys_language_uid'] > 0) {   
+            // Go HERE!      
+            DebuggerUtility::var_dump([$status, $table, $id, $fieldArray]);
+            die();
+        }
+    }
+
 
     protected function validateColumns(array &$incomingFieldArray, string $table, $id, DataHandler $dataHandler): void{
         $dataMap = $dataHandler->datamap;
 
         if ($table === 'tx_jarcolumnrow_columns') {
-
-            if(!isset($GLOBALS['fooo'])) {
-                $GLOBALS['fooo'] = [];
-            }
-
             // look for the parent column row (first in dataset, then in database)              
             $columnRow = false;
             if(isset($dataMap['tt_content']) && is_array($dataMap['tt_content'])) {
