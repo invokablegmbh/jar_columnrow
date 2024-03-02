@@ -190,4 +190,9 @@ class Database implements SingletonInterface
         }
         return $record;
     }
+
+    /*public static function isTranslatedInConnectionMode(array $row): bool
+    {
+        return $row['l18n_parent'] === 0 && $row['l10n_source'] === 0;
+    }*/
 }

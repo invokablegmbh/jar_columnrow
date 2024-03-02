@@ -63,7 +63,9 @@ class ColumnRowDataProcessor implements DataProcessorInterface
                     $finalOffsetClass .= ' offset-lg-' . $column['offset_lg'];
                 }
             }
-            $finalColumnClass .= ' col-lg-' . $column['col_lg'];
+            if(!empty($column['col_lg'])) {
+                $finalColumnClass .= ' col-lg-' . $column['col_lg'];
+            }
 
             $processedData['columns'][$k]['cssClass'] = $finalColumnClass;
             $processedData['columns'][$k]['orderClass'] = $finalOrderClass;

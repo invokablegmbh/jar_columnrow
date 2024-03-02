@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Jar\Columnrow\Xclasses\View;
 
-use Jar\Columnrow\Utilities\ColumnRowUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
  *

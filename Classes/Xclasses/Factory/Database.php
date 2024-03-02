@@ -21,14 +21,14 @@ class Database extends \B13\Container\Domain\Factory\Database
 {
     public function fetchOneRecord(int $uid): ?array
     {        
-        $result = parent::fetchOneRecord($uid);
+        $result = parent::fetchOneRecord($uid);        
         GeneralUtility::makeInstance(GateService::class)->setLastUsedRow($result);
         return $result;
     }
 
     public function fetchOneDefaultRecord(array $record): ?array
     {
-        $result = parent::fetchOneDefaultRecord($record);
+        $result = parent::fetchOneDefaultRecord($record);        
         if($result !== null) {
             // overload current connected row with default values        
             GeneralUtility::makeInstance(GateService::class)->setLastUsedRow($result);

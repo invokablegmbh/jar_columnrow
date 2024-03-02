@@ -22,6 +22,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 class GateService implements SingletonInterface
 {
     protected ?array $lastUsedRow = null;
+    protected ?array $originalTranslationOfLastUsedRow = null; // useful, when we have a connected default / translated record situation
     protected array $reflectedRows = [];
     protected array $generatedGrids = [];
 
@@ -46,7 +47,7 @@ class GateService implements SingletonInterface
      * @return array 
      */
     public function getContainerGridFromRow(?array $row): array
-    {        
+    {       
         $reflectedRow = $this->getReflectedRow($row);
 
         if($reflectedRow === null) {
@@ -57,8 +58,10 @@ class GateService implements SingletonInterface
             return [];
         }
 
-        if(isset($this->generatedGrids[$row['uid']])) {            
-            return $this->generatedGrids[$row['uid']];
+        $cacheId = $this->originalTranslationOfLastUsedRow === null ? $row['uid'] : $this->originalTranslationOfLastUsedRow['uid'];
+
+        if(isset($this->generatedGrids[$cacheId])) {            
+            return $this->generatedGrids[$cacheId];
         }
 
         // Create a full-width column to display the child columns at the correct width
@@ -78,6 +81,16 @@ class GateService implements SingletonInterface
                 /* place for first columns */
             ]
         ];
+
+        // translation: overwrite title-fields of columns with the translated values (connected mode), to show right labels in backend
+        if($row === $this->lastUsedRow && $this->originalTranslationOfLastUsedRow !== null) {
+            $orignalLanguageReflectedRow = $this->getReflectedRow($this->originalTranslationOfLastUsedRow);
+            foreach($reflectedRow['columns'] as $key => $column) {
+                if(isset($orignalLanguageReflectedRow['columns'][$key]['title'])) {
+                    $reflectedRow['columns'][$key]['title'] = $orignalLanguageReflectedRow['columns'][$key]['title'];
+                }
+            }
+        }
 
         foreach($reflectedRow['columns'] as $column) {
             // fallback to gridbase if no column width is set (like the accordion items do)
@@ -117,7 +130,7 @@ class GateService implements SingletonInterface
             ];
         }
 
-        $this->generatedGrids[$row['uid']] = $grid;
+        $this->generatedGrids[$cacheId] = $grid;
 
         return $grid;
     }
@@ -153,6 +166,19 @@ class GateService implements SingletonInterface
      */
     public function setLastUsedRow(?array $row): GateService
     {
+        // check if we have a connected default / translated record situation
+        // and store the original translation of the last used row
+        // for using individual column titles in the grid
+        if ($this->lastUsedRow !== null &&
+            $this->lastUsedRow['sys_language_uid'] !== $row['sys_language_uid'] &&
+            $this->lastUsedRow['sys_language_uid'] > 0 &&
+            $this->lastUsedRow['l18n_parent'] === $row['uid']
+        ) {
+            $this->originalTranslationOfLastUsedRow = $this->lastUsedRow;
+        } else {
+            $this->originalTranslationOfLastUsedRow = null;
+        }
+
         $this->lastUsedRow = $row;
         return $this;
     }

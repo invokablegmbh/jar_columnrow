@@ -13,6 +13,21 @@ tt_content.jarcolumnrow_columnrow {
    }
 }
 
+tt_content.jarcolumnrow_accordion =< lib.contentElement 
+tt_content.jarcolumnrow_accordion {
+   templateName = Accordion
+   templateRootPaths {
+      0 = EXT:jar_columnrow/Resources/Private/Templates/Content/
+   }
+   dataProcessing {
+      50 = Jar\Utilities\DataProcessing\ReflectionProcessor
+      50.tableColumnRemoveablePrefixes {
+         tt_content = columnrow_
+      }
+      77 = Jar\Columnrow\DataProcessing\ColumnRowDataProcessor
+   }
+}
+
 page = PAGE
 
 [{$plugin.tx_jar_columnrow.settings.bootstrapGrid} > 0]
