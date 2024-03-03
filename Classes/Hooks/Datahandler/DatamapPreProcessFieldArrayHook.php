@@ -90,7 +90,7 @@ class DatamapPreProcessFieldArrayHook
     public function processDatamap_postProcessFieldArray($status, $table, $id, array &$fieldArray): void
     {
         if ($table === 'tx_jarcolumnrow_columns' && $status=='new' && isset($fieldArray['sys_language_uid']) && $fieldArray['sys_language_uid'] > 0) {   
-            // Go HERE!      
+            // Go HERE!   MAYBE it's just TCA configuration   
             DebuggerUtility::var_dump([$status, $table, $id, $fieldArray]);
             die();
         }
