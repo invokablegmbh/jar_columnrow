@@ -20,7 +20,7 @@
     "require": {
         "typo3/cms-core": "^10.4 || ^11.5  || dev-master",
         "jar/jar_utilities": "^v1.0",
-        "b13/container": "^2.2.5"
+        "b13/container": "^2"
     },
     "autoload": {
         "psr-4": {

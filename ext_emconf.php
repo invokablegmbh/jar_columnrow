@@ -16,7 +16,7 @@ $EM_CONF['jar_columnrow'] = array(
 		'depends' => array(
 			'typo3' => '10.4.1-11.5.99',
 			'php' => '7.4.0-8.1.999',
-			'container' => '2.2.0-2.2.99'
+			'container' => '2.2.0-2.99.99'
 		),
 		'conflicts' => array(),
 		'suggests' => array(), 

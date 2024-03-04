@@ -21,6 +21,7 @@ use Jar\Columnrow\Utilities\ColumnRowUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class DatamapPreProcessFieldArrayHook
 {
@@ -124,7 +125,7 @@ class DatamapPreProcessFieldArrayHook
     }
 
     public function processDatamap_afterAllOperations(DataHandler &$dataHandler)
-    {
+    {        
         $dataMap = $dataHandler->datamap;
 
         // when editing a element in default language, translated connected elements are created with sorting as 'l10n_source' and 'l10n_parent'
