@@ -206,6 +206,7 @@ $contentTableColumns = [
 			'minitems' => '1',
 			'maxitems' => 99,
 			'appearance' => [
+				'collapseAll' => false,
 				'levelLinksPosition' => 'bottom',
 				'showSynchronizationLink' => false,
 				'showPossibleLocalizationRecords' => false,

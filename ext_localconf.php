@@ -52,6 +52,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Service\RecordLocal
 ];
 
 // translation: adding field array hook to change the colpos of an translated element to the cooresponding column
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['tx_columnrow-pre-process-cmdmap'] = \Jar\Columnrow\Hooks\Datahandler\DatamapPreProcessFieldArrayHook::class;
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['tx_columnrow-pre-process-field-array'] = \Jar\Columnrow\Hooks\Datahandler\DatamapPreProcessFieldArrayHook::class;
 
 // backend preview: add getContainer to grid column to access image and color informations in the preview

@@ -89,11 +89,7 @@ class DatamapPreProcessFieldArrayHook
     // hook in the process when translated elements are created
     public function processDatamap_postProcessFieldArray($status, $table, $id, array &$fieldArray): void
     {
-        if ($table === 'tx_jarcolumnrow_columns' && $status=='new' && isset($fieldArray['sys_language_uid']) && $fieldArray['sys_language_uid'] > 0) {   
-            // Go HERE!   MAYBE it's just TCA configuration   
-            DebuggerUtility::var_dump([$status, $table, $id, $fieldArray]);
-            die();
-        }
+        
     }
 
 
@@ -131,8 +127,7 @@ class DatamapPreProcessFieldArrayHook
                     $incomingFieldArray['sys_language_uid'] = $columnRow['sys_language_uid'];
                 }
 
-                // when editing a element in default language, translated connected elements are created with sorting as 'l10n_source' and 'l10n_parent'
-                // you can solve that by re-saving the element in default language, but it is very anoying
+                
 
                 /*if (
                     isset($columnRow['sys_language_uid']) &&
@@ -146,5 +141,83 @@ class DatamapPreProcessFieldArrayHook
                 }*/
             } 
         }       
+    }
+
+    public function processDatamap_afterAllOperations(&$dataHandler)
+    {
+        $dataMap = $dataHandler->datamap;
+
+        // when editing a element in default language, translated connected elements are created with sorting as 'l10n_source' and 'l10n_parent'
+        // you can solve that by re-saving the element in default language, but it is very anoying
+        // so we have to repair them afterwards
+        if(isset($dataMap['tx_jarcolumnrow_columns'])) {
+            $newTranslatedColumns = array_filter($dataMap['tx_jarcolumnrow_columns'], function ($element) {               
+                return
+                    isset($element['l10n_parent']) &&
+                    strpos((string) $element['l10n_parent'], 'NEW') === 0 && 
+                    isset($element['sys_language_uid']) &&
+                    $element['sys_language_uid'] > 0;
+            });
+
+            DebuggerUtility::var_dump($dataHandler->substNEWwithIDs);
+
+            $dataHandlerData = [];
+            foreach($newTranslatedColumns as $key => $newTranslatedColumn) {                
+                if(
+                    !array_key_exists($key, $dataHandler->substNEWwithIDs) ||
+                    !array_key_exists($newTranslatedColumn['l10n_parent'], $dataHandler->substNEWwithIDs)
+                ) {
+                    continue;
+                }
+                $insertedUid = $dataHandler->substNEWwithIDs[$key];
+                $realParentUid = $dataHandler->substNEWwithIDs[$newTranslatedColumn['l10n_parent']];
+                DebuggerUtility::var_dump($insertedUid);
+                DebuggerUtility::var_dump($realParentUid);
+                // update the l10n_parent and l10n_source on this element and write it to DB
+
+                $dataHandlerData[$insertedUid] = [
+                    'l10n_parent' => $realParentUid,
+                    'l10n_source' => $realParentUid
+                ];
+
+
+                
+            }
+            //DebuggerUtility::var_dump($dataHandler);
+
+            //DebuggerUtility::var_dump($dataHandlerData);
+
+            if(count($dataHandlerData)) {                
+                // TODO change something
+            }
+
+            DebuggerUtility::var_dump($newTranslatedColumns);
+            die(); 
+        }  
+    }
+
+    public function processCmdmap_postProcess($command, $table, $id, $value, \TYPO3\CMS\Core\DataHandling\DataHandler &$pObj)
+    {
+        if($table === 'tx_jarcolumnrow_columns' && $command !== 'delete') {
+            //DebuggerUtility::var_dump([$command, $table, $id, $value, $pObj], 'processCmdmap_postProcess');
+            //die();
+        }
+    }
+
+
+    public function processCmdmap_preProcess($command, $table, $id, $value, DataHandler &$dataHandler)
+    {       
+        if ($table === 'tx_jarcolumnrow_columns') {
+            //if($command !== 'delete' && $command !== 'copy') {
+                //DebuggerUtility::var_dump([$command, $table, $id, $value, $dataHandler]);
+                //die();
+            //}
+            
+            
+            
+            if ($command === 'new') {
+                
+            }
+        }
     }
 }
