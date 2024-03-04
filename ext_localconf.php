@@ -28,6 +28,11 @@ if (version_compare(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getExten
 		\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
 		['source' => 'EXT:jar_columnrow/Resources/Public/Icons/ColumnRow.svg']
 	);
+	$iconRegistry->registerIcon(
+		'jar-accordion-content-icon',
+		\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+		['source' => 'EXT:jar_columnrow/Resources/Public/Icons/Accordion.svg']
+	);
 }
 
 // Update Wizards
@@ -52,6 +57,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Service\RecordLocal
 ];
 
 // translation: adding field array hook to change the colpos of an translated element to the cooresponding column
+// validate column row values in certain translation cases
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['tx_columnrow-pre-process-cmdmap'] = \Jar\Columnrow\Hooks\Datahandler\DatamapPreProcessFieldArrayHook::class;
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['tx_columnrow-pre-process-field-array'] = \Jar\Columnrow\Hooks\Datahandler\DatamapPreProcessFieldArrayHook::class;
 
