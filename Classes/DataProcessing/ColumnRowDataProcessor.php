@@ -14,7 +14,9 @@ use Jar\Utilities\Utilities\IteratorUtility;
 class ColumnRowDataProcessor implements DataProcessorInterface
 {
     public function __construct(
-        private readonly ContainerFactory $containerFactory
+        private readonly ContainerFactory $containerFactory,
+        private readonly GateService $gateService,
+        private readonly ContainerProcessor $containerProcessor
     ) {
     }
 
@@ -41,16 +43,26 @@ class ColumnRowDataProcessor implements DataProcessorInterface
 
         $isTranslatedElementInConnectedMode = ColumnRowUtility::rowIsTranslatedInConnectionMode($row);
 
-        $container = $this->containerFactory->buildContainer($isTranslatedElementInConnectedMode ? $row['_LOCALIZED_UID'] : $row['uid']);
+        if(isset($row['_LOCALIZED_UID'])) {
+            $row['uid'] = $row['_LOCALIZED_UID'];
+        }
+
+        $container = $this->containerFactory->buildContainer($row['uid']);
 
         $toReflectedRow = $isTranslatedElementInConnectedMode ? $container->getContainerRecord() : $row;
-        $reflectedRow = GeneralUtility::makeInstance(GateService::class)->getReflectedRow($toReflectedRow);
+        $reflectedRow = $this->gateService->getReflectedRow($toReflectedRow);
                 
+        // add individual labels per language
+        if($isTranslatedElementInConnectedMode) {
+            $reflectedRow = ColumnRowUtility::addIndividualFieldsPerLanguage(
+                $reflectedRow,
+                $this->gateService->getReflectedRow($row)
+            );
+        }
 
-
-        // render column content via container processor
-        $containerProcessor = GeneralUtility::makeInstance(ContainerProcessor::class);
-        $containerProcessorResult = $containerProcessor->process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
+        // render column content via container processor        
+        $containerProcessorResult = $this->containerProcessor->process($cObj, $contentObjectConfiguration, $processorConfiguration, $processedData);
+        
         $colsWithChildren = [];
         foreach (array_keys($containerProcessorResult) as $key) {
             if (strpos($key, 'children_') === 0) {

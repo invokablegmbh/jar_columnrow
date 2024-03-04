@@ -12,9 +12,8 @@ $GLOBALS['TBE_STYLES']['skins']['jar_columnrow'] = [
 ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns');
 
 /*
-    Akkordeon englisches Label im backend und frontend anzeigen
-        Automatisches Hinzufügen von Übersetzungen, wenn man im Original was anlegt                        
-            l10n_parent	und l10n source werden falsch gesetzt (werden aber nach Speichern korrigiert)    
+    TYPO3 12
+    - Akkordeon Migration
     Doku:    
         Color Pflege im TSConfig (2x direkt, allgemein über JAR) / TCA 
         Hinzufügen von neuen Farben

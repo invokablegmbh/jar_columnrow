@@ -200,8 +200,29 @@ class Database implements SingletonInterface
         return $record;
     }
 
-    /*public static function isTranslatedInConnectionMode(array $row): bool
+    public function updateRecord(int $uid, array $fields): void
     {
-        return $row['l18n_parent'] === 0 && $row['l10n_source'] === 0;
-    }*/
+        if(!count($fields)) {
+            return;
+        }
+
+        $queryBuilder = $this->getQueryBuilder();
+        $stm = $queryBuilder->update('tx_jarcolumnrow_columns')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'uid',
+                    $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+                )                
+        );
+
+        foreach($fields as $name => $value) {
+            $stm->set($name, $value);
+        }
+
+        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
+            $stm->execute();
+        } else {
+            $stm->executeStatement();
+        }
+    }
 }

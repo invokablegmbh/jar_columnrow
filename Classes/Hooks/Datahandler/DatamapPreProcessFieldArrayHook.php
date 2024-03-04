@@ -21,7 +21,6 @@ use Jar\Columnrow\Utilities\ColumnRowUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class DatamapPreProcessFieldArrayHook
 {
@@ -86,12 +85,6 @@ class DatamapPreProcessFieldArrayHook
         $incomingFieldArray = $this->copyToLanguageElementInContainer($incomingFieldArray);
     }
 
-    // hook in the process when translated elements are created
-    public function processDatamap_postProcessFieldArray($status, $table, $id, array &$fieldArray): void
-    {
-        
-    }
-
 
     protected function validateColumns(array &$incomingFieldArray, string $table, $id, DataHandler $dataHandler): void{
         $dataMap = $dataHandler->datamap;
@@ -117,7 +110,7 @@ class DatamapPreProcessFieldArrayHook
             }
             
             if($columnRow) {                   
-                // under some circumstances the sys_language_uid is set to 0 by free translated elements (if they are created via the translation wizard)
+                // under some circumstances the sys_language_uid is set to 0 by free translated elements (when their siblings are previous created via the translation wizard)
                 // we have to set them to the right language
                 if(
                     isset($columnRow['sys_language_uid']) &&
@@ -126,24 +119,11 @@ class DatamapPreProcessFieldArrayHook
                 ) {
                     $incomingFieldArray['sys_language_uid'] = $columnRow['sys_language_uid'];
                 }
-
-                
-
-                /*if (
-                    isset($columnRow['sys_language_uid']) &&
-                    $columnRow['sys_language_uid'] > 0 && 
-                    !ColumnRowUtility::rowIsTranslatedInConnectionMode($columnRow)
-                ) {
-                   
-                    $column = $this->columnDatabase->fetchOneRecord((int)$id);
-                    DebuggerUtility::var_dump([$incomingFieldArray, $column]);
-                    die();
-                }*/
             } 
         }       
     }
 
-    public function processDatamap_afterAllOperations(&$dataHandler)
+    public function processDatamap_afterAllOperations(DataHandler &$dataHandler)
     {
         $dataMap = $dataHandler->datamap;
 
@@ -159,9 +139,6 @@ class DatamapPreProcessFieldArrayHook
                     $element['sys_language_uid'] > 0;
             });
 
-            DebuggerUtility::var_dump($dataHandler->substNEWwithIDs);
-
-            $dataHandlerData = [];
             foreach($newTranslatedColumns as $key => $newTranslatedColumn) {                
                 if(
                     !array_key_exists($key, $dataHandler->substNEWwithIDs) ||
@@ -171,53 +148,16 @@ class DatamapPreProcessFieldArrayHook
                 }
                 $insertedUid = $dataHandler->substNEWwithIDs[$key];
                 $realParentUid = $dataHandler->substNEWwithIDs[$newTranslatedColumn['l10n_parent']];
-                DebuggerUtility::var_dump($insertedUid);
-                DebuggerUtility::var_dump($realParentUid);
-                // update the l10n_parent and l10n_source on this element and write it to DB
 
-                $dataHandlerData[$insertedUid] = [
-                    'l10n_parent' => $realParentUid,
-                    'l10n_source' => $realParentUid
-                ];
-
-
-                
+                // check if the problem exists (sorting == l10n_parent == l10n_source) and set the right l10n_parent and l10n_source
+                $row = $this->columnDatabase->fetchOneRecord($insertedUid);
+                if($row && $row['l10n_parent'] === $row['sorting'] && $row['l10n_source'] === $row['sorting']) {
+                    $this->columnDatabase->updateRecord($insertedUid, [
+                        'l10n_parent' => $realParentUid,
+                        'l10n_source' => $realParentUid
+                    ]);
+                }
             }
-            //DebuggerUtility::var_dump($dataHandler);
-
-            //DebuggerUtility::var_dump($dataHandlerData);
-
-            if(count($dataHandlerData)) {                
-                // TODO change something
-            }
-
-            DebuggerUtility::var_dump($newTranslatedColumns);
-            die(); 
         }  
-    }
-
-    public function processCmdmap_postProcess($command, $table, $id, $value, \TYPO3\CMS\Core\DataHandling\DataHandler &$pObj)
-    {
-        if($table === 'tx_jarcolumnrow_columns' && $command !== 'delete') {
-            //DebuggerUtility::var_dump([$command, $table, $id, $value, $pObj], 'processCmdmap_postProcess');
-            //die();
-        }
-    }
-
-
-    public function processCmdmap_preProcess($command, $table, $id, $value, DataHandler &$dataHandler)
-    {       
-        if ($table === 'tx_jarcolumnrow_columns') {
-            //if($command !== 'delete' && $command !== 'copy') {
-                //DebuggerUtility::var_dump([$command, $table, $id, $value, $dataHandler]);
-                //die();
-            //}
-            
-            
-            
-            if ($command === 'new') {
-                
-            }
-        }
     }
 }

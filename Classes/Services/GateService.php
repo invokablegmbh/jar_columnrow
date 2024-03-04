@@ -3,13 +3,11 @@
 declare(strict_types=1);
 namespace Jar\Columnrow\Services;
 
-use Doctrine\DBAL\Schema\Column;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
 use Jar\Utilities\Services\ReflectionService;
 use Jar\Utilities\Utilities\IteratorUtility;
 use Jar\Utilities\Utilities\LocalizationUtility;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
@@ -95,11 +93,7 @@ class GateService implements SingletonInterface
         // translation: overwrite title-fields of columns with the translated values (connected mode), to show right labels in backend
         if($row === $this->lastUsedRow && $this->originalTranslationOfLastUsedRow !== null) {
             $orignalLanguageReflectedRow = $this->getReflectedRow($this->originalTranslationOfLastUsedRow);
-            foreach($reflectedRow['columns'] as $key => $column) {
-                if(isset($orignalLanguageReflectedRow['columns'][$key]['title'])) {
-                    $reflectedRow['columns'][$key]['title'] = $orignalLanguageReflectedRow['columns'][$key]['title'];
-                }
-            }
+            $reflectedRow = ColumnRowUtility::addIndividualFieldsPerLanguage($reflectedRow, $orignalLanguageReflectedRow);
         }
 
         foreach($reflectedRow['columns'] as $column) {
@@ -179,7 +173,7 @@ class GateService implements SingletonInterface
     {
         // check if we have a connected default / translated record situation
         // and store the original translation of the last used row
-        // for using individual column titles in the grid
+        // f.e. for using individual column titles in the grid
         if ($this->lastUsedRow !== null &&
             $row !== null && 
             $this->lastUsedRow['sys_language_uid'] !== $row['sys_language_uid'] &&

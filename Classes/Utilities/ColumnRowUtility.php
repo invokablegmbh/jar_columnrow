@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jar\Columnrow\Utilities;
 
 use Jar\Utilities\Utilities\BackendUtility;
+use Jar\Utilities\Utilities\TcaUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
@@ -135,8 +136,35 @@ class ColumnRowUtility
         return $result;
     }
 
+    /**
+     * @param array $row 
+     * @return bool 
+     */
     public static function rowIsTranslatedInConnectionMode(array $row): bool
     {
         return $row['sys_language_uid'] > 0 && $row['l18n_parent'] > 0;
+    }
+
+    /**
+     * Set individual fields per language, useful for f.e. title fields in connected mode
+     * @param array $reflectedDefaultColumnRow 
+     * @param array $reflectedTranslatedColumnRow 
+     * @return array 
+     */
+    public static function addIndividualFieldsPerLanguage(array $reflectedDefaultColumnRow, array $reflectedTranslatedColumnRow): array
+    {
+        $individualFieldsPerLanguage = TcaUtility::getTca()['tx_jarcolumnrow_columns']['ctrl']['columnRowSettings']['individualFieldsPerLanguage'] ?? [];
+       
+        if(count($individualFieldsPerLanguage) && is_array($reflectedDefaultColumnRow['columns']) && is_array($reflectedTranslatedColumnRow['columns'])) {            
+            foreach($reflectedDefaultColumnRow['columns'] as $key => $column) {
+                foreach ($individualFieldsPerLanguage as $fieldname) {
+                    if(isset($column[$fieldname]) && isset($reflectedTranslatedColumnRow['columns'][$key][$fieldname])) {
+                        $reflectedDefaultColumnRow['columns'][$key][$fieldname] = $reflectedTranslatedColumnRow['columns'][$key][$fieldname];
+                    }
+                }
+            }
+        }
+        
+        return $reflectedDefaultColumnRow;
     }
 }

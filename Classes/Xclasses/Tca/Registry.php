@@ -25,19 +25,6 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
 {
-    /**
-     * @param ContainerConfiguration $containerConfiguration
-     */
-    public function configureContainer(ContainerConfiguration $containerConfiguration): void
-    {
-        parent::configureContainer($containerConfiguration);
-    }
-
-    public function getAllAvailableColumnsColPos(string $cType): array
-    {
-        return parent::getAllAvailableColumnsColPos($cType);
-    }    
-
     public function isContainerElement(string $cType): bool
     {        
         if(ColumnRowUtility::isOurContainerCType($cType)) {
@@ -82,31 +69,5 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
             ];
         }
         return parent::getGridPartialPaths($cType);
-    }
-
-    public function getGridLayoutPaths(string $cType): array
-    {
-        return parent::getGridLayoutPaths($cType);
-    }
-
-    public function getColPosName(string $cType, int $colPos): ?string
-    {
-        return parent::getColPosName($cType, $colPos);
-    }
-
-    public function getAvailableColumns(string $cType): array
-    {
-        return parent::getAvailableColumns($cType);
-    }
-
-    public function getAllAvailableColumns(): array
-    {
-        $columns = parent::getAllAvailableColumns();
-        return $columns;
-    }
-
-    public function getPageTsString(): string
-    {
-        return parent::getPageTsString();
     }
 }

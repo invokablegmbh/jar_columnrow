@@ -24,6 +24,7 @@ class CommandMapBeforeStartHook extends \B13\Container\Hooks\Datahandler\Command
 {
     protected function dataFromContainerIdColPos(array $data): array
     {
+        // repair wrong children colPos when copying columnrow elements (using source colPos instead of target colPos)
         if(
             isset($data['tx_container_parent']) &&
             $data['tx_container_parent'] > 0 &&
