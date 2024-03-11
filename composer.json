@@ -19,7 +19,7 @@
     ],
     "require": {
         "typo3/cms-core": "^12.4 || ^11.5  || dev-master",
-        "jar/jar_utilities": "^v1.0",
+        "jar/jar_utilities": "^v1.0 || ^v2.0",
         "b13/container": "^2"
     },
     "autoload": {
