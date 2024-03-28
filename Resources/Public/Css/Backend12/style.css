@@ -1,0 +1,39 @@
+/* Version 2 Styling */
+
+/* Hide first adjustment row, it's just for representing the right sizes of the real used columns */
+
+.jar-columnrow-grid-container>table>tbody>tr:first-child {
+    height: 0;
+    overflow: hidden;
+}
+
+.jar-columnrow-grid-container>table>tbody>tr:first-child>td {
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    background: transparent;
+    border: none;
+    margin: 0;
+}
+
+.jar-columnrow-grid-container>table>tbody>tr:first-child>td>* {
+    display: none;
+}
+
+/* Draw background */
+.t3-grid-container.jar-columnrow-grid-container {
+    position: relative;
+}
+
+.jar-columnrow-appearance-background {    
+    position: absolute;    
+    display: block;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background-size: cover;
+    opacity: 0.5;    
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: 5px;
+}

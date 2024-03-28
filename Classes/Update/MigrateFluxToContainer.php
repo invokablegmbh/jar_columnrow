@@ -65,6 +65,19 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
         foreach ($contentElements as $contentElement) {
             $flexForm = GeneralUtility::makeInstance(FlexFormService::class)->convertFlexFormContentToArray($contentElement['pi_flexform']);
 
+            // if no columns are preset add one dummy column
+            if (
+                !isset($flexForm['columns']) || 
+                (isset($flexForm['columns']) && is_array($flexForm['columns']) && !count($flexForm['columns'])) ||
+                (isset($flexForm['columns']) && is_string($flexForm['columns']) && $flexForm['columns'] === '')
+            ) {
+                $flexForm['columns'] = [
+                    [
+                        'col' => ColumnRowUtility::getGridBase()
+                    ]
+                ];                
+            }
+
             $contentRow = [
                 'columnrow_content_width' => $flexForm['contentWidth'] == 'fullwidth' ? 'container-fluid' : 'container',
                 'columnrow_select_background' => isset($flexForm['selectBackground']) ? $flexForm['selectBackground'] : '',
@@ -72,7 +85,7 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
                 'columnrow_row_user_background' => isset($flexForm['rowUserBackground']) ? $flexForm['rowUserBackground'] : '',
                 'columnrow_row_background_image' => isset($flexForm['rowBackgroundImage']) ? $flexForm['rowBackgroundImage'] : '',
                 'columnrow_additional_row_class' => isset($flexForm['additionalRowClass']) ? $flexForm['additionalRowClass'] : '',
-                'columnrow_columns' => isset($flexForm['columns']) ? count($flexForm['columns']) : 0,
+                'columnrow_columns' => isset($flexForm['columns']) && is_array($flexForm['columns']) ? count($flexForm['columns']) : 0,
             ];
 
             $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
@@ -204,6 +217,8 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
             )
             ->andWhere(
                 $queryBuilder->expr()->neq('pi_flexform', $queryBuilder->createNamedParameter(''))
+            )->andWhere(
+                $queryBuilder->expr()->eq('deleted', 0)
             );
 
         if(count($containerBasedColumnRowUids)) {

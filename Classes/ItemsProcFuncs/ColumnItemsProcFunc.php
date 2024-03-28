@@ -93,7 +93,7 @@ class ColumnItemsProcFunc implements SingletonInterface
         for ($i = 0; $i < $base; $i++) {
             $colSize = $i + 1;            
             $defaultCols[] = [
-                $colSize,
+                (string) $colSize,
                 $colSize
             ];
         }

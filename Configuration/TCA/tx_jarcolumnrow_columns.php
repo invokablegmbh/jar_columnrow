@@ -65,6 +65,9 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
         'columnRowSettings' => [
             'individualFieldsPerLanguage' => ['title'],
         ],
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'types' => [
         0 => [

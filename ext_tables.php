@@ -1,15 +1,28 @@
 <?php
 
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-$GLOBALS['TBE_STYLES']['skins']['jar_columnrow'] = [
-    'name' => 'jar_columnrow',
-    'stylesheetDirectories' => [
-        'css' => 'EXT:jar_columnrow/Resources/Public/Css/Backend/'
-    ]
-];
+$versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+// Only include page.tsconfig if TYPO3 version is below 12 so that it is not imported twice.
+if ($versionInformation->getMajorVersion() < 12) {
+    $GLOBALS['TBE_STYLES']['skins']['jar_columnrow'] = [
+        'name' => 'jar_columnrow',
+        'stylesheetDirectories' => [
+            'css' => 'EXT:jar_columnrow/Resources/Public/Css/Backend/'
+        ]
+    ];
 
-ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns');
+    ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns');
+} else {
+    $GLOBALS['TYPO3_CONF_VARS']['BE']['stylesheets']['jar_columnrow'] = 'EXT:jar_columnrow/Resources/Public/Css/Backend12/style.css';
+}
+
+
+
+
+
 
 /*
     TYPO3 12
