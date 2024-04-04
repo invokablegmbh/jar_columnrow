@@ -64,18 +64,21 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
 
         foreach ($contentElements as $contentElement) {
             $flexForm = GeneralUtility::makeInstance(FlexFormService::class)->convertFlexFormContentToArray($contentElement['pi_flexform']);
-
+            
             // if no columns are preset add one dummy column
+            $dummyColumn = false;
             if (
                 !isset($flexForm['columns']) || 
                 (isset($flexForm['columns']) && is_array($flexForm['columns']) && !count($flexForm['columns'])) ||
                 (isset($flexForm['columns']) && is_string($flexForm['columns']) && $flexForm['columns'] === '')
             ) {
-                $flexForm['columns'] = [
-                    [
+                $flexForm['columns'] = [];
+                $flexForm['columns'][] = [
+                    'column' => [
                         'col' => ColumnRowUtility::getGridBase()
                     ]
-                ];                
+                ];
+                $dummyColumn = true;
             }
 
             $contentRow = [
@@ -158,6 +161,9 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
                     
                     // move content elements to the new colpos
                     $fluxBasedColPos = ($contentElement['uid'] * 100) + ($index + 1);
+                    if($dummyColumn && count($columns) == 1) {
+                        $fluxBasedColPos = ($contentElement['uid'] * 100);
+                    }
                     $ContainerBasedColPos = ColumnRowUtility::decodeColPos(['uid' => $columnUid]);
 
                     $connectionPool->getConnectionForTable('tt_content')
