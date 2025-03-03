@@ -99,6 +99,9 @@
 			<trans-unit id="full_width">
 				<source>Full width</source>
 			</trans-unit>
+			<trans-unit id="indented">
+				<source>Reduced content width</source>
+			</trans-unit>
 			<trans-unit id="reduced_content_width">
 				<source>Reduced content width</source>
 			</trans-unit>

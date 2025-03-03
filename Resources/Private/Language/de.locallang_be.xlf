@@ -104,6 +104,9 @@
 			<trans-unit id="full_width">
 				<target>Volle Bildschirmbreite</target>
 			</trans-unit>
+			<trans-unit id="indented">
+				<target>Verringerte Inhaltsbreite</target>
+			</trans-unit>
 			<trans-unit id="reduced_content_width">
 				<target>Verringerte Inhaltsbreite</target>
 			</trans-unit>

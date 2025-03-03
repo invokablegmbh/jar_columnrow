@@ -43,12 +43,16 @@ $contentTableColumns = [
 			'items' => [
 				0 => [
 					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:content_width',
-					1 => 'container',
+					1 => 'content',
 				],
 				1 => [
 					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:full_width',
-					1 => 'container-fluid',
+					1 => 'full-width',
 				],
+				2 => [
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:indented',
+					1 => 'indented',
+				]
 			],
 			'size' => 1,
 			'maxitems' => 1,
