@@ -1,0 +1,36 @@
+#Default Configuration
+
+jar_columnrow {
+    gridBase = 12
+}
+
+mod.wizards.newContentElement.wizardItems.container {
+    header = LLL:EXT:container/Resources/Private/Language/locallang.xlf:container
+    elements {
+        jarcolumnrow_columnrow {
+            iconIdentifier = jar-column-row-content-icon
+            title = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline
+            description = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:description
+            tt_content_defValues {
+                CType = jarcolumnrow_columnrow
+            }
+        }
+        jarcolumnrow_accordion {
+            iconIdentifier = jar-accordion-content-icon
+            title = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:accordion_headline
+            description = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:accordion_description
+            tt_content_defValues {
+                CType = jarcolumnrow_accordion
+            }
+        }
+        jarcolumnrow_tab {
+            iconIdentifier = jar-tab-content-icon
+            title = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:tab_headline
+            description = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:tab_description
+            tt_content_defValues {
+                CType = jarcolumnrow_tab
+            }
+        }
+    }
+    show := addToList(jarcolumnrow_columnrow, jarcolumnrow_accordion, jarcolumnrow_tab)
+}

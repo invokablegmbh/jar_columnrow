@@ -7,19 +7,31 @@
 				<target>Template</target>
 			</trans-unit>
 			<trans-unit id="headline">
-				<target>Spaltenelement (Grid | Row - Column)</target>
+				<target>Spaltenelement</target>
 			</trans-unit>
 			<trans-unit id="description">
 				<target>Layoutelement, welches Inhalte in einer Spaltenanordnung anzeigt.</target>
 			</trans-unit>
+			<trans-unit id="accordion_headline">
+				<source>Akkordeon</source>
+			</trans-unit>
+			<trans-unit id="accordion_description">
+				<source>Layoutelement, das Inhalte in einem Akkordeon anzeigt.</source>
+			</trans-unit>
+			<trans-unit id="tab_headline">
+				<source>Tab</source>
+			</trans-unit>
+			<trans-unit id="tab_description">
+				<source>Layoutelement, das Inhalte in einem Tab anzeigt.</source>
+			</trans-unit>
+			<trans-unit id="items">
+				<source>Elemente</source>
+			</trans-unit>
+			<trans-unit id="item">
+				<source>Element</source>
+			</trans-unit>
 			<trans-unit id="column_manager">
 				<target>Spaltenverwaltung</target>
-			</trans-unit>
-			<trans-unit id="column_extended">
-				<target>Erweiterte Spaltenansicht</target>
-			</trans-unit>
-			<trans-unit id="column_extended">
-				<target>Erweiterte Spaltenansicht</target>
 			</trans-unit>
 			<trans-unit id="column">
 				<target>Spalte</target>
@@ -29,42 +41,13 @@
 			</trans-unit>
 			<trans-unit id="column_width">
 				<target>Spaltenbreite</target>
-			</trans-unit>
-			<trans-unit id="column_width_mobile">
-				<target>Spaltenbreite (Mobile)</target>
-			</trans-unit>
-			<trans-unit id="column_width_tablet">
-				<target>Spaltenbreite (Tablet)</target>
-			</trans-unit>
-			<trans-unit id="column_width_small_desktop">
-				<target>Spaltenbreite (Small Desktop)</target>
-			</trans-unit>
-			<trans-unit id="column_width_large_desktop">
-				<target>Spaltenbreite (Large Desktop)</target>
-			</trans-unit>
-			<trans-unit id="order_smartphone">
-				<target>Reihenfolge (Smartphone)</target>
-			</trans-unit>
-			<trans-unit id="order_tablet">
-				<target>Reihenfolge (Tablet)</target>
-			</trans-unit>
-			<trans-unit id="order_small_desktop">
-				<target>Reihenfolge (Small Desktop)</target>
-			</trans-unit>
-			<trans-unit id="order_large_desktop">
-				<target>Reihenfolge (Large Desktop)</target>
-			</trans-unit>
-			<trans-unit id="offset_smartphone">
-				<target>Offset (Smartphone)</target>
-			</trans-unit>
-			<trans-unit id="offset_tablet">
-				<target>Offset (Tablet)</target>
-			</trans-unit>
-			<trans-unit id="offset_small_desktop">
-				<target>Offset (Small Desktop)</target>
-			</trans-unit>
-			<trans-unit id="offset_large_desktop">
-				<target>Offset (Large Desktop)</target>
+			</trans-unit>			
+			<trans-unit id="order">
+				<target>Reihenfolge</target>
+			</trans-unit>			
+			<trans-unit id="offset">
+				<source>Offset</source>
+				<target>Versatz</target>
 			</trans-unit>
 			<trans-unit id="background">
 				<target>Hintergrund</target>
@@ -109,14 +92,11 @@
 				<target>Farbverlauf</target>
 			</trans-unit>
 			<trans-unit id="custom_background">
-				<target>Farbverlauf</target>
+				<target>Benuterdefinierte Hintergrundfarbe</target>
 			</trans-unit>
-			<trans-unit id="add_row_class">
-				<target>Zusätzliche Reihen CSS-Klasse</target>
-			</trans-unit>
-			<trans-unit id="add_column_class">
-				<target>Zusätzliche Spalten CSS-Klasse</target>
-			</trans-unit>
+			<trans-unit id="css_class">
+				<target>Zusätzliche CSS-Klassen</target>
+			</trans-unit>			
 			<trans-unit id="100_percent_nogrid">
 				<target>100% ohne Grid</target>
 			</trans-unit>
@@ -134,6 +114,38 @@
 			</trans-unit>
 			<trans-unit id="width_of_content">
 				<target>Breite des Inhalts</target>
+			</trans-unit>
+			<trans-unit id="default">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="rowappearance">
+				<source>Appearance</source>
+				<target>Darstellung</target>
+			</trans-unit>
+			<trans-unit id="smartphone">
+				<source>Smartphone</source>
+				<target>Smartphone</target>
+			</trans-unit>
+			<trans-unit id="tablet">
+				<source>Tablet</source>
+				<target>Tablet</target>
+			</trans-unit>
+			<trans-unit id="small_desktop">
+				<source>Small desktop</source>
+				<target>Kleine Desktopgeräte</target>
+			</trans-unit>
+			<trans-unit id="large_desktop">
+				<source>Large desktop</source>
+				<target>Große Desktopgeräte</target>
+			</trans-unit>
+			<trans-unit id="custom">
+				<source>Custom</source>
+				<target>Benutzerdefiniert</target>
+			</trans-unit>
+			<trans-unit id="title">
+				<source>Title</source>
+				<target>Titel</target>
 			</trans-unit>
 		</body>
 	</file>

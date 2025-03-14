@@ -6,7 +6,7 @@ $EM_CONF['jar_columnrow'] = array(
 	'category' => 'plugin',
 	'author' => 'invokable GmbH',
 	'author_email' => 'info@invokable.gmbh',
-	'version' => '1.0.22',
+	'version' => '2.0.0',
 	'state' => 'stable',
 	'internal' => '',
 	'uploadfolder' => '0',
@@ -14,10 +14,11 @@ $EM_CONF['jar_columnrow'] = array(
 	'clearCacheOnLoad' => 0,
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '10.4.1-11.5.99',
-			'flux' => '9.4.1.'
+			'typo3' => '12.4.1-12.4.99',
+			'php' => '8.1.999-8.4.99',
+			'container' => '^3.0'
 		),
 		'conflicts' => array(),
-		'suggests' => array(),
+		'suggests' => array(), 
 	),
 );

@@ -1,0 +1,26 @@
+<f:layout name="Default" />
+<f:section name="Header" />
+<f:section name="Main">
+	<f:if condition="{columns}">
+		<div id="c{uid} cmw-{uid}" class="cmw angle--none {class} {space_before_class} {space_after_class} cm__1-column-accordion" style="{style}">
+			<div class="accordion" data-accordion="{uid}-accordion" data-deep-link="true" data-update-history="false" data-allow-all-closed="true" data-multi-expand="true">
+				<f:for each="{columns}" as="column" iteration="iteration" key="key">
+					<div class="accordion-item" data-accordion-item>
+						<a href="#accordion-tab-{iteration.index}-{uid}" class="accordion-title" aria-controls="accordion-tab-{iteration.index}-{uid}" id="accordion-tab-{iteration.index}-{uid}-label" aria-expanded="true">{column.title}</a>
+						<div class="accordion-content" data-tab-content="" id="accordion-tab-{iteration.index}-{uid}" role="region" aria-labelledby="accordion-tab-{iteration.index}-{uid}-label" aria-hidden="false">
+							<f:if condition="{column.content}">
+								<f:for each="{column.content}" as="ce">
+									{ce -> f:format.raw()}
+								</f:for>
+							</f:if>
+						</div>							
+					</div>
+				</f:for>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+
+
+

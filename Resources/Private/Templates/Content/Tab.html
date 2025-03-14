@@ -1,0 +1,30 @@
+<f:layout name="Default" />
+<f:section name="Header" />
+<f:section name="Main">
+	<f:if condition="{columns}">
+		<div id="c{uid} cmw-{uid}" class="cmw angle--none {class} {space_before_class} {space_after_class} cm__1-column-tab" style="{style}">
+			<ul class="tabs" data-responsive-accordion-tabs="tabs small-accordion medium-accordion large-tabs" data-deep-link="true" data-update-history="true" data-deep-link-smudge="true" data-deep-link-smudge-delay="500" id="tabs-{uid}" role="tablist" data-tabs="{uid}-tabs">
+				<f:for each="{columns}" as="column" iteration="iteration" key="key">
+					<li class="tabs-title {f:if(condition: '{iteration.index} === 0', then: 'is-active', else: '')}" role="presentation">
+						<a href="#tabulator-{iteration.index}-{uid}" class="tabs-link" role="tab" aria-controls="tabulator-{iteration.index}-{uid}" aria-selected="true" id="tabulator-{iteration.index}-{uid}-label" tabindex="0">{column.title}</a>
+					</li>
+				</f:for>
+			</ul>
+
+			<div class="tabs-content" data-tabs-content="tabs-{uid}">
+				<f:for each="{columns}" as="column" iteration="iteration" key="key">
+					<div class="tabs-panel {f:if(condition: '{iteration.index} === 0', then: 'is-active', else: '')}" id="tabulator-{iteration.index}-{uid}" role="tabpanel" aria-labelledby="tabulator-{iteration.index}-{uid}-label" aria-hidden="true">
+						<f:if condition="{column.content}">
+							<f:for each="{column.content}" as="ce">
+								{ce -> f:format.raw()}
+							</f:for>
+						</f:if>
+					</div>
+				</f:for>
+			</div>
+
+		</f:if>
+	</div>
+</f:section>				
+
+

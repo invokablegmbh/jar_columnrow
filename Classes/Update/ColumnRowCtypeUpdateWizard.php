@@ -4,15 +4,11 @@ declare(strict_types=1);
 namespace Jar\Columnrow\Update;
 
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
-use Doctrine\DBAL\DBALException;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 
-/** @package Jar\Feditor\Updates */
 class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
 {
     protected $mapping = [
@@ -28,7 +24,7 @@ class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
      */
     public function getIdentifier(): string
     {
-        return 'feditor_columnRowCtypeUpdateWizard';
+        return 'columnrow_CtypeUpdateWizard';
     }
 
     /**
@@ -38,7 +34,7 @@ class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
      */
     public function getTitle(): string
     {
-        return 'Jar: Update old tt_content column row CTypes';
+        return 'ColumnRow: Update old tt_content column row CTypes';
     }
 
     /**
