@@ -18,6 +18,12 @@
 			<trans-unit id="accordion_description">
 				<source>Layoutelement, das Inhalte in einem Akkordeon anzeigt.</source>
 			</trans-unit>
+			<trans-unit id="tab_headline">
+				<source>Tab</source>
+			</trans-unit>
+			<trans-unit id="tab_description">
+				<source>Layoutelement, das Inhalte in einem Tab anzeigt.</source>
+			</trans-unit>
 			<trans-unit id="items">
 				<source>Elemente</source>
 			</trans-unit>
@@ -27,13 +33,6 @@
 			<trans-unit id="column_manager">
 				<target>Spaltenverwaltung</target>
 			</trans-unit>
-			<trans-unit id="column_extended">
-				<target>Erweiterte Spaltenansicht</target>
-			</trans-unit>
-			<trans-unit id="show_extended">
-				<source>Show extended configuration</source>
-				<target>Erweiterte Konfiguration anzeigen</target>
-			</trans-unit>			
 			<trans-unit id="column">
 				<target>Spalte</target>
 			</trans-unit>
@@ -103,9 +102,6 @@
 			</trans-unit>
 			<trans-unit id="full_width">
 				<target>Volle Bildschirmbreite</target>
-			</trans-unit>
-			<trans-unit id="indented">
-				<target>Verringerte Inhaltsbreite</target>
 			</trans-unit>
 			<trans-unit id="reduced_content_width">
 				<target>Verringerte Inhaltsbreite</target>

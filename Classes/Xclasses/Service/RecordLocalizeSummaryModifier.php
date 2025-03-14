@@ -19,6 +19,8 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 class RecordLocalizeSummaryModifier extends \B13\Container\Service\RecordLocalizeSummaryModifier
 {
 
+    private array $matchedColPos = [];
+
     /**
      * @param array $payload
      * @return array
@@ -28,7 +30,7 @@ class RecordLocalizeSummaryModifier extends \B13\Container\Service\RecordLocaliz
         $payload = parent::rebuildPayload($payload);
 
         // check for content elements with our colPos prefix and add them to the column list
-        if(isset($payload['records'])) {            
+        if(isset($payload['records'])) {     
             foreach (array_keys($payload['records']) as $colPos) {
                 if(ColumnRowUtility::isColumnRowColPos((int) $colPos)) {
                     $payload['columns']['columns'][$colPos] = 'Column (' . $colPos . ')';
@@ -37,5 +39,32 @@ class RecordLocalizeSummaryModifier extends \B13\Container\Service\RecordLocaliz
             }
         }
         return $payload;
+    }
+
+    // todo: make that prettier, ugly fix because this is now handled via 2 separate methods in "RecordSummaryForLocalization"
+
+    public function filterRecords(array $recordsPerColPos): array
+    {
+        $filtered = parent::filterRecords($recordsPerColPos);
+
+        $this->matchedColPos = [];
+        foreach (array_keys($filtered) as $colPos) {
+            if (ColumnRowUtility::isColumnRowColPos((int) $colPos)) {
+                $this->matchedColPos[] = $colPos;
+            }
+        }        
+        return $filtered;
+    }
+
+    public function rebuildColumns(array $columns): array
+    {
+        $columns = parent::rebuildColumns($columns);       
+        if(!empty($this->matchedColPos)) {
+            foreach ($this->matchedColPos as $colPos) {
+                $columns['columns'][$colPos] = 'Column (' . $colPos . ')';
+                $columns['columnList'][] = $colPos;
+            }           
+        }
+        return $columns;
     }
 }

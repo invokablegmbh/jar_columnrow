@@ -93,54 +93,100 @@ class ColumnRowDataProcessor implements DataProcessorInterface
         
         foreach($processedData['columns'] as $k => $column) {
             $finalColumnClass = $finalOrderClass = $finalOffsetClass = '';
-            if($column['extended']) {
-                if($column['col_xs'] != '12' && $column['col_xs'] != '0' && ($column['col_xs'] != $column['col_sm'])) {
-                    $finalColumnClass .= ' col-xs-' . $column['col_xs'];
-                }
-                if($column['col_sm'] != '12' && $column['col_sm'] != '0' && ($column['col_sm'] != $column['col_md'])) {
-                    $finalColumnClass .= ' col-sm-' . $column['col_sm'];
-                }
-                if($column['col_md'] != '12' && $column['col_md'] != '0' && ($column['col_md'] != $column['col_lg'])) {
-                    $finalColumnClass .= ' col-md-' . $column['col_md'];
-                }
-
-                if($column['order_xs'] != $column['order_sm']) {
-                    $finalOrderClass .= ' order-xs-' . $column['order_xs'];
-                }
-                if($column['order_sm'] != $column['order_md']) {
-                    $finalOrderClass .= ' order-sm-' . $column['order_sm'];
-                }
-                if($column['order_md'] != $column['order_lg']) {
-                    $finalOrderClass .= ' order-md-' . $column['order_md'];
-                }
-                $finalOrderClass .= ' order-lg-' . $column['order_lg'];
-
-                if($column['offset_xs'] != '12' && $column['offset_xs'] != '0' && ($column['offset_xs'] != $column['offset_sm'])) {
-                    $finalOffsetClass .= ' offset-xs-' . $column['offset_xs'];
-                }
-                if($column['offset_sm'] != '12' && $column['offset_sm'] != '0' && ($column['offset_sm'] != $column['offset_md'])) {
-                    $finalOffsetClass .= ' offset-sm-' . $column['offset_sm'];
-                }
-                if($column['offset_md'] != '12' && $column['offset_md'] != '0' && ($column['offset_md'] != $column['offset_lg'])) {
-                    $finalOffsetClass .= ' offset-md-' . $column['offset_md'];
-                }
-                if($column['offset_lg'] != '12' && $column['offset_lg'] != '0') {
-                    $finalOffsetClass .= ' offset-lg-' . $column['offset_lg'];
-                }
+            
+            if($column['col_xs'] != '12' && $column['col_xs'] != '0') {
+                $finalColumnClass .= ' col-' . $column['col_xs'];
             }
+            if($column['col_sm'] != '12' && $column['col_sm'] != '0') {
+                $finalColumnClass .= ' col-sm-' . $column['col_sm'];
+            }
+            if($column['col_md'] != '12' && $column['col_md'] != '0') {
+                $finalColumnClass .= ' col-md-' . $column['col_md'];
+            }
+
+            if($column['order_xs'] != '12' && $column['order_xs'] != '0') {
+                $finalColumnClass .= ' order-' . $column['order_xs'];
+            }
+            if($column['order_sm'] != $column['order_md']) {
+                $finalOrderClass .= ' order-sm-' . $column['order_sm'];
+            }
+            if($column['order_md'] != $column['order_lg']) {
+                $finalOrderClass .= ' order-md-' . $column['order_md'];
+            }
+            if($column['order_lg'] != $column['order_lg']) {
+                $finalOrderClass .= ' order-lg-' . $column['order_lg'];
+            }
+
+            if($column['offset_xs'] != '12' && $column['offset_xs'] != '0') {
+                $finalColumnClass .= ' offset-' . $column['offset_xs'];
+            }
+            if($column['offset_sm'] != '12' && $column['offset_sm'] != '0') {
+                $finalOffsetClass .= ' offset-sm-' . $column['offset_sm'];
+            }
+            if($column['offset_md'] != '12' && $column['offset_md'] != '0') {
+                $finalOffsetClass .= ' offset-md-' . $column['offset_md'];
+            }
+            if($column['offset_lg'] != '12' && $column['offset_lg'] != '0') {
+                $finalOffsetClass .= ' offset-lg-' . $column['offset_lg'];
+            }
+
             if(!empty($column['col_lg'])) {
                 $finalColumnClass .= ' col-lg-' . $column['col_lg'];
             }
 
+            if(!empty($column['padding_class'])) {
+                $paddingClass = 'cp-none';
+                if($column['padding_class'] === '1') { $paddingClass = 'cp-small'; }
+                if($column['padding_class'] === '2') { $paddingClass = 'cp-normal'; }
+                if($column['padding_class'] === '3') { $paddingClass = 'cp-double'; }
+                if($column['padding_class'] === '4') { $paddingClass = 'cp-x-double'; }
+                $finalColumnClass .= ' ' . $paddingClass;
+            }
+
+            if(!empty($column['alignment_class'])) {
+                $alignClass = 'align-self-top';
+                if($column['alignment_class'] === '1') { $alignClass = 'align-self-middle'; }
+                if($column['alignment_class'] === '2') { $alignClass = 'align-self-bottom'; }
+                if($column['alignment_class'] === '3') { $alignClass = 'align-self-stretch'; }
+                $finalColumnClass .= ' ' . $alignClass;
+            }
+
+            if ($column['bg_color_class'] == "transpa") {
+                $column['bg_color_class'] = 'transparent';
+            }
+            
+            $finalBackgroundColor = '';
+            if(!empty($column['bg_color_class']) && $column['bg_color_class'] != 'transparent') {
+                $finalBackgroundColor = 'background-color:' . $column['bg_color_class'] .';';
+            }
+
+
             $processedData['columns'][$k]['cssClass'] = $finalColumnClass;
             $processedData['columns'][$k]['orderClass'] = $finalOrderClass;
             $processedData['columns'][$k]['offsetClass'] = $finalOffsetClass;
+            $processedData['columns'][$k]['backgroundColor'] = $finalBackgroundColor;
         }
 
         // @todo: also refactor this to a separate data processor
-        $processedData['space_before_class'] = $row['space_before_class'] ? 'space-before-' . $row['space_before_class'] : '';
-        $processedData['space_after_class'] = $row['space_after_class'] ? 'space-after-' . $row['space_after_class'] : '';
+        if($row['space_before_class'] == 'extra-small') $processedData['space_before_class'] = 'space-before-extra-small';
+        else if($row['space_before_class'] == 'small')  $processedData['space_before_class'] = 'space-before-small';
+        else if($row['space_before_class'] == 'medium')  $processedData['space_before_class'] = 'space-before-medium';
+        else if($row['space_before_class'] == 'large')  $processedData['space_before_class'] = 'space-before-large';
+        else if($row['space_before_class'] == 'extra-large')  $processedData['space_before_class'] = 'space-before-extra-large';
+        else $processedData['space_before_class'] = 'pt-none';
+        
+        if($row['space_after_class'] == 'extra-small') $processedData['space_after_class'] = 'space-after-extra-small';
+        else if($row['space_after_class'] == 'small')  $processedData['space_after_class'] = 'space-after-small';
+        else if($row['space_after_class'] == 'medium')  $processedData['space_after_class'] = 'space-after-medium';
+        else if($row['space_after_class'] == 'large')  $processedData['space_after_class'] = 'space-after-large';
+        else if($row['space_after_class'] == 'extra-large')  $processedData['space_after_class'] = 'space-after-extra-large';
+        else $processedData['space_after_class'] = 'pb-normal';
 
+
+        // background options
+        $processedData['bg'] = '';
+        if($row['columnrow_select_background'] == '1') $processedData['bg'] = 'background-color: ' . $row['columnrow_row_background'];
+        if($row['columnrow_select_background'] == '2') $processedData['bg'] = 'background-image: url(' .  $processedData['row_background_image'][0]['url'] . ')';
        
         return $processedData;
     }

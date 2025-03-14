@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Jar\Columnrow\Xclasses\Hooks\Datahandler;
 
-use Jar\Columnrow\Hooks\Datahandler\Database as ColumnDatabase;
+use Jar\Columnrow\Hooks\Datahandler\ColumnDatabase as ColumnDatabase;
 use Jar\Columnrow\Services\GateService;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
-use Jar\Utilities\Utilities\IteratorUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.

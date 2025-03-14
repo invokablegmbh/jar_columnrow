@@ -18,6 +18,12 @@
 			<trans-unit id="accordion_description">
 				<source>Layout element that displays content in an accordion.</source>
 			</trans-unit>
+			<trans-unit id="tab_headline">
+				<source>Tab</source>
+			</trans-unit>
+			<trans-unit id="tab_description">
+				<source>Layout element that displays content in a tab.</source>
+			</trans-unit>
 			<trans-unit id="items">
 				<source>Items</source>
 			</trans-unit>
@@ -27,9 +33,6 @@
 			<trans-unit id="column_manager">
 				<source>Column management</source>
 			</trans-unit>
-			<trans-unit id="show_extended">
-				<source>Show extended configuration</source>
-			</trans-unit>			
 			<trans-unit id="column">
 				<source>Column</source>
 			</trans-unit>
@@ -99,9 +102,6 @@
 			<trans-unit id="full_width">
 				<source>Full width</source>
 			</trans-unit>
-			<trans-unit id="indented">
-				<source>Reduced content width</source>
-			</trans-unit>
 			<trans-unit id="reduced_content_width">
 				<source>Reduced content width</source>
 			</trans-unit>
@@ -137,6 +137,12 @@
 			</trans-unit>
 			<trans-unit id="title">
 				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="padding_class">
+				<source>Column padding</source>
+			</trans-unit>
+			<trans-unit id="bg_color_class">
+				<source>Background Color Class</source>
 			</trans-unit>
 		</body>
 	</file>

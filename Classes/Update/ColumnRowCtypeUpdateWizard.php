@@ -13,7 +13,7 @@ class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
 {
     protected $mapping = [
         'j77template_columnrow' => 'jarcolumnrow_columnrow',
-        // 'j77template_multicontainer' => 'jarcolumnrow_multicontainer'
+        'j77template_multicontainer' => 'jarcolumnrow_multicontainer'
     ];
 
     /**

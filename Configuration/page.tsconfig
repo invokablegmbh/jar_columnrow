@@ -23,6 +23,14 @@ mod.wizards.newContentElement.wizardItems.container {
                 CType = jarcolumnrow_accordion
             }
         }
+        jarcolumnrow_tab {
+            iconIdentifier = jar-tab-content-icon
+            title = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:tab_headline
+            description = LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:tab_description
+            tt_content_defValues {
+                CType = jarcolumnrow_tab
+            }
+        }
     }
-    show := addToList(jarcolumnrow_columnrow, jarcolumnrow_accordion)
+    show := addToList(jarcolumnrow_columnrow, jarcolumnrow_accordion, jarcolumnrow_tab)
 }

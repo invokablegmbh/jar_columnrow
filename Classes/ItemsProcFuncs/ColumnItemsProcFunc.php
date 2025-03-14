@@ -72,12 +72,7 @@ class ColumnItemsProcFunc implements SingletonInterface
             ], $params['items']);
         }
 
-        // add hide column option to all widths (in extended mode)
-        $extendedView = (bool) ($params['row']['extended'] ?? false);
-
-        if($extendedView) {
-            $params['items'][] = ['LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_do_now_show', -1 ];
-        }
+        $params['items'][] = ['LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:item_do_now_show', -1 ];
     }
 
     /** @return array  */
@@ -148,5 +143,35 @@ class ColumnItemsProcFunc implements SingletonInterface
         $params['items']  = array_merge([
             ['LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:no_offset', 0]
         ], $params['items']);
+    }
+
+    /**
+     * Modify the items of a select field
+     *
+     * @param array $params (passed by reference)
+     */
+    public function modifyPaddingItems(array &$params): void
+    {
+        $params['items'] = [
+            [ 'none', 0 ],
+            [ 'small', 1 ],
+            [ 'normal', 2 ],
+            [ 'large', 3 ],
+            [ 'extra-large', 4 ]
+        ];
+    }
+    /**
+     * Modify the items of a select field
+     *
+     * @param array $params (passed by reference)
+     */
+    public function modifyAlignmentItems(array &$params): void
+    {
+        $params['items'] = [
+            [ 'top', 0 ],
+            [ 'middle', 1 ],
+            [ 'bottom', 2 ],
+            [ 'stretch', 3 ]
+        ];
     }
 }

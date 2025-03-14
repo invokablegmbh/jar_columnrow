@@ -1,7 +1,6 @@
 CREATE TABLE tx_jarcolumnrow_columns ( 
     uid int(11) NOT NULL auto_increment,
     pid int(11) DEFAULT '0' NOT NULL,
-    extended int(5) DEFAULT '0' NOT NULL,
     title TINYTEXT,
     col_lg TINYTEXT,
     col_md TINYTEXT,
@@ -15,8 +14,11 @@ CREATE TABLE tx_jarcolumnrow_columns (
     offset_md TINYTEXT,
     offset_sm TINYTEXT,
     offset_xs TINYTEXT,
+    padding_class TINYTEXT,
+    alignment_class TINYTEXT,
+    bg_color_class TINYTEXT,
     additional_col_class TINYTEXT,
-    parent_column_row TINYTEXT,
+    parent_column_row int(11) DEFAULT '0' NOT NULL,
     sorting int(11) DEFAULT '0' NOT NULL,
     PRIMARY KEY (uid)
 );

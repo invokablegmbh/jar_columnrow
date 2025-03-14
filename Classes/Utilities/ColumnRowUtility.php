@@ -89,7 +89,7 @@ class ColumnRowUtility
      */
     public static function getFrontendAttributesByPopulatedRow(array $row): array {
         $result = [
-            'content_width' => 'content',
+            'content_width' => 'container',
             'class' => '',
             'style' => '',
         ];

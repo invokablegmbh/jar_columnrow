@@ -1,12 +1,12 @@
 <f:layout name="Default" />
 <f:section name="Header" />
 <f:section name="Main">	
-	<div id="c{uid}" class="jar-column-row {class} {space_before_class} {space_after_class}" style="{style}">
-		<div class="container {content_width}">
-			<div class="row">
+	<div id="c{uid}" class="jar-column-row {class}" style="{style} {bg}">
+		<div class="{content_width}">
+			<div class="row {space_before_class} {space_after_class}">
 				<f:if condition="{columns}">
 					<f:for each="{columns}" as="column" iteration="iteration" key="key">
-						<div data-index="{iteration.index}" class="{column.cssClass} {column.orderClass} {column.offsetClass} {f:if(condition: column.additional_col_class, then: column.additional_col_class)}">
+						<div data-index="{iteration.index}" id="col-{iteration.index}-{uid}" class="{column.cssClass} {column.orderClass} {column.offsetClass} {f:if(condition: column.additional_col_class, then: column.additional_col_class)}" style="{column.backgroundColor}">
 							<f:if condition="{column.content}">
 								<f:for each="{column.content}" as="ce">									
 									{ce -> f:format.raw()}

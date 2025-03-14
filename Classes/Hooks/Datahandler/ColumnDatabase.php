@@ -22,7 +22,7 @@ use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class Database implements SingletonInterface
+class ColumnDatabase implements SingletonInterface
 {
     private array $fetchedOneRecords = [];
 
@@ -145,7 +145,7 @@ class Database implements SingletonInterface
             ->from('tx_jarcolumnrow_columns')
             ->where(
                 $queryBuilder->expr()->eq(
-                    'tx_container_parent',
+                    'parent_column_row',
                     $queryBuilder->createNamedParameter($parent, \PDO::PARAM_INT)
                 ),
                 $queryBuilder->expr()->eq(

@@ -70,3 +70,8 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Backend\Grid\Contai
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Hooks\Datahandler\CommandMapBeforeStartHook::class] = [
 	'className' => \Jar\Columnrow\Xclasses\Hooks\Datahandler\CommandMapBeforeStartHook::class,
 ];
+
+// disable default containter paste after behavior for columnrow elements, the default behavior suits better in our case
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\B13\Container\Domain\Service\ContainerService::class] = [
+	'className' => \Jar\Columnrow\Xclasses\Service\ContainerService::class,
+];

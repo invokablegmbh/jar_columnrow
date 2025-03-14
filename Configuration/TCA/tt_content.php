@@ -27,9 +27,22 @@ $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_columnrow']['previewRendere
 	'jar_columnrow'
 );
 
-
 $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_accordion'] = 'jar-accordion-content-icon';
 $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+	[
+		'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:tab_headline',
+		'jarcolumnrow_tab',
+		'EXT:jar_columnrow/Resources/Public/Icons/Accordion.svg',
+	],
+	'CType',
+	'jar_columnrow'
+);
+
+
+$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_tab'] = 'jar-tab-content-icon';
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_tab']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
 
 
 $contentTableColumns = [
@@ -43,16 +56,12 @@ $contentTableColumns = [
 			'items' => [
 				0 => [
 					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:content_width',
-					1 => 'content',
+					1 => 'container content',
 				],
 				1 => [
 					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:full_width',
-					1 => 'full-width',
+					1 => 'container full-width',
 				],
-				2 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:indented',
-					1 => 'indented',
-				]
 			],
 			'size' => 1,
 			'maxitems' => 1,
@@ -91,39 +100,20 @@ $contentTableColumns = [
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',
 		'l10n_mode' => 'exclude',
 		'config' => [
-			'type' => 'select',
-			'renderType' => 'selectSingle',
-			'items' => [
-				0 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:user_customized',
-					1 => 'user',
-				],
-			],
-			'itemsProcFunc' => ColorItemsProcFunc::class . '->modifyItems',
-			'size' => 1,
-			'maxitems' => 1,
-			'eval' => '',
-		],
-		'displayCond' => 'FIELD:columnrow_select_background:=:1',
-		'onChange' => 'reload',
-	],
-	'columnrow_row_user_background' => [
-		'exclude' => false,
-		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom_background',
-		'l10n_mode' => 'exclude',
-		'config' => [
 			'type' => 'input',
 			'renderType' => 'colorpicker',
 			'size' => 10,
 			'eval' => 'trim',
-		],
-		'displayCond' =>
-		[
-			'AND' => [
-				'FIELD:columnrow_row_background:=:user',
-				'FIELD:columnrow_select_background:=:1',
+			'valuePicker' => [
+				'items' => [
+					['Weiß', '#ffffff'],
+					['Schwarz', '#000000'],
+					['Rot', '#e30613'],
+					['Grau', '#dadada'],
+				],
 			],
-		], 
+		],
+		'displayCond' => 'FIELD:columnrow_select_background:=:1',
 	],
 	'columnrow_row_background_image' => [
 		'exclude' => false,
@@ -256,9 +246,8 @@ $contentTableColumns = [
 		columnrow_select_background,
 		--linebreak--,				
 		columnrow_row_background,
-		columnrow_row_user_background,
 		columnrow_row_background_image,
-		--linebreak--,		
+		--linebreak--,
 		columnrow_content_width,
 		columnrow_additional_row_class,
 	',
@@ -281,6 +270,13 @@ $GLOBALS['TCA']['tt_content']['palettes']['columnrow_rowappearance']['label'] = 
 	'after:header'
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+	'tt_content',
+	'columnrow_columns',
+	'jarcolumnrow_tab',
+	'after:header'
+);
+
 // enable language overlay for tx_jarcolumnrow_columns when used as accordion (to rename accordion item titles in connected mode)
 $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrides']['columnrow_columns'] = [
 	'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:items',
@@ -299,6 +295,29 @@ $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrid
 
 // Important: We need l10n_parent in the list, to be able to use it in the reflected service to get the default of connected translations
 $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['columnsOverrides']['columnrow_columns']['config']['overrideChildTca']['types'] = [
+	0 => [
+		'showitem' => 'title,l10n_parent',
+	]
+];
+
+// enable language overlay for tx_jarcolumnrow_columns when used as tab (to rename tab item titles in connected mode)
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_tab']['columnsOverrides']['columnrow_columns'] = [
+	'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:items',
+	'l10n_mode' => 'prefixLangTitle',
+	'l10n_display' => 'defaultAsReadonly',
+];
+
+
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_tab']['columnsOverrides']['columnrow_columns']['config']['overrideChildTca']['columns']['title'] = [
+	'config' => [
+		'type' => 'input',
+		'size' => 30,
+		'eval' => 'trim',
+	],
+];
+
+// Important: We need l10n_parent in the list, to be able to use it in the reflected service to get the default of connected translations
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_tab']['columnsOverrides']['columnrow_columns']['config']['overrideChildTca']['types'] = [
 	0 => [
 		'showitem' => 'title,l10n_parent',
 	]

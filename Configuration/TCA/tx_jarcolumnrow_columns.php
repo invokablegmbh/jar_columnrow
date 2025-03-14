@@ -34,6 +34,24 @@ $columnOffsetConfig = [
     'maxitems' => 1,
     'eval' => '',
 ];
+$columnPaddingConfig = [
+    'type' => 'select',
+    'renderType' => 'selectSingle',
+    'items' => [],
+    'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyPaddingItems',
+    'size' => 1,
+    'maxitems' => 1,
+    'eval' => '',
+];
+$columnAlignmentConfig = [
+    'type' => 'select',
+    'renderType' => 'selectSingle',
+    'items' => [],
+    'itemsProcFunc' => ColumnItemsProcFunc::class . '->modifyAlignmentItems',
+    'size' => 1,
+    'maxitems' => 1,
+    'eval' => '',
+];
 
 $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
     'ctrl' => [
@@ -41,7 +59,6 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
         'label' => 'title',
         'label_alt' => 'col_lg',
         'tstamp' => 'tstamp',
-        'type' => 'extended',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
@@ -71,15 +88,27 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
     ],
     'types' => [
         0 => [
-            'showitem' => 'title,--palette--;;baseview,l10n_parent',
-        ],
-        1 => [
-            'showitem' => 'sys_language_uid,title,--palette--;;desktop,--palette--;;medium,--palette--;;small,--palette--;;mobile,additional_col_class,extended, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime, hidden,l10n_parent',
-        ],
+            'showitem' => '
+                title,
+                --palette--;;desktop,
+                l10n_parent,
+                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+                --palette--;;medium,
+                --palette--;;small,
+                --palette--;;mobile,
+                --palette--;;additinal_options,
+                additional_col_class,
+                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
+                starttime,
+                endtime,
+                hidden,
+                l10n_parent,
+            ',
+        ]
     ],
     'palettes' => [
         'baseview' => [
-            'showitem' => 'col_lg, extended',
+            'showitem' => 'col_lg',
         ],
         'desktop' => [
             'showitem' => 'col_lg, order_lg, offset_lg',
@@ -96,6 +125,10 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
         'mobile' => [
             'showitem' => 'col_xs, order_xs, offset_xs',
             'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:smartphone',
+        ],
+        'additinal_options' => [
+            'showitem' => 'padding_class, alignment_class, bg_color_class',
+            'label' => 'Weitere Optionen',
         ],
     ],
     'columns' => [
@@ -162,15 +195,6 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
                     'upper' => 2145913200,
                 ],
             ],
-        ],
-        'extended' => [
-            'exclude' => false,
-            'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:show_extended',
-            'config' => [
-                'type' => 'check',
-                'default' => 0,
-            ],
-            'onChange' => 'reload',
         ],
         'title' => [
             'exclude' => false,
@@ -240,6 +264,34 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
             'exclude' => false,
             'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:offset',
             'config' => $columnOffsetConfig
+        ],
+        'padding_class' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:padding_class',
+            'config' => $columnPaddingConfig
+        ],
+        'alignment_class' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:alignment_class',
+            'config' => $columnAlignmentConfig
+        ],
+        'bg_color_class' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:bg_color_class',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'colorpicker',
+                'size' => 10,
+                'default' => 'transparent', // Optional: Standardfarbe
+                'valuePicker' => [
+                    'items' => [
+                        ['Weiß', '#ffffff'],
+                        ['Schwarz', '#000000'],
+                        ['Rot', '#e30613'],
+                        ['Grau', '#dadada'],
+                    ],
+                ],
+            ],
         ],
         'additional_col_class' => [
             'exclude' => false,
