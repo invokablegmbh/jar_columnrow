@@ -257,7 +257,7 @@ class DatamapPreProcessFieldArrayHook
                         !empty($originalColumn['parent_column_row']) &&
                         isset($originalColumn['sorting'])
                     ) { 
-                        $originalColumnRow = $this->database->fetchOneRecord($originalColumn['parent_column_row']);
+                        $originalColumnRow = $this->database->fetchOneRecord((int)$originalColumn['parent_column_row']);
 
                         if(
                             $originalColumnRow &&
