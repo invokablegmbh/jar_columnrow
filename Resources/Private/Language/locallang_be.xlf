@@ -115,7 +115,7 @@
 				<source>Width of content</source>
 			</trans-unit>
 			<trans-unit id="horizontal_alignment">
-				<target>Horizontal alignment</target>
+				<source>Horizontal alignment</source>
 			</trans-unit>
 			<trans-unit id="default">
 				<source>Default</source>
