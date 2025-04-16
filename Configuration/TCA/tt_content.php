@@ -68,6 +68,32 @@ $contentTableColumns = [
 			'eval' => '',
 		],
 	],
+	'columnrow_horizontal_alignment' => [
+		'exclude' => false,
+		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:horizontal_alignment',
+		'l10n_mode' => 'exclude',
+		'config' => [
+			'type' => 'select',
+			'renderType' => 'selectSingle',
+			'items' => [
+				0 => [
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:left',
+					1 => 'start',
+				],
+				1 => [
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:middle',
+					1 => 'center',
+				],
+				2 => [
+					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:right',
+					1 => 'end',
+				],
+			],
+			'size' => 1,
+			'maxitems' => 1,
+			'eval' => '',
+		],
+	],
 	'columnrow_select_background' => [
 		'exclude' => false,
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background',
@@ -250,6 +276,8 @@ $contentTableColumns = [
 		--linebreak--,
 		columnrow_content_width,
 		columnrow_additional_row_class,
+		--linebreak--,
+		columnrow_horizontal_alignment,
 	',
 	'after:header'
 );

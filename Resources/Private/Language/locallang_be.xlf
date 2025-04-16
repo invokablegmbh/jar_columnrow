@@ -114,6 +114,9 @@
 			<trans-unit id="width_of_content">
 				<source>Width of content</source>
 			</trans-unit>
+			<trans-unit id="horizontal_alignment">
+				<target>Horizontal alignment</target>
+			</trans-unit>
 			<trans-unit id="default">
 				<source>Default</source>
 			</trans-unit>
@@ -143,6 +146,15 @@
 			</trans-unit>
 			<trans-unit id="bg_color_class">
 				<source>Background Color Class</source>
+			</trans-unit>
+			<trans-unit id="left">
+				<source>Left</source>
+			</trans-unit>
+			<trans-unit id="middle">
+				<source>Center</source>
+			</trans-unit>
+			<trans-unit id="right">
+				<source>Right</source>
 			</trans-unit>
 		</body>
 	</file>

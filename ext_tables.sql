@@ -26,6 +26,7 @@ CREATE TABLE tx_jarcolumnrow_columns (
 CREATE TABLE tt_content ( 
     colPos BIGINT unsigned DEFAULT '0' NOT NULL,
     columnrow_content_width TINYTEXT,
+    columnrow_horizontal_alignment TINYTEXT,
     columnrow_select_background TINYTEXT,
     columnrow_row_background TINYTEXT,
     columnrow_row_user_background TINYTEXT,

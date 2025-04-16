@@ -115,6 +115,10 @@
 			<trans-unit id="width_of_content">
 				<target>Breite des Inhalts</target>
 			</trans-unit>
+			<trans-unit id="horizontal_alignment">
+				<source>horizontal_alignment</source>
+				<target>Horizontale Ausrichtung</target>
+			</trans-unit>
 			<trans-unit id="default">
 				<source>Default</source>
 				<target>Standard</target>
