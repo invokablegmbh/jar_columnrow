@@ -57,7 +57,6 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
      */
     public function executeUpdate(): bool
     {
-        die;
         $contentElements = $this->getQueryForFluxBasedColumnRowElements()
             ->select('*')
             ->executeQuery()
@@ -83,7 +82,7 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
             }
 
             $contentRow = [
-                'columnrow_content_width' => $flexForm['contentWidth'] == 'fullwidth' ? 'grid-container full' : 'grid-container',
+                'columnrow_content_width' => $flexForm['contentWidth'] == 'fullwidth' ? 'container full-width' : 'container content',
                 'columnrow_select_background' => isset($flexForm['selectBackground']) ? $flexForm['selectBackground'] : '',
                 'columnrow_row_background' => isset($flexForm['rowBackground']) ? $flexForm['rowBackground'] : '',
                 'columnrow_row_user_background' => isset($flexForm['rowUserBackground']) ? $flexForm['rowUserBackground'] : '',
