@@ -94,29 +94,36 @@ class ColumnRowUtility
             'style' => '',
         ];
 
-        if(
-            !array_key_exists('select_background', $row) ||
-            !array_key_exists('row_background', $row) ||
-            !array_key_exists('row_user_background', $row) ||
-            !array_key_exists('row_background_image', $row) ||
-            !array_key_exists('content_width', $row) ||
-            !array_key_exists('additional_row_class', $row)
-        ) {
-            return $result;
+        if(!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jar_columnrow']['getFrontendAttributesByPopulatedRow'])) {
+            if(
+                !array_key_exists('select_background', $row) ||
+                !array_key_exists('row_background', $row) ||
+                !array_key_exists('row_user_background', $row) ||
+                !array_key_exists('row_background_image', $row) ||
+                !array_key_exists('content_width', $row) ||
+                !array_key_exists('additional_row_class', $row)            
+            ) {
+                return $result;
+            }
         }
 
-        // content width
-        $result['content_width'] = $row['content_width'];
+        
 
-        // Background Image Mode
-        if($row['select_background'] == 2 && is_array($row['row_background_image']) && count($row['row_background_image'])) {
+        // content width
+        if(!empty($row['content_width'])) {
+            $result['content_width'] = $row['content_width'];
+        }
+
+
+        // Background Image Mode        
+        if(isset($row['select_background']) && $row['select_background'] == 2 && is_array($row['row_background_image']) && count($row['row_background_image'])) {
             $result['style'] .= 'background-image:url(' . $row['row_background_image'][0]['url'] . ');';
         }
         // Selected color mode - custom color
-        else if ($row['select_background'] == 1 ) {
+        else if (isset($row['select_background']) && $row['select_background'] == 1 ) {
             
             // custom color
-            if ($row['row_background'] === 'user') {
+            if ($row['row_background'] === 'user' && !empty($row['row_user_background'])) {
                 $result['style'] .= 'background-color:' . $row['row_user_background'] . ';';
             } else {
                 // if $row['row_background'] starts with a '.' it is a class otherwise a colorcode
@@ -126,11 +133,27 @@ class ColumnRowUtility
                     $result['style'] .= 'background-color:' . $row['row_background'] . ';';
                 }
             }
-        }
+        }        
 
         // Additional Row Class
-        if ($row['additional_row_class']) {
+        if (!empty($row['additional_row_class'])) {
             $result['class'] .= ' ' . implode(' ', explode('.', $row['additional_row_class']));
+        }
+
+        // add hook to change or add attributes
+        $hookResult = [];
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jar_columnrow']['getFrontendAttributesByPopulatedRow'])) {
+            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jar_columnrow']['getFrontendAttributesByPopulatedRow'] as $className) {                
+                $hookResult[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($className)
+                    ->getFrontendAttributesByPopulatedRow($row, $result);
+            }
+        }
+        if (is_array($hookResult) && count($hookResult)) {
+            foreach ($hookResult as $hookRow) {
+                if (is_array($hookRow)) {
+                    $result = array_merge($result, $hookRow);
+                }
+            }
         }
         
         return $result;
