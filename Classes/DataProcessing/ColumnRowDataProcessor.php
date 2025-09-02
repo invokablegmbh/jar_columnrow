@@ -167,20 +167,17 @@ class ColumnRowDataProcessor implements DataProcessorInterface
             $processedData['columns'][$k]['backgroundColor'] = $finalBackgroundColor;
         }
 
-        // @todo: also refactor this to a separate data processor
-        if($row['space_before_class'] == 'extra-small') $processedData['space_before_class'] = 'space-before-extra-small';
-        else if($row['space_before_class'] == 'small')  $processedData['space_before_class'] = 'space-before-small';
-        else if($row['space_before_class'] == 'medium')  $processedData['space_before_class'] = 'space-before-medium';
-        else if($row['space_before_class'] == 'large')  $processedData['space_before_class'] = 'space-before-large';
-        else if($row['space_before_class'] == 'extra-large')  $processedData['space_before_class'] = 'space-before-extra-large';
-        else $processedData['space_before_class'] = 'pt-none';
-        
-        if($row['space_after_class'] == 'extra-small') $processedData['space_after_class'] = 'space-after-extra-small';
-        else if($row['space_after_class'] == 'small')  $processedData['space_after_class'] = 'space-after-small';
-        else if($row['space_after_class'] == 'medium')  $processedData['space_after_class'] = 'space-after-medium';
-        else if($row['space_after_class'] == 'large')  $processedData['space_after_class'] = 'space-after-large';
-        else if($row['space_after_class'] == 'extra-large')  $processedData['space_after_class'] = 'space-after-extra-large';
-        else $processedData['space_after_class'] = 'pb-normal';
+        if (!empty($row['space_before_class'])) {
+            $processedData['space_before_class'] = 'space-before-' . $row['space_before_class'];
+        } else {
+            $processedData['space_before_class'] = 'pt-none';
+        }
+
+        if (!empty($row['space_after_class'])) {
+            $processedData['space_after_class'] = 'space-after-' . $row['space_after_class'];
+        } else {
+            $processedData['space_after_class'] = 'pb-normal';
+        }
 
 
         // background options
