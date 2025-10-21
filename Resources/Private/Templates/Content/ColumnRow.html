@@ -1,6 +1,9 @@
 <f:layout name="Default" />
 <f:section name="Header" />
 <f:section name="Main">	
+	<f:if condition="{focusAreaCssStyling}">
+        {focusAreaCssStyling -> f:format.raw()}
+    </f:if>
 	<div id="c{uid}" class="jar-column-row {class}" style="{style} {bg}">
 		<div class="{content_width}">
 			<div class="row {space_before_class} {space_after_class} justify-content-{horizontal_alignment}">
@@ -19,7 +22,3 @@
 		</div>
 	</div>
 </f:section>
-
-
-
-

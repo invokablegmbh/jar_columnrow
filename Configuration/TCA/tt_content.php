@@ -145,7 +145,7 @@ $contentTableColumns = [
 		'exclude' => false,
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_graph',
 		'l10n_mode' => 'exclude',
-		'config' =>  [
+		'config' => [
 			'type' => 'inline',
 			'foreign_table' => 'sys_file_reference',
 			'foreign_field' => 'uid_foreign',
@@ -158,23 +158,84 @@ $contentTableColumns = [
 			'foreign_selector' => 'uid_local',
 			'overrideChildTca' => [
 				'columns' => [
-					'uid_local' => [
+					'crop' => [
 						'config' => [
-							'appearance' => [
-								'elementBrowserType' => 'file',
-								'elementBrowserAllowed' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai,svg',
+							'cropVariants' => [
+								'desktop' => [
+									'title' => 'LLL:EXT:jar_feditor/Resources/Private/Language/locallang.xlf:desktop',
+									'allowedAspectRatios' => [
+										'NaN' => [
+											'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.free',
+											'value' => 0.0,
+										],
+									],
+									'focusArea' => [
+										'x' => 0.4166,
+										'y' => 0.4166,
+										'width' => 0.1666,
+										'height' => 0.1666,
+									],
+								],
+								'medium' => [
+									'title' => 'LLL:EXT:jar_feditor/Resources/Private/Language/locallang.xlf:medium',
+									'allowedAspectRatios' => [
+										'NaN' => [
+											'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.free',
+											'value' => 0.0,
+										],
+									],
+									'focusArea' => [
+										'x' => 0.4166,
+										'y' => 0.4166,
+										'width' => 0.1666,
+										'height' => 0.1666,
+									],
+								],
+								'tablet' => [
+									'title' => 'LLL:EXT:jar_feditor/Resources/Private/Language/locallang.xlf:tablet',
+									'allowedAspectRatios' => [
+										'NaN' => [
+											'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.free',
+											'value' => 0.0,
+										],
+									],
+									'focusArea' => [
+										'x' => 0.4166,
+										'y' => 0.4166,
+										'width' => 0.1666,
+										'height' => 0.1666,
+									],
+								],
+								'mobile' => [
+									'title' => 'LLL:EXT:jar_feditor/Resources/Private/Language/locallang.xlf:mobile',
+									'allowedAspectRatios' => [
+										'NaN' => [
+											'title' => 'LLL:EXT:core/Resources/Private/Language/locallang_wizards.xlf:imwizard.ratio.free',
+											'value' => 0.0,
+										],
+									],
+									'focusArea' => [
+										'x' => 0.4166,
+										'y' => 0.4166,
+										'width' => 0.1666,
+										'height' => 0.1666,
+									],
+								],
 							],
 						],
 					],
 				],
 				'types' => [
 					2 => [
-						'showitem' => '--palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,--palette--;;filePalette',
+						'showitem' => '
+							--palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+							--palette--;;filePalette
+						',
 					],
 				],
 			],
 			'filter' => [
-				0 => [
+				[
 					'userFunc' => 'TYPO3\\CMS\\Core\\Resource\\Filter\\FileExtensionFilter->filterInlineChildren',
 					'parameters' => [
 						'allowedFileExtensions' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai,svg',
@@ -186,7 +247,7 @@ $contentTableColumns = [
 				'useSortable' => true,
 				'headerThumbnail' => [
 					'field' => 'uid_local',
-					'height' => '45m',
+					'height' => '45',
 				],
 				'enabledControls' => [
 					'info' => true,
@@ -203,6 +264,7 @@ $contentTableColumns = [
 		],
 		'displayCond' => 'FIELD:columnrow_select_background:=:2',
 	],
+
 	'columnrow_additional_row_class' => [
 		'exclude' => false,
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:css_class',

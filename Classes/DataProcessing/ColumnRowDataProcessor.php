@@ -17,8 +17,7 @@ class ColumnRowDataProcessor implements DataProcessorInterface
         private readonly ContainerFactory $containerFactory,
         private readonly GateService $gateService,
         private readonly ContainerProcessor $containerProcessor
-    ) {
-    }
+    ) {}
 
     /**
      * Process data of a record to resolve File objects to the view
@@ -179,12 +178,48 @@ class ColumnRowDataProcessor implements DataProcessorInterface
             $processedData['space_after_class'] = 'pb-normal';
         }
 
+        $convertCroppingAreaToCssVars = function ($croppingArea) {
+            if (empty($croppingArea['x']) || empty($croppingArea['y'])) {
+                return '';
+            }
+            $fpx = round($croppingArea['x'] + ($croppingArea['width'] / 2), 4) * 100;
+            $fpy = round($croppingArea['y'] + ($croppingArea['height'] / 2), 4) * 100;
+            return '--fpx:' . $fpx . '%;--fpy:' . $fpy . '%;';
+        };
 
+        $focusAreaCss = [];
+        if (!empty($processedData['row_background_image'][0]['focusArea'])) {
+            foreach ($processedData['row_background_image'][0]['focusArea'] as $variant => $area) {
+                $focusAreaCss[$variant] = $convertCroppingAreaToCssVars($area);
+            }
+        }
+        
+        $processedData['focusAreaCss'] = $focusAreaCss;
+        $processedData['focusAreaCssStyling'] = $this->buildFocusAreaCssStyling($focusAreaCss, $row['uid']);
+        
         // background options
         $processedData['bg'] = '';
-        if($row['columnrow_select_background'] == '1') $processedData['bg'] = 'background-color: ' . $row['columnrow_row_background'];
-        if($row['columnrow_select_background'] == '2') $processedData['bg'] = 'background-image: url(' .  $processedData['row_background_image'][0]['url'] . ')';
-       
+        if($row['columnrow_select_background'] == '1')  $processedData['bg'] = 'background-color: ' . $row['columnrow_row_background'];
+        if($row['columnrow_select_background'] == '2') $processedData['bg'] = 'background-image: url(' .  $processedData['row_background_image'][0]['url'] . ');background-size:cover;';
+        
         return $processedData;
+    }
+
+    private function buildFocusAreaCssStyling(array $focusAreaCss, string $uid): string
+    {
+        $css = '';
+        if (!empty($focusAreaCss['desktop'])) {
+            $css .= "@media (min-width:1200px){#c{$uid}{{$focusAreaCss['desktop']}background-position:var(--fpx) var(--fpy);}}";
+        }
+        if (!empty($focusAreaCss['medium'])) {
+            $css .= "@media (max-width:990px){#c{$uid}{{$focusAreaCss['medium']}background-position:var(--fpx) var(--fpy);}}";
+        }
+        if (!empty($focusAreaCss['tablet'])) {
+            $css .= "@media (max-width:768px){#c{$uid}{{$focusAreaCss['tablet']}background-position:var(--fpx) var(--fpy);}}";
+        }
+        if (!empty($focusAreaCss['mobile'])) {
+            $css .= "@media (max-width:450px){#c{$uid}{{$focusAreaCss['mobile']}background-position:var(--fpx) var(--fpy);}}";
+        }
+        return $css ? "<style>{$css}</style>" : '';
     }
 }
