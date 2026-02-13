@@ -6,7 +6,6 @@ namespace Jar\Columnrow\Update;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 
 class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
@@ -15,6 +14,9 @@ class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
         'j77template_columnrow' => 'jarcolumnrow_columnrow',
         'j77template_multicontainer' => 'jarcolumnrow_multicontainer'
     ];
+    public function __construct(private readonly ConnectionPool $connectionPool)
+    {
+    }
 
     /**
      * Return the identifier for this wizard
@@ -57,7 +59,7 @@ class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
     public function executeUpdate(): bool
     {
         try {
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $queryBuilder->getRestrictions()->removeAll();
             foreach($this->mapping as $old => $new) {
                 // Old Ctype => new cType
@@ -67,10 +69,10 @@ class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
                         $queryBuilder->expr()->eq('CType', $queryBuilder->createNamedParameter($old))
                     )
                     ->set('CType', $new)
-                    ->execute();
+                    ->executeStatement();
             }
             
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return false;
         }
         return true;
@@ -86,16 +88,16 @@ class ColumnRowCtypeUpdateWizard implements UpgradeWizardInterface
      */
     public function updateNecessary(): bool
     {   
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $queryBuilder->getRestrictions()->removeAll();
-        $oldCytpe = !!reset(reset($queryBuilder
+        $oldCytpe = (bool) reset(reset($queryBuilder
             ->count('CType')
             ->from('tt_content')
             ->where(
                 $queryBuilder->expr()->in('CType', $queryBuilder->createNamedParameter(array_keys($this->mapping), Connection::PARAM_STR_ARRAY))
             )
-            ->execute()
-            ->fetchAll()));
+            ->executeQuery()
+            ->fetchAllAssociative()));
 
         return $oldCytpe;
     }

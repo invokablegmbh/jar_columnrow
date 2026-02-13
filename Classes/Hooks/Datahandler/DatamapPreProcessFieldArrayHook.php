@@ -16,14 +16,12 @@ use B13\Container\Domain\Service\ContainerService;
 use B13\Container\Domain\Factory\Exception;
 use B13\Container\Hooks\Datahandler\Database;
 use B13\Container\Tca\Registry;
-use Doctrine\DBAL\Schema\Column;
 use Jar\Columnrow\Hooks\Datahandler\ColumnDatabase as ColumnDatabase;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class DatamapPreProcessFieldArrayHook
 {
@@ -38,7 +36,7 @@ class DatamapPreProcessFieldArrayHook
     ) {
     }
 
-    public function processDatamap_afterAllOperations(DataHandler &$dataHandler)
+    public function processDatamap_afterAllOperations(DataHandler &$dataHandler): void
     {
         $this->fixColPosAfterCopyPage($dataHandler);
         $this->fixLanguageFieldsAfterTranslation($dataHandler);
@@ -88,12 +86,12 @@ class DatamapPreProcessFieldArrayHook
                 $sourceColumnUid = ColumnRowUtility::encodeColPos((int)$incomingFieldArray['colPos']);
                 if($sourceColumnUid !== (int)$incomingFieldArray['colPos']) {
                     $translatedTargetColumn = $this->columnDatabase->fetchOneTranslatedRecordByl10nSource($sourceColumnUid, $incomingFieldArray['sys_language_uid']);
-                    if(!empty($translatedTargetColumn)) {
+                    if($translatedTargetColumn !== null && $translatedTargetColumn !== []) {
                         $incomingFieldArray['colPos'] = ColumnRowUtility::decodeColPos($translatedTargetColumn, $translatedContainerRecord);
                     }                    
                 }
             }
-        } catch (Exception $e) {
+        } catch (Exception) {
             // not a container
         }
         return $incomingFieldArray;
@@ -125,16 +123,10 @@ class DatamapPreProcessFieldArrayHook
                 }
             }
             
-            if($columnRow) {                   
-                // under some circumstances the sys_language_uid is set to 0 by free translated elements (when their siblings are previous created via the translation wizard)
-                // we have to set them to the right language
-                if(
-                    isset($columnRow['sys_language_uid']) &&
-                    $columnRow['sys_language_uid'] > 0 && 
-                    !ColumnRowUtility::rowIsTranslatedInConnectionMode($columnRow)
-                ) {
-                    $incomingFieldArray['sys_language_uid'] = $columnRow['sys_language_uid'];
-                }
+            // under some circumstances the sys_language_uid is set to 0 by free translated elements (when their siblings are previous created via the translation wizard)
+            // we have to set them to the right language
+            if($columnRow && (isset($columnRow['sys_language_uid']) && $columnRow['sys_language_uid'] > 0 && !ColumnRowUtility::rowIsTranslatedInConnectionMode($columnRow))) {                   
+                $incomingFieldArray['sys_language_uid'] = $columnRow['sys_language_uid'];
             } 
         }       
     }
@@ -145,11 +137,11 @@ class DatamapPreProcessFieldArrayHook
         if (isset($dataMap['tt_content'])) {
             foreach ($dataMap['tt_content'] as $uid => $record) {
                 if (
-                    strpos((string) $uid, 'NEW') === 0 ||
+                    str_starts_with((string) $uid, 'NEW') ||
                     !isset($record['colPos']) ||
                     !isset($record['tx_container_parent']) ||
                     $record['tx_container_parent'] != 0 ||
-                    strpos((string) $record['colPos'], ColumnRowUtility::$colPosPrefix) !== 0
+                    !str_starts_with((string) $record['colPos'], ColumnRowUtility::$colPosPrefix)
                 ) {
                     continue;
                 }
@@ -181,7 +173,7 @@ class DatamapPreProcessFieldArrayHook
             foreach ($dataMap['tt_content'] as $newUid => $record) {
                 if(
                     !isset($record['CType']) ||
-                    strpos((string) $newUid, 'NEW') !== 0 ||
+                    !str_starts_with((string) $newUid, 'NEW') ||
                     !array_key_exists($newUid, $dataHandler->substNEWwithIDs)
                 ) {
                     continue;
@@ -213,11 +205,9 @@ class DatamapPreProcessFieldArrayHook
                     $childContentElements = $this->database->fetchRecordsByParentAndLanguage($sourceUid, $record['sys_language_uid']);
 
                     // just use elements from the same page
-                    $childContentElements = array_filter($childContentElements, function ($element) use ($record) {
-                        return $element['pid'] === $record['pid'];
-                    });
+                    $childContentElements = array_filter($childContentElements, fn($element) => $element['pid'] === $record['pid']);
 
-                    if(!empty($childContentElements)) {
+                    if($childContentElements !== []) {
                         
                         $colPosMap = $this->createColPosRemappingBasedOnOrder($sourceUid, $insertedUid, $mappingLanguage);
 
@@ -271,7 +261,7 @@ class DatamapPreProcessFieldArrayHook
                                 $colPosMap = $this->createColPosRemappingBasedOnOrder($originalColumnRow['uid'], $newColumnRow['uid'], $originalColumnRow['sys_language_uid']);
 
                                 if(
-                                    !empty($colPosMap) &&
+                                    $colPosMap !== [] &&
                                     isset($colPosMap[$record['colPos']])
                                 ) {
                                     $this->connectionPool->getConnectionForTable('tt_content')
@@ -305,7 +295,7 @@ class DatamapPreProcessFieldArrayHook
         
         $originalColumns = $this->columnDatabase->fetchRecordsByParentAndLanguage($sourceUid, $sys_language_uid);
 
-        if (empty($originalColumns)) {
+        if ($originalColumns === []) {
             return $colPosMap;
         }
 
@@ -318,7 +308,7 @@ class DatamapPreProcessFieldArrayHook
 
         $newColumns = $this->columnDatabase->fetchRecordsByParentAndLanguage($targetUid, $sys_language_uid);
 
-        if (empty($newColumns)) {
+        if ($newColumns === []) {
             return $colPosMap;
         }
 
@@ -348,13 +338,10 @@ class DatamapPreProcessFieldArrayHook
         $dataMap = $dataHandler->datamap;
 
         if (isset($dataMap['tx_jarcolumnrow_columns'])) {
-            $newTranslatedColumns = array_filter($dataMap['tx_jarcolumnrow_columns'], function ($element) {
-                return
-                    isset($element['l10n_parent']) &&
-                    strpos((string) $element['l10n_parent'], 'NEW') === 0 &&
-                    isset($element['sys_language_uid']) &&
-                    $element['sys_language_uid'] > 0;
-            });
+            $newTranslatedColumns = array_filter($dataMap['tx_jarcolumnrow_columns'], fn($element) => isset($element['l10n_parent']) &&
+            str_starts_with((string) $element['l10n_parent'], 'NEW') &&
+            isset($element['sys_language_uid']) &&
+            $element['sys_language_uid'] > 0);
 
             foreach ($newTranslatedColumns as $key => $newTranslatedColumn) {
                 if (

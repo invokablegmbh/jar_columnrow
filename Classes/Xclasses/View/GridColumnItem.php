@@ -15,6 +15,7 @@ namespace Jar\Columnrow\Xclasses\View;
 
 class GridColumnItem extends \TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumnItem
 {
+    #[\Override]
     public function getRecord(): array
     {
         return $this->record;

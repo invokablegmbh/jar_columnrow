@@ -25,10 +25,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ColumnDatabase implements SingletonInterface
 {
     private array $fetchedOneRecords = [];
+    public function __construct(private readonly ConnectionPool $connectionPool)
+    {
+    }
 
     protected function getQueryBuilder(): QueryBuilder
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_jarcolumnrow_columns');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_jarcolumnrow_columns');
         $queryBuilder->getRestrictions()
             ->removeByType(HiddenRestriction::class)
             ->removeByType(StartTimeRestriction::class)
@@ -44,19 +47,13 @@ class ColumnDatabase implements SingletonInterface
 
         $queryBuilder = $this->getQueryBuilder();
         $stm = $queryBuilder->select('*')
-            ->from('tx_jarcolumnrow_columns')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'uid',
-                    $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
-                )
-            )
-            ->execute();
-        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
-            $record = $stm->fetch();
-        } else {
-            $record = $stm->fetchAssociative();
-        }
+            ->from('tx_jarcolumnrow_columns')->where($queryBuilder->expr()->eq(
+            'uid',
+            $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
+        ))->executeQuery();
+
+        $record = $stm->fetchAssociative();
+        
         if ($record === false) {
             return null;
         }
@@ -70,17 +67,10 @@ class ColumnDatabase implements SingletonInterface
     {
         $queryBuilder = $this->getQueryBuilder();
         $stm = $queryBuilder->select('*')
-            ->from('tx_jarcolumnrow_columns')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'l18n_parent',
-                    $queryBuilder->createNamedParameter((int)$record['uid'], Connection::PARAM_INT)
-                )
-            )
-            ->execute();
-        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
-            return (array)$stm->fetchAll();
-        }
+            ->from('tx_jarcolumnrow_columns')->where($queryBuilder->expr()->eq(
+            'l18n_parent',
+            $queryBuilder->createNamedParameter((int)$record['uid'], Connection::PARAM_INT)
+        ))->executeQuery();
         return (array)$stm->fetchAllAssociative();
     }
 
@@ -88,23 +78,16 @@ class ColumnDatabase implements SingletonInterface
     {
         $queryBuilder = $this->getQueryBuilder();
         $stm = $queryBuilder->select('*')
-            ->from('tx_jarcolumnrow_columns')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'l10n_source',
-                    $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    'sys_language_uid',
-                    $queryBuilder->createNamedParameter($language, \PDO::PARAM_INT)
-                )
-            )
-            ->execute();
-        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
-            $record = $stm->fetch();
-        } else {
-            $record = $stm->fetchAssociative();
-        }
+            ->from('tx_jarcolumnrow_columns')->where($queryBuilder->expr()->eq(
+            'l10n_source',
+            $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
+        ), $queryBuilder->expr()->eq(
+            'sys_language_uid',
+            $queryBuilder->createNamedParameter($language, Connection::PARAM_INT)
+        ))->executeQuery();
+
+        $record = $stm->fetchAssociative();
+        
         if ($record === false) {
             return null;
         }
@@ -115,23 +98,16 @@ class ColumnDatabase implements SingletonInterface
     {
         $queryBuilder = $this->getQueryBuilder();
         $stm = $queryBuilder->select('*')
-            ->from('tx_jarcolumnrow_columns')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'l18n_parent',
-                    $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    'sys_language_uid',
-                    $queryBuilder->createNamedParameter($language, \PDO::PARAM_INT)
-                )
-            )
-            ->execute();
-        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
-            $record = $stm->fetch();
-        } else {
-            $record = $stm->fetchAssociative();
-        }
+            ->from('tx_jarcolumnrow_columns')->where($queryBuilder->expr()->eq(
+            'l18n_parent',
+            $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
+        ), $queryBuilder->expr()->eq(
+            'sys_language_uid',
+            $queryBuilder->createNamedParameter($language, Connection::PARAM_INT)
+        ))->executeQuery();
+
+        $record = $stm->fetchAssociative();
+
         if ($record === false) {
             return null;
         }
@@ -146,22 +122,18 @@ class ColumnDatabase implements SingletonInterface
             ->where(
                 $queryBuilder->expr()->eq(
                     'parent_column_row',
-                    $queryBuilder->createNamedParameter($parent, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($parent, Connection::PARAM_INT)
                 ),
                 $queryBuilder->expr()->eq(
                     'sys_language_uid',
-                    $queryBuilder->createNamedParameter($language, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($language, Connection::PARAM_INT)
                 ),
                 $queryBuilder->expr()->eq(
                     't3ver_oid',
-                    $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)
                 )
-            )
-            ->orderBy('sorting', 'ASC')
-            ->execute();
-        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
-            return (array)$stm->fetchAll();
-        }
+            )->orderBy('sorting', 'ASC')->executeQuery();
+
         return (array)$stm->fetchAllAssociative();
     }
 
@@ -169,31 +141,22 @@ class ColumnDatabase implements SingletonInterface
     {
         $queryBuilder = $this->getQueryBuilder();
         $stm = $queryBuilder->select('*')
-            ->from('tx_jarcolumnrow_columns')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'l10n_source',
-                    $queryBuilder->createNamedParameter($defaultUid, \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    'l18n_parent',
-                    $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    'sys_language_uid',
-                    $queryBuilder->createNamedParameter($language, \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    't3ver_oid',
-                    $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
-                )
-            )
-            ->execute();
-        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
-            $record = $stm->fetch();
-        } else {
-            $record = $stm->fetchAssociative();
-        }
+            ->from('tx_jarcolumnrow_columns')->where($queryBuilder->expr()->eq(
+            'l10n_source',
+            $queryBuilder->createNamedParameter($defaultUid, Connection::PARAM_INT)
+        ), $queryBuilder->expr()->eq(
+            'l18n_parent',
+            $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)
+        ), $queryBuilder->expr()->eq(
+            'sys_language_uid',
+            $queryBuilder->createNamedParameter($language, Connection::PARAM_INT)
+        ), $queryBuilder->expr()->eq(
+            't3ver_oid',
+            $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)
+        ))->executeQuery();
+            
+        $record = $stm->fetchAssociative();
+        
         if ($record === false) {
             return null;
         }
@@ -211,7 +174,7 @@ class ColumnDatabase implements SingletonInterface
             ->where(
                 $queryBuilder->expr()->eq(
                     'uid',
-                    $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
                 )                
         );
 
@@ -219,10 +182,8 @@ class ColumnDatabase implements SingletonInterface
             $stm->set($name, $value);
         }
 
-        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
-            $stm->execute();
-        } else {
-            $stm->executeStatement();
-        }
+
+        $stm->executeStatement();
+        
     }
 }

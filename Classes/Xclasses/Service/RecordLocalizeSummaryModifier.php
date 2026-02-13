@@ -14,7 +14,6 @@ namespace Jar\Columnrow\Xclasses\Service;
 
 
 use Jar\Columnrow\Utilities\ColumnRowUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class RecordLocalizeSummaryModifier extends \B13\Container\Service\RecordLocalizeSummaryModifier
 {
@@ -25,6 +24,7 @@ class RecordLocalizeSummaryModifier extends \B13\Container\Service\RecordLocaliz
      * @param array $payload
      * @return array
      */
+    #[\Override]
     public function rebuildPayload(array $payload): array
     {        
         $payload = parent::rebuildPayload($payload);
@@ -43,6 +43,7 @@ class RecordLocalizeSummaryModifier extends \B13\Container\Service\RecordLocaliz
 
     // todo: make that prettier, ugly fix because this is now handled via 2 separate methods in "RecordSummaryForLocalization"
 
+    #[\Override]
     public function filterRecords(array $recordsPerColPos): array
     {
         $filtered = parent::filterRecords($recordsPerColPos);
@@ -56,10 +57,11 @@ class RecordLocalizeSummaryModifier extends \B13\Container\Service\RecordLocaliz
         return $filtered;
     }
 
+    #[\Override]
     public function rebuildColumns(array $columns): array
     {
         $columns = parent::rebuildColumns($columns);       
-        if(!empty($this->matchedColPos)) {
+        if($this->matchedColPos !== []) {
             foreach ($this->matchedColPos as $colPos) {
                 $columns['columns'][$colPos] = 'Column (' . $colPos . ')';
                 $columns['columnList'][] = $colPos;

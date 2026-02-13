@@ -3,8 +3,6 @@ namespace Jar\Columnrow\DataProcessing;
 
 use B13\Container\DataProcessing\ContainerProcessor;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use B13\Container\Domain\Factory\ContainerFactory;
@@ -64,12 +62,11 @@ class ColumnRowDataProcessor implements DataProcessorInterface
         
         $colsWithChildren = [];
         foreach (array_keys($containerProcessorResult) as $key) {
-            if (strpos($key, 'children_') === 0) {
-                $colPos = explode('_', $key, 2)[1];
+            if (str_starts_with((string) $key, 'children_')) {
+                $colPos = explode('_', (string) $key, 2)[1];
                 $colsWithChildren[$colPos] = IteratorUtility::pluck($containerProcessorResult[$key], 'renderedContent');
             }
         }
-
         $processedData = $processedData + $reflectedRow + ColumnRowUtility::getFrontendAttributesByPopulatedRow($reflectedRow);
 
         if (!isset($processedData['columns'])) {
@@ -199,8 +196,12 @@ class ColumnRowDataProcessor implements DataProcessorInterface
         
         // background options
         $processedData['bg'] = '';
-        if($row['columnrow_select_background'] == '1')  $processedData['bg'] = 'background-color: ' . $row['columnrow_row_background'];
-        if($row['columnrow_select_background'] == '2') $processedData['bg'] = 'background-image: url(' .  $processedData['row_background_image'][0]['url'] . ');background-size:cover;';
+        if ($row['columnrow_select_background'] == '1') {
+            $processedData['bg'] = 'background-color: ' . $row['columnrow_row_background'];
+        }
+        if ($row['columnrow_select_background'] == '2') {
+            $processedData['bg'] = 'background-image: url(' .  $processedData['row_background_image'][0]['url'] . ');background-size:cover;';
+        }
         
         return $processedData;
     }
@@ -220,6 +221,6 @@ class ColumnRowDataProcessor implements DataProcessorInterface
         if (!empty($focusAreaCss['mobile'])) {
             $css .= "@media (max-width:450px){#c{$uid}{{$focusAreaCss['mobile']}background-position:var(--fpx) var(--fpy);}}";
         }
-        return $css ? "<style>{$css}</style>" : '';
+        return $css !== '' && $css !== '0' ? "<style>{$css}</style>" : '';
     }
 }

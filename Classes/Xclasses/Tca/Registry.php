@@ -14,17 +14,14 @@ namespace Jar\Columnrow\Xclasses\Tca;
 
 
 use TYPO3\CMS\Core\SingletonInterface;
-use B13\Container\Tca\ContainerConfiguration;
 use Jar\Columnrow\Services\GateService;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
-use Jar\Utilities\Utilities\BackendUtility;
-use TYPO3\CMS\Backend\View\PageLayoutContext;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
 {
+    #[\Override]
     public function isContainerElement(string $cType): bool
     {        
         if(ColumnRowUtility::isOurContainerCType($cType)) {
@@ -33,6 +30,7 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
         return parent::isContainerElement($cType);
     }
 
+    #[\Override]
     public function getRegisteredCTypes(): array
     {
         $result = parent::getRegisteredCTypes();
@@ -42,6 +40,7 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
         return $result;
     }
 
+    #[\Override]
     public function getGrid(string $cType): array
     {        
         if(ColumnRowUtility::isOurContainerCType($cType)) {
@@ -50,6 +49,7 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
         return parent::getGrid($cType);
     }
 
+    #[\Override]
     public function getGridTemplate(string $cType): ?string
     {
         if(ColumnRowUtility::isOurContainerCType($cType)) {
@@ -58,6 +58,7 @@ class Registry extends \B13\Container\Tca\Registry implements SingletonInterface
         return parent::getGridTemplate($cType);
     }
 
+    #[\Override]
     public function getGridPartialPaths(string $cType): array
     {
         // thus we skip the container bootloading of containers via tca (and the corsponding creation of new content elements)

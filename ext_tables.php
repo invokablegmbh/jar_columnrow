@@ -1,7 +1,6 @@
 <?php
 
 use TYPO3\CMS\Core\Information\Typo3Version;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
@@ -13,8 +12,6 @@ if ($versionInformation->getMajorVersion() < 12) {
             'css' => 'EXT:jar_columnrow/Resources/Public/Css/Backend/'
         ]
     ];
-
-    ExtensionManagementUtility::allowTableOnStandardPages('tx_jarcolumnrow_columns');
 } else {
     $GLOBALS['TYPO3_CONF_VARS']['BE']['stylesheets']['jar_columnrow'] = 'EXT:jar_columnrow/Resources/Public/Css/Backend12/style.css';
 }

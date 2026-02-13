@@ -8,6 +8,7 @@ use Jar\Utilities\Services\ReflectionService;
 use Jar\Utilities\Utilities\IteratorUtility;
 use Jar\Utilities\Utilities\LocalizationUtility;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
@@ -23,21 +24,19 @@ class GateService implements SingletonInterface
     protected ?array $originalTranslationOfLastUsedRow = null; // useful, when we have a connected default / translated record situation
     protected array $reflectedRows = [];
     protected array $generatedGrids = [];
+    private readonly ReflectionService $reflectionService;
 
     /**
      * @param ReflectionService $reflectionService 
      * @return void 
      */
-    public function __construct(
-        private readonly ReflectionService $reflectionService
-    ) {
+    public function __construct(ReflectionService $reflectionService) {
+        $this->reflectionService = clone $reflectionService;
         // unset blacklisting of language columns
         $columnBlacklist = $reflectionService->getColumnBlacklist();        
-        $columnBlacklist = array_filter($columnBlacklist, function($value) {
-            return !in_array($value, ['l18n_*', 'l10n_*']);
-        });
+        $columnBlacklist = array_filter($columnBlacklist, fn($value) => !in_array($value, ['l18n_*', 'l10n_*']));
 
-        $reflectionService
+        $this->reflectionService
         ->setTableColumnWhitelist([
             'tt_content' => ['columnrow_*']
         ])
@@ -55,7 +54,7 @@ class GateService implements SingletonInterface
     public function getContainerGridFromRow(?array $row): array
     {       
         $reflectedRow = $this->getReflectedRow($row);
-
+        
         if($reflectedRow === null) {
             return [];
         }
@@ -109,23 +108,19 @@ class GateService implements SingletonInterface
             // Check if we need to start a new row with the column width
             $existingColumnWidth = IteratorUtility::pluck($grid[count($grid) - 1], 'colspan');
             // create the sum of existing columns
-            $newColumnWidth = (int) array_reduce($existingColumnWidth, function($carry, $item) {
-                return $carry + $item;
-            }, $currentColumntWidth);
+            $newColumnWidth = (int) array_reduce($existingColumnWidth, fn($carry, $item) => $carry + $item, $currentColumntWidth);
 
             if($newColumnWidth > $gridbase) {
                 $grid[] = [];
             }
 
             $columnLabel = '';
-            if(isset($column['title']) && !empty($column['title'])) {
+            if (isset($column['title']) && !empty($column['title'])) {
                 $columnLabel = $column['title'];
+            } elseif ($isSpecialColumn) {
+                $columnLabel = LocalizationUtility::localize('LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom') . ' (' . $column['col_lg'] . ')';
             } else {
-                if($isSpecialColumn) {                
-                    $columnLabel = LocalizationUtility::localize('LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:custom') . ' (' . $column['col_lg'] . ')';
-                } else {
-                    $columnLabel = number_format($currentColumntWidth  / $gridbase * 100, 2, '.', '') . '%';
-                }
+                $columnLabel = number_format($currentColumntWidth  / $gridbase * 100, 2, '.', '') . '%';
             }
             
             $grid[count($grid) - 1][] = [
@@ -136,7 +131,7 @@ class GateService implements SingletonInterface
         }
 
         $this->generatedGrids[$cacheId] = $grid;
-
+        
         return $grid;
     }
 

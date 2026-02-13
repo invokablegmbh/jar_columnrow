@@ -60,7 +60,6 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
         'label_alt' => 'col_lg',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -172,10 +171,8 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
             ],
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 13,
-                'eval' => 'datetime',
                 'default' => 0,
             ],
         ],
@@ -186,10 +183,8 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
             ],
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 13,
-                'eval' => 'datetime',
                 'default' => 0,
                 'range' => [
                     'upper' => 2145913200,
@@ -279,8 +274,7 @@ $GLOBALS['TCA']['tx_jarcolumnrow_columns'] = [
             'exclude' => false,
             'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:bg_color_class',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'colorpicker',
+                'type' => 'color',
                 'size' => 10,
                 'default' => 'transparent', // Optional: Standardfarbe
                 'valuePicker' => [

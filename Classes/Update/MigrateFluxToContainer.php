@@ -3,20 +3,20 @@
 declare(strict_types=1);
 namespace Jar\Columnrow\Update;
 
-use IteratorIterator;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
 use Jar\Utilities\Utilities\IteratorUtility;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
-use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /** @package Jar\Columnrow\Update */
 class MigrateFluxToContainer implements UpgradeWizardInterface
 {    
+    public function __construct(private readonly ConnectionPool $connectionPool)
+    {
+    }
     /**
      * Return the identifier for this wizard
      * This should be the same string as used in the ext_localconf class registration
@@ -83,15 +83,15 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
 
             $contentRow = [
                 'columnrow_content_width' => $flexForm['contentWidth'] == 'fullwidth' ? 'container full-width' : 'container content',
-                'columnrow_select_background' => isset($flexForm['selectBackground']) ? $flexForm['selectBackground'] : '',
-                'columnrow_row_background' => isset($flexForm['rowBackground']) ? $flexForm['rowBackground'] : '',
-                'columnrow_row_user_background' => isset($flexForm['rowUserBackground']) ? $flexForm['rowUserBackground'] : '',
-                'columnrow_row_background_image' => isset($flexForm['rowBackgroundImage']) ? $flexForm['rowBackgroundImage'] : '',
-                'columnrow_additional_row_class' => isset($flexForm['additionalRowClass']) ? $flexForm['additionalRowClass'] : '',
+                'columnrow_select_background' => $flexForm['selectBackground'] ?? '',
+                'columnrow_row_background' => $flexForm['rowBackground'] ?? '',
+                'columnrow_row_user_background' => $flexForm['rowUserBackground'] ?? '',
+                'columnrow_row_background_image' => $flexForm['rowBackgroundImage'] ?? '',
+                'columnrow_additional_row_class' => $flexForm['additionalRowClass'] ?? '',
                 'columnrow_columns' => isset($flexForm['columns']) && is_array($flexForm['columns']) ? count($flexForm['columns']) : 0,
             ];
 
-            $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+            $connectionPool = $this->connectionPool;
             $connectionPool->getConnectionForTable('tt_content')
                 ->update(
                     'tt_content',
@@ -124,24 +124,24 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
                     $colLg = ($classicColLg ?? $classicCol);
 
                     if($colLg === null) {
-                        throw new \Exception("Not matching main col size found at tt_content " . $contentElement['uid']);                        
+                        throw new \Exception("Not matching main col size found at tt_content " . $contentElement['uid'], 1930954329);                        
                     }
 
                     $columnRow = [
                         'pid' => $contentElement['pid'],
                         'col_lg' => $colLg,
-                        'col_md' => isset($column['medium']) ? $column['medium'] : null,
-                        'col_sm' => isset($column['small']) ? $column['small'] : null,
+                        'col_md' => $column['medium'] ?? null,
+                        'col_sm' => $column['small'] ?? null,
                         // 'col_xs' => isset($column['small']) ? $column['small'] : null,
-                        'order_lg' => isset($column['order-large']) ? $column['order-large'] : null,
-                        'order_md' => isset($column['order-medium']) ? $column['order-medium'] : null,
-                        'order_sm' => isset($column['order-small']) ? $column['order-small'] : null,
+                        'order_lg' => $column['order-large'] ?? null,
+                        'order_md' => $column['order-medium'] ?? null,
+                        'order_sm' => $column['order-small'] ?? null,
                         // 'order_xs' => isset($column['order-small']) ? $column['order-small'] : null,
-                        'offset_lg' => isset($column['offset-large']) ? $column['offset-large'] : null,
-                        'offset_md' => isset($column['offset-medium']) ? $column['offset-medium'] : null,
-                        'offset_sm' => isset($column['offset-small']) ? $column['offset-small'] : null,
+                        'offset_lg' => $column['offset-large'] ?? null,
+                        'offset_md' => $column['offset-medium'] ?? null,
+                        'offset_sm' => $column['offset-small'] ?? null,
                         // 'offset_xs' => isset($column['offset-small']) ? $column['offset-small'] : null,
-                        'additional_col_class' => isset($column['additionalColClass']) ? $column['additionalColClass'] : '',
+                        'additional_col_class' => $column['additionalColClass'] ?? '',
                         'parent_column_row' => $contentElement['uid'],
                         'sorting' => $index + 1
                     ];
@@ -159,7 +159,7 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
                     
                     // move content elements to the new colpos
                     $fluxBasedColPos = ($contentElement['uid'] * 100) + ($index + 1);
-                    if($dummyColumn && count($columns) == 1) {
+                    if($dummyColumn && count($columns) === 1) {
                         $fluxBasedColPos = ($contentElement['uid'] * 100);
                     }
                     $ContainerBasedColPos = ColumnRowUtility::decodeColPos(['uid' => $columnUid]);
@@ -197,12 +197,12 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
             ->executeQuery()
             ->fetchAllAssociative();
 
-        return !!reset(reset($queryBuilder));
+        return (bool) reset(reset($queryBuilder));
     }
 
     protected function getQueryForFluxBasedColumnRowElements(): QueryBuilder
     {
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $connectionPool = $this->connectionPool;
 
         $containerBasedColumnRowUids = $connectionPool->getQueryBuilderForTable('tx_jarcolumnrow_columns')
             ->select('parent_column_row')
@@ -213,7 +213,7 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
         $containerBasedColumnRowUids = array_unique(IteratorUtility::pluck($containerBasedColumnRowUids, 'parent_column_row'));
 
         // Stelle sicher, dass die UIDs numerisch sind.
-        $containerBasedColumnRowUids = array_map('intval', $containerBasedColumnRowUids);
+        $containerBasedColumnRowUids = array_map(intval(...), $containerBasedColumnRowUids);
 
         $queryBuilder = $connectionPool->getQueryBuilderForTable('tt_content');
         $queryBuilder->getRestrictions()->removeAll();
@@ -250,7 +250,7 @@ class MigrateFluxToContainer implements UpgradeWizardInterface
     {
         // Column Row Ctype Update Wizard must be executed first
         return [
-            \Jar\Columnrow\Update\ColumnRowCtypeUpdateWizard::class
+            ColumnRowCtypeUpdateWizard::class
         ];
     }
 

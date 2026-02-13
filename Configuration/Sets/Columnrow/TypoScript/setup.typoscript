@@ -1,0 +1,38 @@
+tt_content.jarcolumnrow_columnrow =< lib.contentElement 
+tt_content.jarcolumnrow_columnrow {
+   templateName = ColumnRow
+   templateRootPaths {
+      0 = EXT:jar_columnrow/Resources/Private/Templates/Content/
+   }
+   dataProcessing {      
+      50 = Jar\Columnrow\DataProcessing\ColumnRowDataProcessor
+   }
+}
+
+tt_content.jarcolumnrow_accordion =< lib.contentElement 
+tt_content.jarcolumnrow_accordion {
+   templateName = Accordion
+   templateRootPaths {
+      0 = EXT:jar_columnrow/Resources/Private/Templates/Content/
+   }
+   dataProcessing {
+      50 = Jar\Columnrow\DataProcessing\ColumnRowDataProcessor
+   }
+}
+
+tt_content.jarcolumnrow_tab =< lib.contentElement 
+tt_content.jarcolumnrow_tab {
+   templateName = Tab
+   templateRootPaths {
+      0 = EXT:jar_columnrow/Resources/Private/Templates/Content/
+   }
+   dataProcessing {
+      50 = Jar\Columnrow\DataProcessing\ColumnRowDataProcessor
+   }
+}
+
+page = PAGE
+
+[{$plugin.tx_jar_columnrow.settings.bootstrapGrid} > 0]
+   page.includeCSS.bootstrapGrid = EXT:jar_columnrow/Resources/Public/Css/bootstrap-grid.min.css
+[end]

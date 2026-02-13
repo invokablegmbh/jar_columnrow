@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CommandMapBeforeStartHook extends \B13\Container\Hooks\Datahandler\CommandMapBeforeStartHook
 {
+    #[\Override]
     protected function dataFromContainerIdColPos(array $data): array
     {
         // repair wrong children colPos when copying columnrow elements (using source colPos instead of target colPos)

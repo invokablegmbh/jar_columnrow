@@ -18,6 +18,7 @@ use Jar\Columnrow\Utilities\ColumnRowUtility;
 
 class ContainerService extends ServiceContainerService
 {
+    #[\Override]
     public function getAfterContainerRecord(Container $container): array {
         $containerRecord = $container->getContainerRecord();
         if(isset($containerRecord['CType']) && ColumnRowUtility::isOurContainerCType($containerRecord['CType'])) {

@@ -1,10 +1,10 @@
 <?php
 
-use Jar\Columnrow\ItemsProcFuncs\ColorItemsProcFunc;
-
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use B13\Container\Backend\Preview\ContainerPreviewRenderer;
 defined('TYPO3') || die();
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+ExtensionManagementUtility::addPlugin(
 	[
 		'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:headline',
 		'jarcolumnrow_columnrow',
@@ -15,9 +15,9 @@ defined('TYPO3') || die();
 );
 
 $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_columnrow'] = 'jar-column-row-content-icon';
-$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_columnrow']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_columnrow']['previewRenderer'] = ContainerPreviewRenderer::class;
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+ExtensionManagementUtility::addPlugin(
 	[
 		'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:accordion_headline',
 		'jarcolumnrow_accordion',
@@ -28,9 +28,9 @@ $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_columnrow']['previewRendere
 );
 
 $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_accordion'] = 'jar-accordion-content-icon';
-$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['previewRenderer'] = ContainerPreviewRenderer::class;
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+ExtensionManagementUtility::addPlugin(
 	[
 		'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:tab_headline',
 		'jarcolumnrow_tab',
@@ -42,7 +42,7 @@ $GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_accordion']['previewRendere
 
 
 $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['jarcolumnrow_tab'] = 'jar-tab-content-icon';
-$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_tab']['previewRenderer'] = \B13\Container\Backend\Preview\ContainerPreviewRenderer::class;
+$GLOBALS['TCA']['tt_content']['types']['jarcolumnrow_tab']['previewRenderer'] = ContainerPreviewRenderer::class;
 
 
 $contentTableColumns = [
@@ -55,12 +55,12 @@ $contentTableColumns = [
 			'renderType' => 'selectSingle',
 			'items' => [
 				0 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:content_width',
-					1 => 'container content',
+					'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:content_width',
+					'value' => 'container content',
 				],
 				1 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:full_width',
-					1 => 'container full-width',
+					'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:full_width',
+					'value' => 'container full-width',
 				],
 			],
 			'size' => 1,
@@ -77,16 +77,16 @@ $contentTableColumns = [
 			'renderType' => 'selectSingle',
 			'items' => [
 				0 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:left',
-					1 => 'start',
+					'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:left',
+					'value' => 'start',
 				],
 				1 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:middle',
-					1 => 'center',
+					'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:middle',
+					'value' => 'center',
 				],
 				2 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:right',
-					1 => 'end',
+					'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:right',
+					'value' => 'end',
 				],
 			],
 			'size' => 1,
@@ -103,16 +103,16 @@ $contentTableColumns = [
 			'renderType' => 'selectSingle',
 			'items' => [
 				0 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:default',
-					1 => 0,
+					'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:default',
+					'value' => 0,
 				],
 				1 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',
-					1 => 1,
+					'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',
+					'value' => 1,
 				],
 				2 => [
-					0 => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_graph',
-					1 => 2,
+					'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_graph',
+					'value' => 2,
 				],
 			],
 			'size' => 1,
@@ -126,10 +126,8 @@ $contentTableColumns = [
 		'label' => 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:background_color',
 		'l10n_mode' => 'exclude',
 		'config' => [
-			'type' => 'input',
-			'renderType' => 'colorpicker',
+			'type' => 'color',
 			'size' => 10,
-			'eval' => 'trim',
 			'valuePicker' => [
 				'items' => [
 					['Weiß', '#ffffff'],
@@ -245,10 +243,6 @@ $contentTableColumns = [
 			],
 			'appearance' => [
 				'useSortable' => true,
-				'headerThumbnail' => [
-					'field' => 'uid_local',
-					'height' => '45',
-				],
 				'enabledControls' => [
 					'info' => true,
 					'new' => false,
@@ -293,7 +287,6 @@ $contentTableColumns = [
 				'levelLinksPosition' => 'bottom',
 				'showSynchronizationLink' => false,
 				'showPossibleLocalizationRecords' => false,
-				'showRemovedLocalizationRecords' => false,
 				'showAllLocalizationLink' => false,
 				'useSortable' => 1,
 				'enabledControls' => [
@@ -326,8 +319,8 @@ $contentTableColumns = [
 	]
 ];
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', $contentTableColumns);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+ExtensionManagementUtility::addTCAcolumns('tt_content', $contentTableColumns);
+ExtensionManagementUtility::addFieldsToPalette(
 	'tt_content',
 	'columnrow_rowappearance',
 	'		
@@ -346,21 +339,21 @@ $contentTableColumns = [
 
 $GLOBALS['TCA']['tt_content']['palettes']['columnrow_rowappearance']['label'] = 'LLL:EXT:jar_columnrow/Resources/Private/Language/locallang_be.xlf:rowappearance';
 	
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'columnrow_columns,--palette--;;columnrow_rowappearance',
 	'jarcolumnrow_columnrow',
 	'after:header'
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'columnrow_columns',
 	'jarcolumnrow_accordion',
 	'after:header'
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+ExtensionManagementUtility::addToAllTCAtypes(
 	'tt_content',
 	'columnrow_columns',
 	'jarcolumnrow_tab',

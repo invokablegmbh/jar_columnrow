@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Jar\Columnrow\Utilities;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Jar\Utilities\Utilities\BackendUtility;
 use Jar\Utilities\Utilities\TcaUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
@@ -30,10 +30,7 @@ class ColumnRowUtility
     public static function isOurContainerCType(string $cType): bool
     {
         // check the beginning of ctype for our container prefix
-        if (substr($cType, 0, strlen(self::$containerCTypePrefix)) === self::$containerCTypePrefix) {
-            return true;
-        }
-        return false;
+        return str_starts_with($cType, self::$containerCTypePrefix);
     }
 
     /**     
@@ -65,7 +62,7 @@ class ColumnRowUtility
      */
     public static function isColumnRowColPos(int $colPos): bool        
     {
-        return substr((string) $colPos, 0, strlen(self::$colPosPrefix)) === self::$colPosPrefix;
+        return str_starts_with((string) $colPos, self::$colPosPrefix);
     }
 
     /**     
@@ -94,17 +91,8 @@ class ColumnRowUtility
             'style' => '',
         ];
 
-        if(!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jar_columnrow']['getFrontendAttributesByPopulatedRow'])) {
-            if(
-                !array_key_exists('select_background', $row) ||
-                !array_key_exists('row_background', $row) ||
-                !array_key_exists('row_user_background', $row) ||
-                !array_key_exists('row_background_image', $row) ||
-                !array_key_exists('content_width', $row) ||
-                !array_key_exists('additional_row_class', $row)            
-            ) {
-                return $result;
-            }
+        if(!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jar_columnrow']['getFrontendAttributesByPopulatedRow']) && (!array_key_exists('select_background', $row) || !array_key_exists('row_background', $row) || !array_key_exists('row_user_background', $row) || !array_key_exists('row_background_image', $row) || !array_key_exists('content_width', $row) || !array_key_exists('additional_row_class', $row))) {
+            return $result;
         }
 
         
@@ -116,35 +104,30 @@ class ColumnRowUtility
 
 
         // Background Image Mode        
-        if(isset($row['select_background']) && $row['select_background'] == 2 && is_array($row['row_background_image']) && count($row['row_background_image'])) {
+        if (isset($row['select_background']) && $row['select_background'] == 2 && is_array($row['row_background_image']) && count($row['row_background_image'])) {
             $result['style'] .= 'background-image:url(' . $row['row_background_image'][0]['url'] . ');';
-        }
-        // Selected color mode - custom color
-        else if (isset($row['select_background']) && $row['select_background'] == 1 ) {
-            
+        } elseif (isset($row['select_background']) && $row['select_background'] == 1) {
             // custom color
             if ($row['row_background'] === 'user' && !empty($row['row_user_background'])) {
                 $result['style'] .= 'background-color:' . $row['row_user_background'] . ';';
-            } else {
+            } elseif (str_starts_with((string) $row['row_background'], '.')) {
                 // if $row['row_background'] starts with a '.' it is a class otherwise a colorcode
-                if (substr($row['row_background'], 0, 1) === '.') {
-                    $result['class'] .= ' ' . substr(implode(' ', explode('.', $row['row_background'])), 1);
-                } else {
-                    $result['style'] .= 'background-color:' . $row['row_background'] . ';';
-                }
+                $result['class'] .= ' ' . substr(implode(' ', explode('.', (string) $row['row_background'])), 1);
+            } else {
+                $result['style'] .= 'background-color:' . $row['row_background'] . ';';
             }
         }        
 
         // Additional Row Class
         if (!empty($row['additional_row_class'])) {
-            $result['class'] .= ' ' . implode(' ', explode('.', $row['additional_row_class']));
+            $result['class'] .= ' ' . implode(' ', explode('.', (string) $row['additional_row_class']));
         }
 
         // add hook to change or add attributes
         $hookResult = [];
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jar_columnrow']['getFrontendAttributesByPopulatedRow'])) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['jar_columnrow']['getFrontendAttributesByPopulatedRow'] as $className) {                
-                $hookResult[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($className)
+                $hookResult[] = GeneralUtility::makeInstance($className)
                     ->getFrontendAttributesByPopulatedRow($row, $result);
             }
         }

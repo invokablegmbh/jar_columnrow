@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Jar\Columnrow\Xclasses\Factory;
 
+use B13\Container\Domain\Factory\Database as FactoryDatabase;
 use Jar\Columnrow\Services\GateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
@@ -17,8 +17,9 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  */
 
 
-class Database extends \B13\Container\Domain\Factory\Database
+class Database extends FactoryDatabase
 {
+    #[\Override]
     public function fetchOneRecord(int $uid): ?array
     {        
         $result = parent::fetchOneRecord($uid);        
@@ -26,6 +27,7 @@ class Database extends \B13\Container\Domain\Factory\Database
         return $result;
     }
 
+    #[\Override]
     public function fetchOneDefaultRecord(array $record): ?array
     {
         $result = parent::fetchOneDefaultRecord($record);        

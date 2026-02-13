@@ -24,9 +24,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ContentDatabase implements SingletonInterface
 {
+    public function __construct(private readonly ConnectionPool $connectionPool)
+    {
+    }
     protected function getQueryBuilder(): QueryBuilder
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $queryBuilder->getRestrictions()
             ->removeByType(HiddenRestriction::class)
             ->removeByType(StartTimeRestriction::class)
@@ -38,23 +41,16 @@ class ContentDatabase implements SingletonInterface
     {
         $queryBuilder = $this->getQueryBuilder();
         $stm = $queryBuilder->select('*')
-            ->from('tt_content')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    't3_origuid',
-                    $queryBuilder->createNamedParameter($origUid, \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    'pid',
-                    $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
-                )
-            )
-            ->execute();
-        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
-            $record = $stm->fetch();
-        } else {
-            $record = $stm->fetchAssociative();
-        }
+            ->from('tt_content')->where($queryBuilder->expr()->eq(
+            't3_origuid',
+            $queryBuilder->createNamedParameter($origUid, Connection::PARAM_INT)
+        ), $queryBuilder->expr()->eq(
+            'pid',
+            $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT)
+        ))->executeQuery();
+
+        $record = $stm->fetchAssociative();
+        
         if ($record === false) {
             return null;
         }

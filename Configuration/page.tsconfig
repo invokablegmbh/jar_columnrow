@@ -34,3 +34,7 @@ mod.wizards.newContentElement.wizardItems.container {
     }
     show := addToList(jarcolumnrow_columnrow, jarcolumnrow_accordion, jarcolumnrow_tab)
 }
+
+mod.web_layout.tt_content.preview {
+    jarcolumnrow_columnrow = EXT:container/Resources/Private/Templates/Container.html
+}

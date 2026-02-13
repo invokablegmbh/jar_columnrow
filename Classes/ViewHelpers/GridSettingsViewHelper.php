@@ -2,13 +2,11 @@
 
 namespace Jar\Columnrow\ViewHelpers;
 
-use Doctrine\DBAL\Schema\Column;
 use Jar\Columnrow\Services\GateService;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
 use Jar\Utilities\Services\ReflectionService;
 use TYPO3\CMS\Backend\View\BackendLayout\Grid\Grid;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
@@ -48,7 +46,7 @@ class GridSettingsViewHelper extends AbstractViewHelper
      * @return void 
      * @throws Exception 
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'grid',

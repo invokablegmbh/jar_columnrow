@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Jar\Columnrow\ItemsProcFuncs;
 
-use Jar\Columnrow\Utilities\ColumnRowUtility;
 use Jar\Utilities\Utilities\BackendUtility;
 use Jar\Utilities\Utilities\LocalizationUtility;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of TYPO3 CMS-based extension "jar_columnrow" by invokable.
@@ -49,7 +47,7 @@ class ColorItemsProcFunc implements SingletonInterface
             if ($b[1] === 'user') {
                 return -1;
             }
-            return strcmp($a[0], $b[0]);
+            return strcmp((string) $a[0], (string) $b[0]);
         });
     }
 }
