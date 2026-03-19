@@ -103,13 +103,13 @@ class ColumnRowDataProcessor implements DataProcessorInterface
             if($column['order_xs'] != '12' && $column['order_xs'] != '0') {
                 $finalColumnClass .= ' order-' . $column['order_xs'];
             }
-            if($column['order_sm'] != $column['order_md']) {
+            if($column['order_sm'] != $column['order_xs']) {
                 $finalOrderClass .= ' order-sm-' . $column['order_sm'];
             }
-            if($column['order_md'] != $column['order_lg']) {
+            if($column['order_md'] != $column['order_sm']) {
                 $finalOrderClass .= ' order-md-' . $column['order_md'];
             }
-            if($column['order_lg'] != $column['order_lg']) {
+            if($column['order_lg'] != $column['order_md']) {
                 $finalOrderClass .= ' order-lg-' . $column['order_lg'];
             }
 
