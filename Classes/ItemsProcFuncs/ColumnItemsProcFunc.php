@@ -56,7 +56,10 @@ class ColumnItemsProcFunc implements SingletonInterface
         usort($params['items'], function($a, $b) {
             $a = (float) $a[1];
             $b = (float) $b[1];
-            return $a <=> $b;
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a < $b) ? -1 : 1;
         });
 
         $params['items'] = array_reverse($params['items']);
@@ -105,7 +108,10 @@ class ColumnItemsProcFunc implements SingletonInterface
         usort($params['items'], function ($a, $b) {
             $a = (float) $a[1];
             $b = (float) $b[1];
-            return $a <=> $b;
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a < $b) ? -1 : 1;
         });
 
         $params['items']  = array_merge([
@@ -127,7 +133,10 @@ class ColumnItemsProcFunc implements SingletonInterface
         usort($params['items'], function ($a, $b) {
             $a = (float) $a[1];
             $b = (float) $b[1];
-            return $a <=> $b;
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a < $b) ? -1 : 1;
         });
 
         $params['items']  = array_merge([

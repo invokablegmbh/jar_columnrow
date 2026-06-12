@@ -33,6 +33,8 @@ tt_content.jarcolumnrow_tab {
 
 page = PAGE
 
+page.includeCSS.styling = EXT:jar_columnrow/Resources/Public/Css/styling.css
+
 [{$plugin.tx_jar_columnrow.settings.bootstrapGrid} > 0]
    page.includeCSS.bootstrapGrid = EXT:jar_columnrow/Resources/Public/Css/bootstrap-grid.min.css
 [end]

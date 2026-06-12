@@ -100,6 +100,19 @@ class ColumnRowDataProcessor implements DataProcessorInterface
                 $finalColumnClass .= ' col-md-' . $column['col_md'];
             }
 
+            if($column['col_xs'] === '-1') {
+                $finalColumnClass .= ' hide-xs';
+            }
+            if($column['col_sm'] === '-1') {
+                $finalColumnClass .= ' hide-sm';
+            }
+            if($column['col_md'] === '-1') {
+                $finalColumnClass .= ' hide-md';
+            }
+            if($column['col_lg'] === '-1') {
+                $finalColumnClass .= ' hide-lg';
+            }
+
             if($column['order_xs'] != '12' && $column['order_xs'] != '0') {
                 $finalColumnClass .= ' order-' . $column['order_xs'];
             }
