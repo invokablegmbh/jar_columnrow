@@ -18,6 +18,7 @@ use B13\Container\Hooks\Datahandler\Database;
 use B13\Container\Tca\Registry;
 use Jar\Columnrow\Hooks\Datahandler\ColumnDatabase as ColumnDatabase;
 use Jar\Columnrow\Utilities\ColumnRowUtility;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -29,7 +30,6 @@ class DatamapPreProcessFieldArrayHook
         private readonly ContainerFactory $containerFactory,
         private readonly Database $database,
         private readonly ColumnDatabase $columnDatabase,
-        private readonly ContentDatabase $contentDatabase,
         private readonly Registry $tcaRegistry,
         private readonly ContainerService $containerService,
         private readonly ConnectionPool $connectionPool,
@@ -41,6 +41,11 @@ class DatamapPreProcessFieldArrayHook
         $this->fixColPosAfterCopyPage($dataHandler);
         $this->fixLanguageFieldsAfterTranslation($dataHandler);
         $this->fixMissingContainerParent($dataHandler);
+    }
+
+    public function processCmdmap_afterFinish(DataHandler $dataHandler): void
+    {
+        $this->fixColPosAfterCopyPageCmdmap($dataHandler);
     }
 
     public function processDatamap_preProcessFieldArray(array &$incomingFieldArray, string $table, $id, DataHandler $dataHandler): void
@@ -179,30 +184,31 @@ class DatamapPreProcessFieldArrayHook
                     continue;
                 }
 
-                $insertedUid = $dataHandler->substNEWwithIDs[$newUid];
+                $insertedUid = (int)$dataHandler->substNEWwithIDs[$newUid];
+
+                $sourceUid = $this->resolveCopiedSourceUid($dataHandler, $insertedUid);
 
                 // when inserting the container, fix all previous inserted elements
                 if (
                     ColumnRowUtility::isOurContainerCType($record['CType']) &&
-                    array_key_exists('t3_origuid', $record) &&
+                    $sourceUid !== null &&
                     array_key_exists('pid', $record) &&
                     array_key_exists('l18n_parent', $record) &&
                     array_key_exists('sys_language_uid', $record)
                 ) {
-                    $sourceUid = $record['t3_origuid'];
-                    $mappingLanguage = $record['sys_language_uid'];
+                    $mappingLanguage = (int)$record['sys_language_uid'];
 
                     // if the container is translated, we have to use the record uid in the default language
                     if (ColumnRowUtility::rowIsTranslatedInConnectionMode($record)) {                        
-                        $recordDefaultLanguage = $this->database->fetchOneRecord($record['t3_origuid']);
+                        $recordDefaultLanguage = $this->database->fetchOneRecord($sourceUid);
                         if(isset($recordDefaultLanguage['l10n_source'])) {
-                            $sourceUid = $recordDefaultLanguage['l10n_source'];
-                            $insertedUid = $record['l18n_parent'];
+                            $sourceUid = (int)$recordDefaultLanguage['l10n_source'];
+                            $insertedUid = (int)$record['l18n_parent'];
                             $mappingLanguage = 0;
                         }
                     }
 
-                    $childContentElements = $this->database->fetchRecordsByParentAndLanguage($sourceUid, $record['sys_language_uid']);
+                    $childContentElements = $this->database->fetchRecordsByParentAndLanguage($sourceUid, (int)$record['sys_language_uid']);
 
                     // just use elements from the same page
                     $childContentElements = array_filter($childContentElements, fn($element) => $element['pid'] === $record['pid']);
@@ -254,11 +260,12 @@ class DatamapPreProcessFieldArrayHook
                             isset($originalColumnRow['CType']) &&
                             ColumnRowUtility::isOurContainerCType($originalColumnRow['CType'])
                         ) { 
-                            $newColumnRow = $this->contentDatabase->fetchOneRecordByOrigUidAndPid((int) $originalColumnRow['uid'], (int) $record['pid']);
+                            $newColumnRowUid = (int)$record['tx_container_parent'];
+                            $newColumnRow = $this->database->fetchOneRecord($newColumnRowUid);
                             
-                            if($newColumnRow && isset($newColumnRow['uid'])) {
+                            if($newColumnRow && isset($newColumnRow['CType']) && ColumnRowUtility::isOurContainerCType($newColumnRow['CType'])) {
 
-                                $colPosMap = $this->createColPosRemappingBasedOnOrder($originalColumnRow['uid'], $newColumnRow['uid'], $originalColumnRow['sys_language_uid']);
+                                $colPosMap = $this->createColPosRemappingBasedOnOrder((int)$originalColumnRow['uid'], $newColumnRowUid, (int)$originalColumnRow['sys_language_uid']);
 
                                 if(
                                     $colPosMap !== [] &&
@@ -276,6 +283,70 @@ class DatamapPreProcessFieldArrayHook
                     }
                 }
             }
+        }
+    }
+
+    protected function resolveCopiedSourceUid(DataHandler $dataHandler, int $targetUid): ?int
+    {
+        $sourceUid = array_search($targetUid, $this->getContentCopyMapping($dataHandler), true);
+
+        return $sourceUid === false ? null : (int)$sourceUid;
+    }
+
+    protected function getContentCopyMapping(DataHandler $dataHandler): array
+    {
+        $mapping = ($dataHandler->copyMappingArray_merged['tt_content'] ?? []) + ($dataHandler->copyMappingArray['tt_content'] ?? []);
+        $contentCopyMapping = [];
+
+        foreach ($mapping as $sourceUid => $targetUid) {
+            $contentCopyMapping[(int)$sourceUid] = (int)$targetUid;
+        }
+
+        return $contentCopyMapping;
+    }
+
+    protected function fixColPosAfterCopyPageCmdmap(DataHandler $dataHandler): void
+    {
+        $targetPageIds = array_map('intval', array_values($dataHandler->copyMappingArray_merged['pages'] ?? []));
+
+        if ($targetPageIds === []) {
+            return;
+        }
+
+        $connection = $this->connectionPool->getConnectionForTable('tt_content');
+        $rows = $connection->executeQuery(
+            'SELECT child.uid AS child_uid, new_col.uid AS new_column_uid
+            FROM tt_content child
+            INNER JOIN tx_jarcolumnrow_columns old_col
+                ON old_col.uid = CAST(SUBSTRING(child.colPos, 5) AS UNSIGNED)
+            INNER JOIN tx_jarcolumnrow_columns new_col
+                ON new_col.parent_column_row = child.tx_container_parent
+                AND new_col.sorting = old_col.sorting
+                AND new_col.sys_language_uid = old_col.sys_language_uid
+                AND new_col.deleted = 0
+                AND new_col.t3ver_oid = 0
+            WHERE child.pid IN (:targetPageIds)
+                AND child.deleted = 0
+                AND child.t3ver_oid = 0
+                AND child.tx_container_parent > 0
+                AND child.colPos LIKE :columnRowColPosPrefix
+                AND old_col.parent_column_row <> child.tx_container_parent',
+            [
+                'targetPageIds' => $targetPageIds,
+                'columnRowColPosPrefix' => ColumnRowUtility::$colPosPrefix . '%',
+            ],
+            [
+                'targetPageIds' => Connection::PARAM_INT_ARRAY,
+                'columnRowColPosPrefix' => Connection::PARAM_STR,
+            ]
+        )->fetchAllAssociative();
+
+        foreach ($rows as $row) {
+            $connection->update(
+                'tt_content',
+                ['colPos' => ColumnRowUtility::decodeColPos(['uid' => (int)$row['new_column_uid']])],
+                ['uid' => (int)$row['child_uid']],
+            );
         }
     }
 
