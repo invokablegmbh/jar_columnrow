@@ -37,4 +37,6 @@ mod.wizards.newContentElement.wizardItems.container {
 
 mod.web_layout.tt_content.preview {
     jarcolumnrow_columnrow = EXT:container/Resources/Private/Templates/Container.html
+    jarcolumnrow_accordion = EXT:container/Resources/Private/Templates/Container.html
+    jarcolumnrow_tab = EXT:container/Resources/Private/Templates/Container.html
 }
